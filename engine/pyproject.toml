@@ -1,0 +1,52 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ctier-engine"
+version = "0.3.0"
+description = "Reference implementation of consequence-tiered API governance for autonomous agents"
+license = { text = "Apache-2.0" }
+authors = [{ name = "Rinu Dhanaraj", email = "hello@open-gw.com" }]
+requires-python = ">=3.11"
+dependencies = [
+    "pydantic>=2.0",
+    "pyyaml>=6.0",
+    "jsonschema>=4.0",
+    "jsonpath-rfc9535",
+]
+
+[project.scripts]
+ctier = "ctier.cli:main"
+
+[project.optional-dependencies]
+serve = ["fastapi>=0.110", "uvicorn>=0.27", "httpx>=0.27"]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools.packages.find]
+include = ["ctier*"]
+
+[tool.setuptools.package-data]
+ctier = [
+    "spec/VERSION",
+    "spec/SHA256SUMS",
+    "spec/README.md",
+    "spec/consequence-tiered-api.yaml",
+    "spec/schemas/*.json",
+    "spec/examples/**/*",
+    "conformance/handwritten/*.yaml",
+    "boundary/*",
+    "kit/VERSION",
+    "kit/cases.yaml",
+    "rules/*.yaml",
+    "authz/public.pem",
+    "authz/keycloak-rsa.json",
+    "authz/README.md",
+    "migration-proposals-0.1.0-draft.json",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+    "live: opt-in Kong live suite; skipped unless --live",
+]

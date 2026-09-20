@@ -1,0 +1,9 @@
+overlay: "1.1.0"
+info:
+  title: second assignment wins
+  version: 1.0.0
+actions:
+  - target: "$.paths['/ping'].get"
+    update:
+      x-ctier-tier: 3
+      x-ctier-status: declared

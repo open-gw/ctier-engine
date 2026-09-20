@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+  <PreFlow>
+    <Request>
+      <Step>
+        <Name>JS-StripCtierNamespace</Name>
+      </Step>
+      <Step>
+        <Name>SC-StripCtierHeaders</Name>
+      </Step>
+      <Step>
+        <Name>AM-DefaultTier</Name>
+      </Step>
+      <Step>
+        <Name>AM-Deployment</Name>
+      </Step>
+    </Request>
+  </PreFlow>
+  <Flows>
+    <Flow name="getOrderSummary">
+      <Condition>(proxy.pathsuffix MatchesPath "/orders/summary") and (request.verb = "GET")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Tier-getOrderSummary</Name>
+        </Step>
+      </Request>
+    </Flow>
+    <Flow name="cancelOrder">
+      <Condition>(proxy.pathsuffix MatchesPath "/orders/*") and (request.verb = "DELETE")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Tier-cancelOrder</Name>
+        </Step>
+      </Request>
+    </Flow>
+  </Flows>
+  <PostFlow>
+    <Request>
+      <Step>
+        <Name>RF-Provisioning</Name>
+        <Condition>(ctier.excluded = "true") or (ctier.tier = "3")</Condition>
+      </Step>
+      <Step>
+        <Name>RF-Tier4</Name>
+        <Condition>ctier.tier = "4"</Condition>
+      </Step>
+    </Request>
+  </PostFlow>
+  <HTTPProxyConnection>
+    <BasePath>/</BasePath>
+    <VirtualHost>default</VirtualHost>
+  </HTTPProxyConnection>
+  <RouteRule name="default">
+    <TargetEndpoint>default</TargetEndpoint>
+  </RouteRule>
+</ProxyEndpoint>

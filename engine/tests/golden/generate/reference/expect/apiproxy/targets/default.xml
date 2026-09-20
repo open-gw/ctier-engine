@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TargetEndpoint name="default">
+  <PreFlow>
+    <Request>
+      <Step>
+        <Name>JS-SetUpstreamProvenance</Name>
+      </Step>
+    </Request>
+  </PreFlow>
+  <HTTPTargetConnection>
+    <URL>https://api.example-bank.com/v1</URL>
+  </HTTPTargetConnection>
+</TargetEndpoint>

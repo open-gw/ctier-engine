@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage name="AM-Cors">
+  <DisplayName>AM-Cors</DisplayName>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <Add>
+    <Headers>
+      <Header name="Access-Control-Allow-Origin">*</Header>
+      <Header name="Access-Control-Allow-Headers">Authorization, X-Agent-Id, X-Correlation-Id</Header>
+    </Headers>
+  </Add>
+</AssignMessage>

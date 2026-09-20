@@ -1,0 +1,33 @@
+_format_version: "3.0"
+services:
+- name: estate
+  url: http://echo:8080
+  routes:
+  - name: estate-catchall
+    paths:
+    - /
+    strip_path: false
+    plugins:
+    - name: rate-limiting
+      config:
+        minute: 100000
+        policy: local
+    - name: file-log
+      config:
+        path: /tmp/estate-file-log.log
+plugins:
+- name: cors
+  config:
+    origins:
+    - "*"
+    credentials: false
+    headers:
+    - Authorization
+    - X-Agent-Id
+    - X-Correlation-Id
+    - Content-Type
+- name: request-transformer
+  config:
+    add:
+      headers:
+      - X-Estate-Seen:1

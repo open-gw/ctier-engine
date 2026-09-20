@@ -1,0 +1,48 @@
+_format_version: '3.0'
+consumers:
+- username: ctier-agents
+  jwt_secrets:
+  - algorithm: RS256
+    key: ctier
+    secret: unused-rs256
+    rsa_public_key: '-----BEGIN PUBLIC KEY-----
+
+      LOCAL-DEV-ONLY-NOT-A-REAL-PUBLIC-KEY-SEE-engine-ctier-authz-README
+
+      -----END PUBLIC KEY-----
+
+      '
+services:
+- name: computed-exceeds-declared
+  url: https://example.invalid/v1
+  routes:
+  - name: getRecord
+    methods:
+    - GET
+    paths:
+    - ~/records/(?<id>[^/]+)$
+    strip_path: false
+    regex_priority: 1
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 3
+        deployment: sha256:9cefa92eeb19cef0165daf895283521aaa5b1f25ed5acc370357b84000e3bfae
+        operation: getRecord
+        excluded: false
+        required_scope: operation-getRecord
+plugins:
+- name: ctier
+  config:
+    tier: 4
+    deployment: sha256:9cefa92eeb19cef0165daf895283521aaa5b1f25ed5acc370357b84000e3bfae
+    excluded: false
+    governed-set:
+    - getRecord

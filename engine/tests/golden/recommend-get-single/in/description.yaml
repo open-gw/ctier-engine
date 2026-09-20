@@ -1,0 +1,15 @@
+openapi: 3.1.0
+info:
+  title: recommend-get-single
+  version: 1.0.0
+paths:
+  /items/{id}:
+    get:
+      operationId: getItem
+      responses:
+        "200":
+          description: one item
+          content:
+            application/json:
+              schema:
+                type: object

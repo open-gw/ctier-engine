@@ -1,0 +1,71 @@
+_format_version: '3.0'
+consumers:
+- username: ctier-agents
+  jwt_secrets:
+  - algorithm: RS256
+    key: ctier
+    secret: unused-rs256
+    rsa_public_key: '-----BEGIN PUBLIC KEY-----
+
+      LOCAL-DEV-ONLY-NOT-A-REAL-PUBLIC-KEY-SEE-engine-ctier-authz-README
+
+      -----END PUBLIC KEY-----
+
+      '
+services:
+- name: sibling-paths
+  url: https://example.invalid/v1
+  routes:
+  - name: getOrderSummary
+    methods:
+    - GET
+    paths:
+    - ~/orders/summary$
+    strip_path: false
+    regex_priority: 2
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 1
+        deployment: sha256:62de3c9a650bfbd3c9afe83985b3976310d5400ea9fed3f570920763d37be0ba
+        operation: getOrderSummary
+        excluded: false
+        required_scope: operation-getOrderSummary
+  - name: cancelOrder
+    methods:
+    - DELETE
+    paths:
+    - ~/orders/(?<orderId>[^/]+)$
+    strip_path: false
+    regex_priority: 1
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 4
+        deployment: sha256:62de3c9a650bfbd3c9afe83985b3976310d5400ea9fed3f570920763d37be0ba
+        operation: cancelOrder
+        excluded: false
+        required_scope: operation-cancelOrder
+plugins:
+- name: ctier
+  config:
+    tier: 4
+    deployment: sha256:62de3c9a650bfbd3c9afe83985b3976310d5400ea9fed3f570920763d37be0ba
+    excluded: false
+    governed-set:
+    - getOrderSummary
+    - cancelOrder

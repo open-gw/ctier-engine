@@ -1,0 +1,122 @@
+ctierSchema: classification-rules/0.1.0
+rules:
+  - id: get-single-resource
+    when:
+      method: [get]
+      pathEndsWithParameter: true
+      responseIsCollection: false
+    propose:
+      criteria:
+        reversibility: not-applicable
+        blast-radius: single-record
+        idempotency: inherently-safe
+    rationale: >
+      This is a read of one record. Nothing is written, so there is nothing
+      to undo and running it again cannot change the world.
+    confidence: high
+
+  - id: read-singleton-subresource
+    when:
+      method: [get, head]
+      pathEndsWithParameter: false
+      responseIsCollection: false
+      pathParameterCount: {min: 1}
+    propose:
+      criteria:
+        reversibility: not-applicable
+        blast-radius: single-record
+        idempotency: inherently-safe
+    rationale: >
+      A named sub-resource of one identified parent. One subject, nothing
+      to undo.
+    confidence: high
+
+  - id: get-collection
+    when:
+      method: [get]
+      responseIsCollection: true
+    propose:
+      criteria:
+        reversibility: not-applicable
+        blast-radius: population
+        idempotency: inherently-safe
+    rationale: >
+      This lists many records. It is still a read — nothing to undo — but
+      a mistake exposes a population, not one row.
+    confidence: high
+
+  - id: put-with-declared-reversal
+    when:
+      method: [put]
+      hasDeclaredReversal: true
+    propose:
+      criteria:
+        reversibility: undo-restores-effect
+        idempotency: safe
+    rationale: >
+      A replace that another operation (or this one) is declared to reverse.
+      Putting the prior representation back restores the effect, and repeating
+      the same replace is safe.
+    confidence: high
+
+  - id: put-without-declared-reversal
+    when:
+      method: [put]
+    propose:
+      criteria:
+        reversibility: undo-restores-record-only
+        idempotency: safe
+    rationale: >
+      A replace with no declared compensating action. You can write the
+      record back; anything that happened while the wrong state stood is
+      not undone. Repeating the same replace is safe.
+    confidence: medium
+
+  - id: patch
+    when:
+      method: [patch]
+    propose:
+      criteria:
+        reversibility: undo-restores-record-only
+        idempotency: key-required
+    rationale: >
+      A partial update. Restoring the record does not restore what callers
+      did with the wrong values, and applying the same patch twice is not
+      inherently safe — it needs an idempotency key.
+    confidence: medium
+
+  - id: post-create
+    when:
+      method: [post]
+      hasRequestBody: true
+    propose:
+      criteria:
+        reversibility: undo-restores-record-only
+        idempotency: unsafe
+    rationale: >
+      A create. Deleting the record later does not undo what happened while
+      it existed, and posting again creates another one.
+    confidence: medium
+
+  - id: delete-with-declared-reversal
+    when:
+      method: [delete]
+      hasDeclaredReversal: true
+    propose:
+      criteria:
+        reversibility: undo-restores-record-only
+    rationale: >
+      A delete that a compensating action is declared to reverse. The
+      record can come back; the interval it was gone cannot.
+    confidence: high
+
+  - id: delete-without-declared-reversal
+    when:
+      method: [delete]
+    propose:
+      criteria:
+        reversibility: none
+    rationale: >
+      A delete with no declared way back. If this is wrong, the record is
+      gone.
+    confidence: high

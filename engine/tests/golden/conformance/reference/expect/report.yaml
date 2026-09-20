@@ -1,0 +1,341 @@
+ctierSchema: conformance-report/0.1.0-draft
+composition: sha256:fc7eedebcba8fa1c5a7d4ef8059620ade412832772a2c69475e2e89c08561676
+deployment: level-2
+adapters:
+- reference
+agree: true
+cases:
+- id: generated-getBalance
+  expect:
+    appliedTier: 1
+    disposition: execute
+  observed:
+    reference:
+      appliedTier: 1
+      disposition: execute
+      evidence:
+        operationAnchor: getBalance
+        escalationReason: none
+        deployment: level-2
+        declaredTier: 1
+  agree: true
+- id: generated-listTransactions
+  expect:
+    appliedTier: 2
+    disposition: execute
+  observed:
+    reference:
+      appliedTier: 2
+      disposition: execute
+      evidence:
+        operationAnchor: listTransactions
+        escalationReason: computed-tier-exceeds-declared
+        deployment: level-2
+        declaredTier: 1
+  agree: true
+- id: generated-updateDisplayPreferences
+  expect:
+    appliedTier: 2
+    disposition: execute
+  observed:
+    reference:
+      appliedTier: 2
+      disposition: execute
+      evidence:
+        operationAnchor: updateDisplayPreferences
+        escalationReason: none
+        deployment: level-2
+        declaredTier: 2
+  agree: true
+- id: generated-updateCommunicationPreferences
+  expect:
+    appliedTier: 3
+    disposition: refuse-provisioning
+  observed:
+    reference:
+      appliedTier: 3
+      disposition: refuse-provisioning
+      evidence:
+        operationAnchor: updateCommunicationPreferences
+        escalationReason: none
+        deployment: level-2
+        declaredTier: 3
+  agree: true
+- id: generated-deleteSavedSearch
+  expect:
+    appliedTier: 2
+    disposition: execute
+  observed:
+    reference:
+      appliedTier: 2
+      disposition: execute
+      evidence:
+        operationAnchor: deleteSavedSearch
+        escalationReason: none
+        deployment: level-2
+        declaredTier: 2
+  agree: true
+- id: generated-restoreSavedSearch
+  expect:
+    appliedTier: 2
+    disposition: execute
+  observed:
+    reference:
+      appliedTier: 2
+      disposition: execute
+      evidence:
+        operationAnchor: restoreSavedSearch
+        escalationReason: none
+        deployment: level-2
+        declaredTier: 2
+  agree: true
+- id: generated-updateCustomerProfile
+  expect:
+    appliedTier: 3
+    disposition: refuse-provisioning
+  observed:
+    reference:
+      appliedTier: 3
+      disposition: refuse-provisioning
+      evidence:
+        operationAnchor: updateCustomerProfile
+        escalationReason: none
+        deployment: level-2
+        declaredTier: 3
+  agree: true
+- id: generated-modifyCreditLimit
+  expect:
+    appliedTier: 3
+    disposition: refuse-provisioning
+  observed:
+    reference:
+      appliedTier: 3
+      disposition: refuse-provisioning
+      evidence:
+        operationAnchor: modifyCreditLimit
+        escalationReason: none
+        deployment: level-2
+        declaredTier: 3
+  agree: true
+- id: generated-raiseDispute
+  expect:
+    appliedTier: 4
+    disposition: refuse-and-suspend
+  observed:
+    reference:
+      appliedTier: 4
+      disposition: refuse-and-suspend
+      evidence:
+        operationAnchor: raiseDispute
+        escalationReason: computed-tier-exceeds-declared
+        deployment: level-2
+        declaredTier: 3
+  agree: true
+- id: generated-initiatePayment
+  expect:
+    appliedTier: 4
+    disposition: refuse-and-suspend
+  observed:
+    reference:
+      appliedTier: 4
+      disposition: refuse-and-suspend
+      evidence:
+        operationAnchor: initiatePayment
+        escalationReason: none
+        deployment: level-2
+        declaredTier: 4
+  agree: true
+- id: generated-getPaymentAuthorization
+  expect:
+    appliedTier: 4
+    disposition: refuse-and-suspend
+  observed:
+    reference:
+      appliedTier: 4
+      disposition: refuse-and-suspend
+      evidence:
+        operationAnchor: getPaymentAuthorization
+        escalationReason: none
+        deployment: level-2
+        declaredTier: 4
+  agree: true
+- id: generated-recordKycDecision
+  expect:
+    appliedTier: 4
+    disposition: refuse-and-suspend
+  observed:
+    reference:
+      appliedTier: 4
+      disposition: refuse-and-suspend
+      evidence:
+        operationAnchor: recordKycDecision
+        escalationReason: none
+        deployment: level-2
+        declaredTier: 4
+  agree: true
+- id: generated-updateFeatureFlags
+  expect:
+    appliedTier: 4
+    disposition: refuse-and-suspend
+  observed:
+    reference:
+      appliedTier: 4
+      disposition: refuse-and-suspend
+      evidence:
+        operationAnchor: updateFeatureFlags
+        escalationReason: none
+        deployment: level-2
+        declaredTier: 4
+  agree: true
+- id: generated-closeAccount
+  expect:
+    appliedTier: 4
+    disposition: refuse-provisioning
+  observed:
+    reference:
+      appliedTier: 4
+      disposition: refuse-provisioning
+      evidence:
+        operationAnchor: closeAccount
+        escalationReason: none
+        deployment: level-2
+        notes: excluded operation reached by a live credential
+  agree: true
+- id: generated-exportStatements
+  expect:
+    appliedTier: 4
+    disposition: refuse-and-suspend
+  observed:
+    reference:
+      appliedTier: 4
+      disposition: refuse-and-suspend
+      evidence:
+        operationAnchor: exportStatements
+        escalationReason: undeclared-operation
+        deployment: level-2
+  agree: true
+- id: bounds-exceeds-listTransactions
+  expect:
+    appliedTier: 3
+    disposition: refuse-provisioning
+  observed:
+    reference:
+      appliedTier: 3
+      disposition: refuse-provisioning
+      evidence:
+        operationAnchor: listTransactions
+        escalationReason: payload-exceeds-declared-bounds
+        deployment: level-2
+        declaredTier: 1
+  agree: true
+- id: bounds-decimal-listTransactions
+  expect:
+    appliedTier: 3
+    disposition: refuse-provisioning
+  observed:
+    reference:
+      appliedTier: 3
+      disposition: refuse-provisioning
+      evidence:
+        operationAnchor: listTransactions
+        escalationReason: payload-exceeds-declared-bounds
+        deployment: level-2
+        declaredTier: 1
+  agree: true
+- id: bounds-scientific-listTransactions
+  expect:
+    appliedTier: 3
+    disposition: refuse-provisioning
+  observed:
+    reference:
+      appliedTier: 3
+      disposition: refuse-provisioning
+      evidence:
+        operationAnchor: listTransactions
+        escalationReason: payload-exceeds-declared-bounds
+        deployment: level-2
+        declaredTier: 1
+  agree: true
+- id: bounds-at-max-listTransactions
+  expect:
+    appliedTier: 2
+    disposition: execute
+  observed:
+    reference:
+      appliedTier: 2
+      disposition: execute
+      evidence:
+        operationAnchor: listTransactions
+        escalationReason: computed-tier-exceeds-declared
+        deployment: level-2
+        declaredTier: 1
+  agree: true
+- id: bounds-non-numeric-listTransactions
+  expect:
+    appliedTier: 2
+    disposition: execute
+  observed:
+    reference:
+      appliedTier: 2
+      disposition: execute
+      evidence:
+        operationAnchor: listTransactions
+        escalationReason: computed-tier-exceeds-declared
+        deployment: level-2
+        declaredTier: 1
+  agree: true
+- id: bounds-absent-listTransactions
+  expect:
+    appliedTier: 2
+    disposition: execute
+  observed:
+    reference:
+      appliedTier: 2
+      disposition: execute
+      evidence:
+        operationAnchor: listTransactions
+        escalationReason: computed-tier-exceeds-declared
+        deployment: level-2
+        declaredTier: 1
+  agree: true
+- id: undeclared-exportStatements
+  expect:
+    appliedTier: 4
+    disposition: refuse-and-suspend
+  observed:
+    reference:
+      appliedTier: 4
+      disposition: refuse-and-suspend
+      evidence:
+        operationAnchor: exportStatements
+        escalationReason: undeclared-operation
+        deployment: level-2
+  agree: true
+- id: excluded-closeAccount
+  expect:
+    appliedTier: 4
+    disposition: refuse-provisioning
+  observed:
+    reference:
+      appliedTier: 4
+      disposition: refuse-provisioning
+      evidence:
+        operationAnchor: closeAccount
+        escalationReason: none
+        deployment: level-2
+        notes: excluded operation reached by a live credential
+  agree: true
+- id: c11-injected-tier-ignored
+  expect:
+    appliedTier: 4
+    disposition: refuse-and-suspend
+  observed:
+    reference:
+      appliedTier: 4
+      disposition: refuse-and-suspend
+      evidence:
+        operationAnchor: updateFeatureFlags
+        escalationReason: none
+        deployment: level-2
+        declaredTier: 4
+  agree: true

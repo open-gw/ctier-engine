@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage name="AM-Tier-updateDisplayPreferences">
+  <DisplayName>AM-Tier-updateDisplayPreferences</DisplayName>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <AssignVariable>
+    <Name>ctier.tier</Name>
+    <Value>2</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>ctier.declared</Name>
+    <Value>true</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>ctier.operation</Name>
+    <Value>updateDisplayPreferences</Value>
+  </AssignVariable>
+</AssignMessage>

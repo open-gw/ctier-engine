@@ -1,0 +1,22 @@
+{
+  "deploymentDigest": "sha256:62de3c9a650bfbd3c9afe83985b3976310d5400ea9fed3f570920763d37be0ba",
+  "generator": {
+    "mode": "bundle",
+    "target": "kong",
+    "version": "0.3.0"
+  },
+  "governed-set": [
+    {
+      "assignment": 1,
+      "method": "GET",
+      "operation": "getOrderSummary",
+      "path": "/orders/summary"
+    },
+    {
+      "assignment": 4,
+      "method": "DELETE",
+      "operation": "cancelOrder",
+      "path": "/orders/{orderId}"
+    }
+  ]
+}

@@ -1,0 +1,277 @@
+ctierSchema: conformance-kit/1.1
+version: "1.1"
+change: Cases change only with a version bump. A result is meaningful only against this version.
+cases:
+  - id: c1-classified-refuse-does-not-execute
+    criterion: C1
+    class: runtime
+    level: any
+    send:
+      method: POST
+      path: /payments
+      body: "{}"
+    expect:
+      status: 423
+      statusNot: [200]
+      observer:
+        unreached: true
+
+  - id: c2-undeclared-is-highest-class-refuse
+    criterion: C2
+    class: runtime
+    level: any
+    send:
+      method: POST
+      path: /accounts/12345/statements/export
+    expect:
+      status: 423
+      body:
+        status: agent_suspended
+        agentAction: halt_and_hand_off
+      pairing: true
+
+  - id: c3-bound-crossing-is-the-higher-class
+    criterion: C3
+    class: runtime
+    level: any
+    send:
+      method: GET
+      path: /accounts/12345/transactions
+      query:
+        limit: "101"
+    expect:
+      statusNot: [200, 423]
+      statusIn: [202, 403]
+      higherClass: true
+
+  - id: c4-w1-withhold-has-no-poll-url
+    criterion: C4
+    class: witness
+    level: "3"
+    caveat: falsify-not-verify
+    send:
+      method: PUT
+      path: /customers/12345/preferences/communication
+    expect:
+      status: 202
+      bodyAbsent: [pollUrl]
+      headerAbsent: [pollurl, retry-after]
+
+  - id: c4-w2-level-2-class-3-is-a-decision
+    criterion: C4
+    class: witness
+    level: "2"
+    caveat: falsify-not-verify
+    send:
+      method: PUT
+      path: /customers/12345/preferences/communication
+    expect:
+      status: 403
+      statusNot: [202, 503]
+      body:
+        status: provisioning_defect
+      bodyAbsent: [pollUrl]
+
+  - id: c4-w3-highest-class-holds-nothing
+    criterion: C4
+    class: witness
+    level: any
+    caveat: falsify-not-verify
+    requires: [pending]
+    send:
+      method: POST
+      path: /payments
+      body: "{}"
+    expect:
+      status: 423
+      body:
+        agentAction: halt_and_hand_off
+      pending:
+        correlationAbsent: true
+
+  - id: c5-withheld-caller-is-released
+    criterion: C5
+    class: runtime
+    level: "3"
+    send:
+      method: PUT
+      path: /customers/12345/preferences/communication
+    expect:
+      status: 202
+      body:
+        status: pending_authorization
+        retryable: false
+        agentAction: continue_task_without_this_step
+      bodyAbsent: [pollUrl]
+      headerAbsent: [retry-after]
+      pairing: true
+
+  - id: c6-execute-is-the-approved-bytes
+    criterion: C6
+    class: runtime
+    level: "3"
+    requires: [pending, approve, observer]
+    send:
+      method: PUT
+      path: /customers/12345/preferences/communication
+    expect:
+      status: 202
+    then:
+      approve: true
+      observer:
+        method: PUT
+        pathContains: /customers/12345/preferences/communication
+        authorizationNotAgent: true
+        count: 1
+
+  - id: c7-caller-does-not-choose-the-identifier
+    criterion: C7
+    class: runtime
+    # Not satisfiable below Level 3: no custody, nowhere to store a
+    # derived key. Adoption ladder and the observability map say so.
+    # An L2 run skips with "not applicable at this level".
+    level: "3"
+    requires: [observer]
+    send:
+      method: GET
+      path: /accounts/12345/balance
+      headers:
+        Idempotency-Key: agent-chosen
+    expect:
+      status: 200
+      observer:
+        present: [idempotency-key]
+        notEquals:
+          idempotency-key: agent-chosen
+
+  - id: c9-highest-class-names-no-resume
+    criterion: C9
+    class: runtime
+    level: any
+    send:
+      method: POST
+      path: /payments
+      body: "{}"
+    expect:
+      status: 423
+      body:
+        status: agent_suspended
+        agentAction: halt_and_hand_off
+      bodyAbsent: [correlationId, pollUrl]
+      pairing: true
+
+  - id: c10-execute-has-a-decision
+    criterion: C10
+    class: runtime
+    level: any
+    requires: [records]
+    send:
+      method: GET
+      path: /accounts/12345/balance
+    expect:
+      status: 200
+      record:
+        present: decision
+
+  - id: c10-highest-class-has-a-decision
+    criterion: C10
+    class: runtime
+    level: any
+    requires: [records]
+    send:
+      method: POST
+      path: /payments
+      body: "{}"
+    expect:
+      status: 423
+      record:
+        present: decision
+
+  - id: c10-undeclared-has-a-decision
+    criterion: C10
+    class: runtime
+    level: any
+    requires: [records]
+    send:
+      method: POST
+      path: /accounts/12345/statements/export
+    expect:
+      status: 423
+      record:
+        present: decision
+
+  - id: c11-inbound-tier-is-not-honoured
+    criterion: C11
+    class: runtime
+    level: any
+    send:
+      method: PUT
+      path: /config/feature-flags
+      headers:
+        x-ctier-tier: "1"
+      body: "{}"
+    expect:
+      status: 423
+      statusNot: [200]
+
+  - id: c12-unassigned-is-refused-undetermined
+    criterion: C12
+    class: runtime
+    level: any
+    # C12 is a path routed at the enforcement point and absent
+    # from the composition. A bare 404 means the path was never
+    # routed — nothing to govern. The kit cannot set that route
+    # up on an arbitrary target. The operator must provision one
+    # (see docs/kit/RUN.md). Status 404 is inconclusive, never fail.
+    provision: routed-but-ungoverned
+    send:
+      method: GET
+      path: /estate/unknown
+    expect:
+      status: 423
+      body:
+        status: unassigned
+        agentAction: halt
+      record:
+        present: attempt
+        attempt:
+          appliedTier: null
+          reason: unassigned
+        absent: decision
+    inconclusiveWhen:
+      status: 404
+
+  - id: c13-assignment-does-not-apply-to-another-composition
+    criterion: C13
+    class: generation
+    level: any
+    expect: {}
+
+  - id: c14-w1-pending-publishes-no-credential
+    criterion: C14
+    class: witness
+    level: "3"
+    caveat: falsify-not-verify
+    requires: [pending]
+    send:
+      method: PUT
+      path: /customers/12345/preferences/communication
+    expect:
+      status: 202
+      pending:
+        noCredential: true
+
+  - id: c16-unknown-prefix-name-is-absent
+    criterion: C16
+    class: runtime
+    level: any
+    requires: [observer]
+    send:
+      method: GET
+      path: /accounts/12345/balance
+      headers:
+        x-ctier-unknown-audit: forged
+    expect:
+      status: 200
+      observer:
+        absent: [x-ctier-unknown-audit]

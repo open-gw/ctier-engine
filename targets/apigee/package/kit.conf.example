@@ -1,0 +1,69 @@
+# Copy to kit.conf and fill every value you have.
+# One file. Do not assemble command-line flags.
+#
+# Required for the run: gateway_url and gateway_token.
+# Apigee placement fields are for your deploy notes and
+# your reply; the runner does not call the Apigee
+# Management API.
+#
+# Optional URLs: leave empty ("") if you do not have
+# them. Checks that need a missing URL are skipped.
+# A skip is not a pass.
+
+# Base URL of the deployed proxy, no path.
+# Example: https://myorg-eval.apigee.net
+gateway_url: https://myorg-eval.apigee.net
+
+# Bearer token the proxy will accept for the
+# operations in the generated product.
+# Example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+gateway_token: "paste-bearer-token-here"
+
+# Apigee organisation that hosts the proxy.
+# Example: myorg
+apigee_org: myorg
+
+# Apigee environment the proxy is deployed to.
+# Example: eval
+apigee_environment: eval
+
+# Proxy name as shown in Apigee after import.
+# Example: retail-banking-api-consequence-tiered-reference
+apigee_proxy_name: retail-banking-api-consequence-tiered-reference
+
+# Optional. HTTP GET that returns { "records": [ … ] }
+# — decisions and attempts written so far.
+# Ship collector/: ./collector/run.sh then replace
+# records.example.invalid in SC-RecordDecision and set
+# e.g. http://127.0.0.1:8090/v1/ledger
+# (reachable from the machine running ./run.sh).
+# Trace print() is not this URL. Leave empty to skip C10.
+kit_records: ""
+
+# Optional. HTTP GET of the last requests the
+# backend received, as a JSON array (or
+# { "requests": [ … ] }).
+# Ship observer/: ./observer/run.sh then point
+# the proxy target at that host and set e.g.
+# http://127.0.0.1:8080/_harness/requests
+# (reachable from the machine running ./run.sh).
+# Leave empty to skip C16.
+kit_observer: ""
+
+# Optional. Base URL of the approval service that
+# lists waiting items (GET /v1/pending) and accepts
+# a decision (POST /v1/decisions/{id}).
+# The generated bundle ships with
+# https://custody.example.invalid — replace that
+# host in the proxy before expecting withhold
+# (HTTP 202) to work.
+kit_custody: ""
+
+# "3" if an approval service is in front of the
+# gateway for class-3 operations; "2" if it is not.
+# Default for a first Apigee run with the stock
+# placeholder custody host: "2".
+kit_level: "2"
+
+# Where to write the result file.
+kit_out: kit-result.yaml

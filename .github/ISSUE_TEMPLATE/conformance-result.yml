@@ -1,0 +1,53 @@
+name: Conformance result
+description: Send back a kit result file from a gateway you ran.
+title: "[conformance] "
+labels: ["conformance-result"]
+body:
+  - type: dropdown
+    id: target
+    attributes:
+      label: Target
+      description: Which gateway you ran the kit against.
+      options:
+        - Kong
+        - APISIX
+        - Apigee
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: kit_version
+    attributes:
+      label: Kit version
+      description: The conformance-kit version from the result file or package (for example conformance-kit/1.1).
+      placeholder: conformance-kit/1.1
+    validations:
+      required: true
+  - type: textarea
+    id: result_file
+    attributes:
+      label: Result file
+      description: Paste the kit result YAML (kit-result.yaml), or attach it. Do not paste bearer tokens or admin passwords.
+      render: yaml
+    validations:
+      required: true
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, gateway version, how you built or deployed (stock package, regenerated, org name only if relevant). No secrets.
+      placeholder: |
+        macOS arm64; Kong 3.x via targets/kong compose; used existing generated/
+    validations:
+      required: true
+  - type: dropdown
+    id: level
+    attributes:
+      label: Level run
+      options:
+        - Level 2
+        - Level 3
+        - Both
+        - Other / unknown
+    validations:
+      required: true

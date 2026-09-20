@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Specification
+    url: https://github.com/open-gw/ctier
+    about: Issues about the published specification belong in open-gw/ctier.

@@ -1,0 +1,37 @@
+# APISIX node config — file-driven standalone (no etcd, no Admin API).
+# Pin apache/apisix:3.13.0-debian: deployment.role=data_plane + yaml provider.
+# Do NOT omit APISIX_STAND_ALONE: without it the entrypoint runs init_etcd.
+#
+# Plugin list replaces the image default. Keep it to what the rig uses.
+# openid-connect and authz-keycloak are A5: the former is the local
+# required_scopes candidate; the latter is on the list so the UMA-ticket
+# hop can be measured, not inferred.
+# lua_shared_dict is declared here so A4 can observe whether a request-time
+# store exists without the Admin API.
+
+apisix:
+  node_listen: 9080
+  enable_ipv6: false
+  enable_admin: false
+
+deployment:
+  role: data_plane
+  role_data_plane:
+    config_provider: yaml
+
+nginx_config:
+  worker_processes: 1
+  error_log_level: notice
+  http_configuration_snippet: |
+    lua_shared_dict ctier_floors 1m;
+    lua_shared_dict ctier_seq 64k;
+
+plugins:
+  - jwt-auth
+  - proxy-rewrite
+  - fault-injection
+  - serverless-pre-function
+  - serverless-post-function
+  - request-id
+  - openid-connect
+  - authz-keycloak

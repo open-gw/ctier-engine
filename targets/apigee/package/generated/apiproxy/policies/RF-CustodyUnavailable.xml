@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault name="RF-CustodyUnavailable">
+  <DisplayName>RF-CustodyUnavailable</DisplayName>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <FaultResponse>
+    <Set>
+      <StatusCode>503</StatusCode>
+      <ReasonPhrase>Service Unavailable</ReasonPhrase>
+      <Headers>
+        <Header name="Retry-After">5</Header>
+        <Header name="Cache-Control">no-store</Header>
+      </Headers>
+      <Payload contentType="application/json">{"status":"custody_unavailable","retryable":true,"agentAction":"retry_later"}</Payload>
+    </Set>
+  </FaultResponse>
+</RaiseFault>

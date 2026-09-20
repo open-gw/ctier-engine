@@ -1,0 +1,119 @@
+# Live APISIX + echo. Standalone YAML, no etcd, no Admin API.
+# Ports sit at 19000+ so this project can run beside ctier-kong-live (18000+).
+# Bind CTIER_APISIX_YAML to the declarative route file APISIX reads at start.
+#
+# Echo is on `upstream` only, unpublished. APISIX and custody attach there
+# as well; Keycloak, the host, and `outsider` do not. Gateway ports stay
+# published. 14a.1.
+
+volumes:
+  ctier-ledger:
+
+networks:
+  edge:
+  upstream:
+    internal: true
+
+services:
+  echo:
+    build:
+      context: ../../kong/live
+      dockerfile: echo.Dockerfile
+    networks:
+      - upstream
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/')",
+        ]
+      interval: 1s
+      timeout: 2s
+      retries: 30
+
+  outsider:
+    image: busybox:1.36.1
+    command: ["sleep", "infinity"]
+    networks:
+      - edge
+
+  custody:
+    build:
+      context: ../../..
+      dockerfile: targets/kong/live/custody.Dockerfile
+    ports:
+      - "19200:8080"
+    networks:
+      - edge
+      - upstream
+    environment:
+      CTIER_SQLITE: /data/custody.sqlite
+      CTIER_BACKEND_URL: http://echo:8080
+      CTIER_SERVICE_TOKEN: local-dev-custody-token
+      CTIER_LEDGER_FALLBACK: /var/ctier/ledger/attempts.jsonl
+      CTIER_DECAY_SECONDS: "5"
+      CTIER_ESCALATE_ABOVE: "9"
+      CTIER_KEYCLOAK_URL: http://keycloak:8080
+      CTIER_KEYCLOAK_REALM: ctier
+      CTIER_KEYCLOAK_ADMIN_USER: local-dev-admin
+      CTIER_KEYCLOAK_ADMIN_PASSWORD: local-dev-admin-password
+    volumes:
+      - ctier-ledger:/var/ctier/ledger
+    depends_on:
+      echo:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')",
+        ]
+      interval: 1s
+      timeout: 2s
+      retries: 30
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.3.3
+    command: ["start-dev", "--import-realm"]
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: local-dev-admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: local-dev-admin-password
+      KC_HTTP_ENABLED: "true"
+      KC_HOSTNAME_STRICT: "false"
+      KC_HEALTH_ENABLED: "true"
+    ports:
+      - "19400:8080"
+    networks:
+      - edge
+    volumes:
+      - ${CTIER_KEYCLOAK_REALM:-./realm.json}:/opt/keycloak/data/import/realm.json:ro
+
+  apisix:
+    image: apache/apisix:3.13.0-debian
+    environment:
+      APISIX_STAND_ALONE: "true"
+    ports:
+      - "19000:9080"
+    networks:
+      - edge
+      - upstream
+    volumes:
+      - ./config.yaml:/usr/local/apisix/conf/config.yaml:ro
+      - ${CTIER_APISIX_YAML}:/usr/local/apisix/conf/apisix.yaml:ro
+    depends_on:
+      echo:
+        condition: service_healthy
+      custody:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c 'exec 3<>/dev/tcp/127.0.0.1/9080'"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 10s

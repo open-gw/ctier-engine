@@ -1,0 +1,32 @@
+{
+  "composedAt": "<composedAt>",
+  "compositionDigest": "sha256:f279b468b7fa3529277f0f5705bd0b4bffd78b02d437c34f12e476e363908904",
+  "coverage": {
+    "absent": 0,
+    "declared": 1,
+    "recommended": 0
+  },
+  "ctierSchema": "composition-manifest/0.1.0",
+  "inputs": [
+    {
+      "digest": "sha256:046a1d025e4677e99dbef240177c58c324f127f4917d1abf8452258c419b39a5",
+      "path": "description.yaml",
+      "role": "description"
+    },
+    {
+      "digest": "sha256:3d121890df7850d249a7bc5272f25be25c355dcc1415f975ac6c2ddbfde84d4a",
+      "order": 0,
+      "path": "overlay-1.yaml",
+      "role": "overlay"
+    }
+  ],
+  "operations": 1,
+  "specVersion": "1.4.0",
+  "zeroMatchActions": [
+    {
+      "index": 0,
+      "matches": 0,
+      "target": "$.paths['/renamed'].get"
+    }
+  ]
+}

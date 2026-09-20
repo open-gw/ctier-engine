@@ -1,0 +1,4 @@
+{
+  "rule": "self-reversal",
+  "message": "postLedgerEntry: self-reversal requires idempotency inherently-safe or safe"
+}

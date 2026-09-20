@@ -1,0 +1,154 @@
+# Hand-written classification-agreement cases. Generation cannot invent these.
+# Bound to the reference document (engine/ctier/spec/consequence-tiered-api.yaml).
+cases:
+  # Spec 1.1.6 bound comparison. Against listTransactions
+  # x-ctier-bounds: { parameter: limit, max: 100 }.
+  # Floor is max(declared 1, computed 2) = 2; exceed raises to 3.
+  # See spec/examples/bound-comparison.yaml.
+
+  # limit=101 against max: 100 — escalates
+  - id: bounds-exceeds-listTransactions
+    request:
+      method: GET
+      path: /accounts/12345/transactions
+      query:
+        limit: "101"
+      headers: {}
+      body: null
+    agent:
+      id: agent-a
+      taskId: task-1
+    expect:
+      appliedTier: 3
+      dispositionByLevel:
+        level-2: refuse-provisioning
+        level-3: withhold
+
+  # limit=101.0 — escalates
+  - id: bounds-decimal-listTransactions
+    request:
+      method: GET
+      path: /accounts/12345/transactions
+      query:
+        limit: "101.0"
+      headers: {}
+      body: null
+    agent:
+      id: agent-a
+      taskId: task-1
+    expect:
+      appliedTier: 3
+      dispositionByLevel:
+        level-2: refuse-provisioning
+        level-3: withhold
+
+  # limit=1.01e2 — escalates
+  - id: bounds-scientific-listTransactions
+    request:
+      method: GET
+      path: /accounts/12345/transactions
+      query:
+        limit: "1.01e2"
+      headers: {}
+      body: null
+    agent:
+      id: agent-a
+      taskId: task-1
+    expect:
+      appliedTier: 3
+      dispositionByLevel:
+        level-2: refuse-provisioning
+        level-3: withhold
+
+  # limit=100 — does not escalate
+  - id: bounds-at-max-listTransactions
+    request:
+      method: GET
+      path: /accounts/12345/transactions
+      query:
+        limit: "100"
+      headers: {}
+      body: null
+    agent:
+      id: agent-a
+      taskId: task-1
+    expect:
+      appliedTier: 2
+      disposition: execute
+
+  # limit=abc — does not escalate
+  - id: bounds-non-numeric-listTransactions
+    request:
+      method: GET
+      path: /accounts/12345/transactions
+      query:
+        limit: "abc"
+      headers: {}
+      body: null
+    agent:
+      id: agent-a
+      taskId: task-1
+    expect:
+      appliedTier: 2
+      disposition: execute
+
+  # parameter absent — does not escalate
+  - id: bounds-absent-listTransactions
+    request:
+      method: GET
+      path: /accounts/12345/transactions
+      query: {}
+      headers: {}
+      body: null
+    agent:
+      id: agent-a
+      taskId: task-1
+    expect:
+      appliedTier: 2
+      disposition: execute
+
+  - id: undeclared-exportStatements
+    request:
+      method: POST
+      path: /accounts/12345/statements/export
+      query: {}
+      headers: {}
+      body: null
+    agent:
+      id: agent-a
+      taskId: task-1
+    expect:
+      appliedTier: 4
+      disposition: refuse-and-suspend
+
+  - id: excluded-closeAccount
+    request:
+      method: POST
+      path: /accounts/12345/closure
+      query: {}
+      headers: {}
+      body: null
+    agent:
+      id: agent-a
+      taskId: task-1
+    expect:
+      appliedTier: 4
+      disposition: refuse-provisioning
+
+  # C11: inbound x-ctier-tier must not lower a declared Tier 4. The strip
+  # happens in the proxy. Until a gateway adapter existed this case could
+  # not fail; it is no longer a placeholder.
+  - id: c11-injected-tier-ignored
+    request:
+      method: PUT
+      path: /config/feature-flags
+      query: {}
+      headers:
+        x-ctier-tier: "1"
+      body: null
+    agent:
+      id: agent-a
+      taskId: task-1
+    expect:
+      appliedTier: 4
+      disposition: refuse-and-suspend

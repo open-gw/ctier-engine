@@ -1,0 +1,18 @@
+realm: ctier
+accessTokenLifespan: 30
+jwt:
+  claim: cid
+  claimValue: ctier
+scopes:
+- name: operation-getOrderSummary
+  operation: getOrderSummary
+  excluded: false
+- name: operation-cancelOrder
+  operation: cancelOrder
+  excluded: false
+excluded: []
+clients:
+- id: agent-a
+  scopes:
+  - operation-getOrderSummary
+  - operation-cancelOrder

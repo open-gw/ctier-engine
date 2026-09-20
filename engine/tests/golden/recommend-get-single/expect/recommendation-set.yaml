@@ -1,0 +1,29 @@
+ctierSchema: recommendation-set/0.1.0
+overlay: 1.1.0
+info:
+  title: ctier recommendations
+  version: 0.1.0
+actions:
+- target: $.paths['/items/{id}'].get
+  description: 'This is a read of one record. Nothing is written, so there is nothing to undo and running it again cannot change the world.
+
+    '
+  update:
+    x-ctier-status: recommended
+    x-ctier-recommended-at: '2026-09-06T14:00:00Z'
+    x-ctier-criteria:
+      reversibility: not-applicable
+      blast-radius: single-record
+      idempotency: inherently-safe
+    x-ctier-rationale: 'This is a read of one record. Nothing is written, so there is nothing to undo and running it again cannot change the world.
+
+      '
+  x-ctier-provenance:
+    inputText: 'GET /items/{id}
+
+      getItem'
+    inputDigest: sha256:2f2ec91e64a6e7f7c9b43f3dba86ad4cd01b344857376f33caa3dfe67e60acc8
+    source: get-single-resource
+    version: 0.1.0
+    confidence: high
+    timestamp: '2026-09-06T14:00:00Z'

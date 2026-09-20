@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/open-gw/ctier-engine/engine/ctier/migration-proposals-0.1.0-draft.json",
+  "title": "ctier migration proposals (draft)",
+  "description": "Proposals to change a declared tier, each carrying the ledger evidence that produced it. Never applied automatically. Draft until a human has used one to change a declaration.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["ctierSchema", "generatedAt", "config", "proposals"],
+  "properties": {
+    "ctierSchema": { "const": "migration-proposals/0.1.0-draft" },
+    "generatedAt": { "type": "string", "minLength": 1 },
+    "config": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["raiseMinSample", "lowerMinSample", "raiseWindowSeconds", "lowerWindowSeconds"],
+      "properties": {
+        "raiseMinSample": { "type": "integer", "minimum": 1 },
+        "lowerMinSample": { "type": "integer", "minimum": 1 },
+        "raiseWindowSeconds": { "type": "integer", "minimum": 1 },
+        "lowerWindowSeconds": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "proposals": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/proposal" }
+    }
+  },
+  "$defs": {
+    "proposal": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": [
+        "operationAnchor",
+        "current",
+        "proposed",
+        "direction",
+        "signal",
+        "sample",
+        "windowSeconds",
+        "contraryEvents",
+        "counts",
+        "correlationIds"
+      ],
+      "properties": {
+        "operationAnchor": { "type": "string", "minLength": 1 },
+        "current": { "$ref": "#/$defs/classification" },
+        "proposed": { "$ref": "#/$defs/classification" },
+        "direction": { "type": "string", "enum": ["raise", "lower"] },
+        "signal": {
+          "type": "string",
+          "enum": [
+            "tier3-always-approved",
+            "tier2-bounds-escalated",
+            "tier3-repeatedly-rejected",
+            "tier4-never-attempted"
+          ]
+        },
+        "sample": { "type": "integer", "minimum": 0 },
+        "windowSeconds": { "type": "integer", "minimum": 1 },
+        "contraryEvents": { "type": "integer", "minimum": 0 },
+        "counts": { "type": "object", "additionalProperties": true },
+        "correlationIds": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "tier": { "type": "integer", "minimum": 1, "maximum": 4 },
+        "excluded": { "type": "boolean" }
+      }
+    }
+  }
+}

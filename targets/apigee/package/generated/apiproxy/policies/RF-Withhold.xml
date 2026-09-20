@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<RaiseFault name="RF-Withhold">
+  <DisplayName>RF-Withhold</DisplayName>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <FaultResponse>
+    <Set>
+      <StatusCode>202</StatusCode>
+      <ReasonPhrase>Accepted</ReasonPhrase>
+      <Headers>
+        <Header name="Content-Type">application/json</Header>
+        <Header name="Cache-Control">no-store</Header>
+        <Header name="X-Agent-Action">{custodyPending.header.X-Agent-Action}</Header>
+        <Header name="x-ctier-correlation-id">{custodyPending.header.x-ctier-correlation-id}</Header>
+        <Header name="X-Ctier-Tier">{custodyPending.header.X-Ctier-Tier}</Header>
+      </Headers>
+      <Payload contentType="application/json">{custodyPending.content}</Payload>
+    </Set>
+  </FaultResponse>
+</RaiseFault>

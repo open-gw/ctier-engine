@@ -1,0 +1,17 @@
+openapi: 3.1.0
+info:
+  title: criteria-missing-field
+  version: 1.0.0
+paths:
+  /accounts/{accountId}/balance:
+    get:
+      operationId: getBalance
+      x-ctier-status: declared
+      x-ctier-criteria:
+        reversibility: not-applicable
+        blast-radius: single-record
+        data-sensitivity: internal
+        idempotency: inherently-safe
+      responses:
+        "200":
+          description: ok

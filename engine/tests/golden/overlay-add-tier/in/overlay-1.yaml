@@ -1,0 +1,15 @@
+overlay: "1.1.0"
+info:
+  title: declare createItem
+  version: 1.0.0
+actions:
+  - target: "$.paths['/items'].post"
+    update:
+      x-ctier-tier: 3
+      x-ctier-status: declared
+      x-ctier-criteria:
+        reversibility: undo-restores-record-only
+        blast-radius: single-record
+        data-sensitivity: internal
+        compliance-trigger: none
+        idempotency: key-required

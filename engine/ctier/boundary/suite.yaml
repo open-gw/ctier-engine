@@ -1,0 +1,260 @@
+ctierSchema: runtime-suite/0.3.0-draft
+cases:
+  - id: namespace-unknown-audit
+    requires: [observer]
+    send:
+      method: GET
+      path: /accounts/12345/balance
+      headers:
+        x-ctier-unknown-audit: forged-by-the-agent
+    expect:
+      status: 200
+      absent: [x-ctier-unknown-audit]
+
+  - id: namespace-criteria
+    requires: [observer]
+    send:
+      method: GET
+      path: /accounts/12345/balance
+      headers:
+        x-ctier-criteria: forged-criteria
+    expect:
+      status: 200
+      absent: [x-ctier-criteria]
+
+  - id: namespace-unlisted
+    requires: [observer]
+    send:
+      method: GET
+      path: /accounts/12345/balance
+      headers:
+        x-ctier-foo: closed-list-would-miss-this
+    expect:
+      status: 200
+      absent: [x-ctier-foo]
+
+  - id: alias-x-correlation-id
+    requires: [observer]
+    send:
+      method: GET
+      path: /accounts/12345/balance
+      headers:
+        X-Correlation-Id: agent-correlation
+    expect:
+      status: 200
+      absent: [x-correlation-id]
+
+  - id: alias-x-idempotency-key
+    requires: [observer]
+    send:
+      method: GET
+      path: /accounts/12345/balance
+      headers:
+        X-Idempotency-Key: agent-x-idempotency
+    expect:
+      status: 200
+      absent: [x-idempotency-key]
+
+  - id: join-key-present
+    requires: [observer]
+    send:
+      method: GET
+      path: /accounts/12345/balance
+    expect:
+      status: 200
+      present: [x-ctier-correlation-id]
+
+  - id: join-key-equals-decision
+    requires: [observer, recordSource]
+    send:
+      method: GET
+      path: /accounts/12345/balance
+    expect:
+      status: 200
+      equals:
+        x-ctier-correlation-id: decision.correlationId
+
+  - id: forged-tier-not-surviving
+    requires: [observer]
+    send:
+      method: GET
+      path: /accounts/12345/balance
+      headers:
+        x-ctier-tier: "9"
+    expect:
+      status: 200
+      notEquals:
+        x-ctier-tier: "9"
+
+  - id: derived-idempotency-present
+    requires: [observer]
+    send:
+      method: GET
+      path: /accounts/12345/balance
+      headers:
+        Idempotency-Key: agent-idempotency
+    expect:
+      status: 200
+      present: [idempotency-key]
+      notEquals:
+        idempotency-key: agent-idempotency
+
+  - id: derived-idempotency-equals-decision
+    requires: [observer, recordSource]
+    send:
+      method: GET
+      path: /accounts/12345/balance
+      headers:
+        Idempotency-Key: agent-idempotency
+    expect:
+      status: 200
+      equals:
+        idempotency-key: decision.idempotencyKey
+
+  - id: strip-precedence
+    requires: [observer, probe]
+    send:
+      method: GET
+      path: /accounts/12345/balance
+      headers:
+        x-ctier-unknown-audit: forged-by-the-agent
+        X-Correlation-Id: agent-correlation
+        Idempotency-Key: agent-idempotency
+    expect:
+      status: 200
+      absent: [x-boundary-probe]
+
+  - id: custody-unavailable-records-attempt
+    requires: [recordSource, custodyControl]
+    when:
+      deployment: level-3
+      custody: unavailable
+    send:
+      method: PUT
+      path: /customers/12345/preferences/communication
+      headers:
+        X-Task-Id: runtime-custody-down
+      repeat: 2
+    expect:
+      status: 503
+      recorded:
+        - type: attempt
+          appliedTier: null
+          reason: custody-unavailable
+      unrecorded:
+        - type: outcome
+
+  - id: level-1-observe-records-decision
+    requires: [recordSource]
+    when:
+      deployment: level-1
+    send:
+      method: POST
+      path: /payments
+      headers:
+        X-Task-Id: runtime-level-1
+      body: "{}"
+    expect:
+      status: 200
+      recorded:
+        - type: decision
+      unrecorded:
+        - type: attempt
+
+  - id: level-2-execute-records-decision
+    requires: [recordSource]
+    when:
+      deployment: level-2
+    send:
+      method: GET
+      path: /accounts/12345/balance
+      headers:
+        X-Task-Id: runtime-level-2
+    expect:
+      status: 200
+      recorded:
+        - type: decision
+      unrecorded:
+        - type: attempt
+
+  - id: withheld-then-approved
+    requires: [recordSource, execute]
+    when:
+      deployment: level-3
+    send:
+      method: PUT
+      path: /customers/12345/preferences/communication
+      headers:
+        X-Task-Id: runtime-t3-approve
+    expect:
+      status: 202
+      recorded:
+        - type: decision
+      unrecorded:
+        - type: outcome
+    then:
+      approve: true
+      expect:
+        recorded:
+          - type: outcome
+
+  - id: unknown-path-refused-undetermined
+    requires: [recordSource]
+    when:
+      deployment: level-2
+    send:
+      method: GET
+      path: /estate/unknown
+      headers:
+        X-Task-Id: runtime-unknown-41
+        x-ctier-unknown-audit: forged-38
+    expect:
+      status: 423
+      recorded:
+        - type: attempt
+          appliedTier: null
+          reason: unassigned
+          absent:
+            - declaredTier
+      unrecorded:
+        - type: decision
+
+  - id: induced-gap-is-detected
+    requires: [recordSource]
+    when:
+      deployment: level-2
+    send:
+      method: GET
+      path: /accounts/12345/balance
+      headers:
+        X-Task-Id: runtime-gap-50
+      repeat: 8
+    expect:
+      status: 200
+      recorded:
+        - type: decision
+      induceGap: true
+
+  - id: tier-4-instruction-agrees
+    when:
+      deployment: level-2
+    send:
+      method: POST
+      path: /payments
+      headers:
+        X-Task-Id: runtime-agree-t4
+      body: "{}"
+    expect:
+      status: 423
+
+  - id: provisioning-instruction-agrees
+    when:
+      deployment: level-2
+    send:
+      method: PUT
+      path: /customers/12345/preferences/communication
+      headers:
+        X-Task-Id: runtime-agree-prov
+    expect:
+      status: 403
+

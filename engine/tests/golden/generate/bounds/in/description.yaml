@@ -1,0 +1,22 @@
+openapi: 3.1.0
+info:
+  title: bounds
+  version: "1"
+servers:
+  - url: https://example.invalid/v1
+paths:
+  /items:
+    get:
+      operationId: listItems
+      x-ctier-tier: 1
+      x-ctier-status: declared
+      x-ctier-bounds:
+        parameter: limit
+        max: 50
+      parameters:
+        - name: limit
+          in: query
+          schema: { type: integer }
+      responses:
+        "200":
+          description: ok

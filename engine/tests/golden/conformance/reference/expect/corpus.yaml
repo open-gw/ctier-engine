@@ -1,0 +1,206 @@
+ctierSchema: conformance-corpus/0.3.0
+profile: standard
+deployment: level-2
+composition: sha256:fc7eedebcba8fa1c5a7d4ef8059620ade412832772a2c69475e2e89c08561676
+cases:
+- id: generated-getBalance
+  request:
+    method: GET
+    path: /accounts/accountId/balance
+    query: {}
+    headers: {}
+    body: null
+  agent:
+    id: agent-a
+    taskId: task-getBalance
+  expect:
+    appliedTier: 1
+    disposition: execute
+- id: generated-listTransactions
+  request:
+    method: GET
+    path: /accounts/accountId/transactions
+    query: {}
+    headers: {}
+    body: null
+  agent:
+    id: agent-a
+    taskId: task-listTransactions
+  expect:
+    appliedTier: 2
+    disposition: execute
+- id: generated-updateDisplayPreferences
+  request:
+    method: PUT
+    path: /customers/customerId/preferences/display
+    query: {}
+    headers: {}
+    body: null
+  agent:
+    id: agent-a
+    taskId: task-updateDisplayPreferences
+  expect:
+    appliedTier: 2
+    disposition: execute
+- id: generated-updateCommunicationPreferences
+  request:
+    method: PUT
+    path: /customers/customerId/preferences/communication
+    query: {}
+    headers: {}
+    body: null
+  agent:
+    id: agent-a
+    taskId: task-updateCommunicationPreferences
+  expect:
+    appliedTier: 3
+    dispositionByLevel:
+      level-2: refuse-provisioning
+      level-3: withhold
+- id: generated-deleteSavedSearch
+  request:
+    method: DELETE
+    path: /saved-searches/searchId
+    query: {}
+    headers: {}
+    body: null
+  agent:
+    id: agent-a
+    taskId: task-deleteSavedSearch
+  expect:
+    appliedTier: 2
+    disposition: execute
+- id: generated-restoreSavedSearch
+  request:
+    method: POST
+    path: /saved-searches/searchId/restore
+    query: {}
+    headers: {}
+    body: null
+  agent:
+    id: agent-a
+    taskId: task-restoreSavedSearch
+  expect:
+    appliedTier: 2
+    disposition: execute
+- id: generated-updateCustomerProfile
+  request:
+    method: PUT
+    path: /customers/customerId/profile
+    query: {}
+    headers: {}
+    body: null
+  agent:
+    id: agent-a
+    taskId: task-updateCustomerProfile
+  expect:
+    appliedTier: 3
+    dispositionByLevel:
+      level-2: refuse-provisioning
+      level-3: withhold
+- id: generated-modifyCreditLimit
+  request:
+    method: PATCH
+    path: /credit/accountId/limit
+    query: {}
+    headers: {}
+    body: null
+  agent:
+    id: agent-a
+    taskId: task-modifyCreditLimit
+  expect:
+    appliedTier: 3
+    dispositionByLevel:
+      level-2: refuse-provisioning
+      level-3: withhold
+- id: generated-raiseDispute
+  request:
+    method: POST
+    path: /disputes
+    query: {}
+    headers: {}
+    body: null
+  agent:
+    id: agent-a
+    taskId: task-raiseDispute
+  expect:
+    appliedTier: 4
+    disposition: refuse-and-suspend
+- id: generated-initiatePayment
+  request:
+    method: POST
+    path: /payments
+    query: {}
+    headers: {}
+    body: null
+  agent:
+    id: agent-a
+    taskId: task-initiatePayment
+  expect:
+    appliedTier: 4
+    disposition: refuse-and-suspend
+- id: generated-getPaymentAuthorization
+  request:
+    method: GET
+    path: /payments/paymentId/authorizations/authorizationId
+    query: {}
+    headers: {}
+    body: null
+  agent:
+    id: agent-a
+    taskId: task-getPaymentAuthorization
+  expect:
+    appliedTier: 4
+    disposition: refuse-and-suspend
+- id: generated-recordKycDecision
+  request:
+    method: POST
+    path: /customers/customerId/kyc-decision
+    query: {}
+    headers: {}
+    body: null
+  agent:
+    id: agent-a
+    taskId: task-recordKycDecision
+  expect:
+    appliedTier: 4
+    disposition: refuse-and-suspend
+- id: generated-updateFeatureFlags
+  request:
+    method: PUT
+    path: /config/feature-flags
+    query: {}
+    headers: {}
+    body: null
+  agent:
+    id: agent-a
+    taskId: task-updateFeatureFlags
+  expect:
+    appliedTier: 4
+    disposition: refuse-and-suspend
+- id: generated-closeAccount
+  request:
+    method: POST
+    path: /accounts/accountId/closure
+    query: {}
+    headers: {}
+    body: null
+  agent:
+    id: agent-a
+    taskId: task-closeAccount
+  expect:
+    appliedTier: 4
+    disposition: refuse-provisioning
+- id: generated-exportStatements
+  request:
+    method: POST
+    path: /accounts/accountId/statements/export
+    query: {}
+    headers: {}
+    body: null
+  agent:
+    id: agent-a
+    taskId: task-exportStatements
+  expect:
+    appliedTier: 4
+    disposition: refuse-and-suspend

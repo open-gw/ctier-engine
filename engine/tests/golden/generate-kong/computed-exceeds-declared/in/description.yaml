@@ -1,0 +1,26 @@
+openapi: 3.1.0
+info:
+  title: computed-exceeds-declared
+  version: "1"
+servers:
+  - url: https://example.invalid/v1
+paths:
+  /records/{id}:
+    get:
+      operationId: getRecord
+      x-ctier-tier: 1
+      x-ctier-status: declared
+      x-ctier-criteria:
+        reversibility: undo-restores-record-only
+        blast-radius: single-record
+        data-sensitivity: internal
+        compliance-trigger: none
+        idempotency: inherently-safe
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: ok

@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/open-gw/ctier/spec/schemas/ctier-extensions-0.1.0.json",
+  "title": "ctier OpenAPI extensions",
+  "description": "Reusable subschemas for the flat x-ctier-* keys. Shape only. Semantic constraints are in spec/validation.md. Enumerations match ctier-engine engine/ctier/models.py.",
+  "$defs": {
+    "ctierSchemaId": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+/[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "digest": {
+      "type": "string",
+      "description": "sha256:<64 lowercase hex>. A composition digest is over canonical JSON of the composed document. A deployment digest is over every input the generator consumed: composed description, tier declarations, and declared agent identities. Regenerating from identical inputs MUST produce an identical digest; a change to any input MUST change it. Per-input digests are over raw bytes.",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "tier": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4
+    },
+    "status": {
+      "type": "string",
+      "enum": ["declared", "recommended"]
+    },
+    "reversibility": {
+      "type": "string",
+      "enum": [
+        "not-applicable",
+        "undo-restores-effect",
+        "undo-restores-record-only",
+        "none"
+      ]
+    },
+    "blastRadius": {
+      "type": "string",
+      "enum": [
+        "single-record",
+        "single-customer",
+        "population",
+        "system-wide"
+      ]
+    },
+    "dataSensitivity": {
+      "type": "string",
+      "enum": ["public", "internal", "personal", "regulated"]
+    },
+    "complianceTrigger": {
+      "type": "string",
+      "enum": ["none", "adjacent", "direct"]
+    },
+    "idempotency": {
+      "type": "string",
+      "enum": ["inherently-safe", "safe", "key-required", "unsafe"]
+    },
+    "criteriaFields": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "reversibility": { "$ref": "#/$defs/reversibility" },
+        "blast-radius": { "$ref": "#/$defs/blastRadius" },
+        "data-sensitivity": { "$ref": "#/$defs/dataSensitivity" },
+        "compliance-trigger": { "$ref": "#/$defs/complianceTrigger" },
+        "idempotency": { "$ref": "#/$defs/idempotency" }
+      }
+    },
+    "criteria": {
+      "description": "A declaration. All five fields are required. There are no defaults. A partial object is an unfinished judgement, not a fail-closed classification.",
+      "allOf": [
+        { "$ref": "#/$defs/criteriaFields" },
+        {
+          "required": [
+            "reversibility",
+            "blast-radius",
+            "data-sensitivity",
+            "compliance-trigger",
+            "idempotency"
+          ]
+        }
+      ]
+    },
+    "criteriaProposal": {
+      "description": "A proposal. Same properties and enums as criteria; any non-empty subset. The empty fields are the ones a human has to supply.",
+      "allOf": [
+        { "$ref": "#/$defs/criteriaFields" },
+        { "minProperties": 1 }
+      ]
+    },
+    "bounds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["parameter", "max"],
+      "properties": {
+        "parameter": { "type": "string", "minLength": 1 },
+        "max": { "type": "integer" }
+      }
+    },
+    "handoff": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authority"],
+      "properties": {
+        "authority": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Authority class, not a person. The consuming application resolves the person."
+        }
+      }
+    },
+    "defaults": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "undeclaredTier": { "$ref": "#/$defs/tier", "default": 4 },
+        "escalateAbove": { "type": "integer", "minimum": 0, "default": 9 },
+        "decaySeconds": { "type": "integer", "minimum": 0, "default": 1800 },
+        "recommendationTtlDays": { "type": "integer", "minimum": 0, "default": 90 }
+      }
+    },
+    "weight": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Zero is meaningful (does not accumulate) and is distinct from absent."
+    },
+    "exclude": { "type": "boolean" },
+    "rationale": { "type": "string" },
+    "recommendedAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "RFC 3339 date-time. When this tier was proposed. Required when x-ctier-status is recommended; forbidden when it is not. The minimum a qualified spec carries about a recommendation — full provenance stays on the recommendation-set."
+    },
+    "operation": {
+      "type": "object",
+      "description": "An Operation Object or fragment. additionalProperties is true so OpenAPI fields pass. if/then/else on x-ctier-status requires x-ctier-recommended-at when recommended and forbids it otherwise.",
+      "additionalProperties": true,
+      "properties": {
+        "x-ctier-tier": { "$ref": "#/$defs/tier" },
+        "x-ctier-criteria": { "$ref": "#/$defs/criteria" },
+        "x-ctier-exclude": { "$ref": "#/$defs/exclude" },
+        "x-ctier-bounds": { "$ref": "#/$defs/bounds" },
+        "x-ctier-handoff": { "$ref": "#/$defs/handoff" },
+        "x-ctier-status": { "$ref": "#/$defs/status" },
+        "x-ctier-recommended-at": { "$ref": "#/$defs/recommendedAt" },
+        "x-ctier-rationale": { "$ref": "#/$defs/rationale" },
+        "x-ctier-weight": { "$ref": "#/$defs/weight" },
+        "x-ctier-escalate-to": { "$ref": "#/$defs/tier" },
+        "x-ctier-reverses": { "$ref": "#/$defs/reverses" }
+      },
+      "if": {
+        "properties": {
+          "x-ctier-status": { "const": "recommended" }
+        },
+        "required": ["x-ctier-status"]
+      },
+      "then": {
+        "required": ["x-ctier-recommended-at"]
+      },
+      "else": {
+        "not": { "required": ["x-ctier-recommended-at"] }
+      }
+    },
+    "reverses": {
+      "type": "string",
+      "minLength": 1,
+      "description": "operationId this operation reverses. May be this operation's own operationId (self-reversal). Self-reversal is valid only when idempotency is inherently-safe or safe — that guard is validator-checked, not schema-checked."
+    }
+  }
+}

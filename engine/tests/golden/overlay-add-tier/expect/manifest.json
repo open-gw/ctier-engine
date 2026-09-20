@@ -1,0 +1,25 @@
+{
+  "composedAt": "<composedAt>",
+  "compositionDigest": "sha256:73da6b0ea3b490704c9e0e7ccfaa43c6a6e2ba0fe56711fc6aefd3043657fdf2",
+  "coverage": {
+    "absent": 0,
+    "declared": 1,
+    "recommended": 0
+  },
+  "ctierSchema": "composition-manifest/0.1.0",
+  "inputs": [
+    {
+      "digest": "sha256:11ada2ed21db43fa27a0c334aa3f829da95789d2613bd2848e0a2f045ec5e05e",
+      "path": "description.yaml",
+      "role": "description"
+    },
+    {
+      "digest": "sha256:a837fa10803f8543888367750000e039151bd796aeedc5e3c07707d7b9f03066",
+      "order": 0,
+      "path": "overlay-1.yaml",
+      "role": "overlay"
+    }
+  ],
+  "operations": 1,
+  "specVersion": "1.4.0"
+}

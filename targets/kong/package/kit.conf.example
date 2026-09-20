@@ -1,0 +1,51 @@
+# Copy to kit.conf and fill every value you have.
+# One file. Do not assemble command-line flags.
+#
+# Required for the run: gateway_url and gateway_token.
+# kong_deployment is for your reply notes; the runner
+# does not call docker or deck for you.
+#
+# Optional URLs: leave empty ("") if you do not have
+# them. Checks that need a missing URL are skipped.
+# A skip is not a pass.
+
+# Base URL of the Kong proxy, no path.
+# Local compose example: http://127.0.0.1:18000
+gateway_url: http://127.0.0.1:18000
+
+# Bearer token Kong will accept for the
+# operations in the generated deck.
+# Example: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9...
+gateway_token: "paste-bearer-token-here"
+
+# How you loaded the deck (for your reply).
+# Example: local-compose
+kong_deployment: local-compose
+
+# Optional. HTTP GET that returns { "records": [ … ] }
+# — decisions and attempts written so far.
+# Local compose with custody: http://127.0.0.1:18200/v1/ledger
+# Leave empty unless the deck posts there or you
+# have built another collector.
+kit_records: ""
+
+# Optional. HTTP GET of the last requests the
+# backend received, as a JSON array (or
+# { "requests": [ … ] }).
+# Echo's /_harness/requests is on the upstream
+# network only unless you publish or proxy it.
+kit_observer: ""
+
+# Optional. Base URL of the approval service that
+# lists waiting items (GET /v1/pending) and accepts
+# a decision (POST /v1/decisions/{id}).
+# Local compose: http://127.0.0.1:18200
+kit_custody: ""
+
+# "3" if an approval service is in front of the
+# gateway for class-3 operations; "2" if it is not.
+# Default for a first run without wiring custody: "2".
+kit_level: "2"
+
+# Where to write the result file.
+kit_out: kit-result.yaml

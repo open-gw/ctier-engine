@@ -1,0 +1,19 @@
+ctier-engine
+Copyright 2026 Rinu Dhanaraj
+
+This product includes software developed as part of the ctier-engine project
+(https://github.com/open-gw/ctier-engine), licensed under the Apache License,
+Version 2.0.
+
+The Apache License section 3 patent grant applies to this Work and to
+contributions combined with this Work. It does not license US provisional
+patent application 64/137,066, or any patent, in the abstract. An independent
+implementation that does not use this Work is not licensed by that grant.
+
+The published specification at https://github.com/open-gw/ctier is licensed
+CC BY 4.0 and grants no patent licence. See that repository's LICENSE.
+
+Runtime dependencies retain their own licences. See LICENSING.md.
+
+  pydantic (MIT)     https://github.com/pydantic/pydantic
+  PyYAML (MIT)       https://github.com/yaml/pyyaml

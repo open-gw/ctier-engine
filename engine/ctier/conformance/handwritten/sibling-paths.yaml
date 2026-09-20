@@ -1,0 +1,29 @@
+# Literal path vs templated sibling. Bound to tests/golden/generate/sibling-paths.
+cases:
+  - id: sibling-literal-getOrderSummary
+    request:
+      method: GET
+      path: /orders/summary
+      query: {}
+      headers: {}
+      body: null
+    agent:
+      id: agent-a
+      taskId: task-1
+    expect:
+      appliedTier: 1
+      disposition: execute
+
+  - id: sibling-template-cancelOrder
+    request:
+      method: DELETE
+      path: /orders/summary
+      query: {}
+      headers: {}
+      body: null
+    agent:
+      id: agent-a
+      taskId: task-1
+    expect:
+      appliedTier: 4
+      disposition: refuse-and-suspend

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+  <PreFlow>
+    <Request>
+      <Step>
+        <Name>SA-RateLimit</Name>
+      </Step>
+      <Step>
+        <Name>AM-Cors</Name>
+      </Step>
+      <Step>
+        <Name>JS-ReadEstateHeaders</Name>
+      </Step>
+      <Step>
+        <Name>ML-RequestLog</Name>
+      </Step>
+    </Request>
+  </PreFlow>
+  <HTTPProxyConnection>
+    <BasePath>/</BasePath>
+    <VirtualHost>default</VirtualHost>
+  </HTTPProxyConnection>
+  <RouteRule name="default">
+    <TargetEndpoint>default</TargetEndpoint>
+  </RouteRule>
+</ProxyEndpoint>

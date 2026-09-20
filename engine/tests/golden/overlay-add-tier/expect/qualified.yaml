@@ -1,0 +1,19 @@
+openapi: 3.1.0
+info:
+  title: overlay-add-tier
+  version: 1.0.0
+paths:
+  /items:
+    post:
+      operationId: createItem
+      responses:
+        '201':
+          description: created
+      x-ctier-tier: 3
+      x-ctier-status: declared
+      x-ctier-criteria:
+        reversibility: undo-restores-record-only
+        blast-radius: single-record
+        data-sensitivity: internal
+        compliance-trigger: none
+        idempotency: key-required

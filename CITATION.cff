@@ -1,0 +1,48 @@
+cff-version: 1.2.0
+message: >-
+  If you use this software, please cite the specification below. The
+  preferred citation is the archived specification, not this repository.
+title: "ctier-engine: Reference Implementation of Consequence-Tiered API Governance"
+abstract: >-
+  Reference implementation of consequence-tiered API governance for
+  autonomous agents. A build-time library classifies API operations by
+  the consequence of executing them incorrectly and compiles that
+  classification into gateway-native configuration. Companion to the
+  ctier specification (DOI 10.5281/zenodo.22020288).
+type: software
+authors:
+  - family-names: Dhanaraj
+    given-names: Rinu
+    email: hello@open-gw.com
+    orcid: https://orcid.org/0009-0007-9082-8846
+    affiliation: Independent Researcher, Alpharetta, GA, USA
+version: 0.3.0
+date-released: "2026-09-17"
+license: Apache-2.0
+repository-code: https://github.com/open-gw/ctier-engine
+url: https://doi.org/10.5281/zenodo.22020288
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.22020288
+    description: >-
+      Archived ctier specification. Preferred citation for this work.
+keywords:
+  - api-governance
+  - ai-agents
+  - agentic-ai
+  - api-gateway
+  - openapi
+  - consequence-tier
+  - authorization
+preferred-citation:
+  type: software
+  title: "ctier: Consequence-Tiered API Governance for Autonomous AI Agents"
+  authors:
+    - family-names: Dhanaraj
+      given-names: Rinu
+      email: hello@open-gw.com
+      orcid: https://orcid.org/0009-0007-9082-8846
+      affiliation: Independent Researcher, Alpharetta, GA, USA
+  doi: 10.5281/zenodo.22020288
+  year: 2026
+  url: https://doi.org/10.5281/zenodo.22020288

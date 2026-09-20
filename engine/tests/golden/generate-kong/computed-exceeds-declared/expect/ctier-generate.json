@@ -1,0 +1,16 @@
+{
+  "deploymentDigest": "sha256:9cefa92eeb19cef0165daf895283521aaa5b1f25ed5acc370357b84000e3bfae",
+  "generator": {
+    "mode": "bundle",
+    "target": "kong",
+    "version": "0.3.0"
+  },
+  "governed-set": [
+    {
+      "assignment": 3,
+      "method": "GET",
+      "operation": "getRecord",
+      "path": "/records/{id}"
+    }
+  ]
+}

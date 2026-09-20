@@ -1,0 +1,72 @@
+# Suspension is stateful across requests. Kong-only: the reference adapter
+# classifies and does not hold a credential. Live runner supplies a token
+# and refreshes it where refreshToken is set.
+ctierSchema: conformance-corpus/0.3.0
+profile: standard
+deployment: level-3
+cases:
+  - id: tier-4-suspends-the-agent
+    scope: task-suspend-1
+    agent:
+      id: agent-a
+      taskId: task-suspend-1
+    sequence:
+      - request:
+          method: POST
+          path: /payments
+          query: {}
+          headers: {}
+          body: "{}"
+        expect: {appliedTier: 4, disposition: refuse-and-suspend}
+      - refreshToken: true
+        request:
+          method: POST
+          path: /payments
+          query: {}
+          headers: {}
+          body: "{}"
+        expect: {disposition: refuse-unauthorized}
+  - id: rejected-tier-3-suspends-the-agent
+    scope: task-reject-1
+    agent:
+      id: agent-a
+      taskId: task-reject-1
+    sequence:
+      - request:
+          method: PUT
+          path: /customers/12345/preferences/communication
+          query: {}
+          headers: {}
+          body: null
+        expect: {appliedTier: 3, disposition: withhold}
+      # Custody reject is not a gateway request. The live test performs it
+      # between these steps, then refreshes the token.
+      - refreshToken: true
+        request:
+          method: PUT
+          path: /customers/12345/preferences/communication
+          query: {}
+          headers: {}
+          body: null
+        expect: {disposition: refuse-unauthorized}
+  - id: expired-tier-3-does-not-suspend
+    scope: task-expire-1
+    agent:
+      id: agent-a
+      taskId: task-expire-1
+    sequence:
+      - request:
+          method: PUT
+          path: /customers/12345/preferences/communication
+          query: {}
+          headers: {}
+          body: null
+        expect: {appliedTier: 3, disposition: withhold}
+      - refreshToken: true
+        request:
+          method: GET
+          path: /accounts/12345/balance
+          query: {}
+          headers: {}
+          body: null
+        expect: {appliedTier: 1, disposition: execute}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage name="AM-DefaultTier">
+  <DisplayName>AM-DefaultTier</DisplayName>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <AssignVariable>
+    <Name>ctier.tier</Name>
+    <Value>4</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>ctier.declared</Name>
+    <Value>false</Value>
+  </AssignVariable>
+</AssignMessage>

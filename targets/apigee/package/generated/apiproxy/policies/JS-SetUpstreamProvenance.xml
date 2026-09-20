@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Javascript name="JS-SetUpstreamProvenance" timeLimit="200">
+  <DisplayName>JS-SetUpstreamProvenance</DisplayName>
+  <ResourceURL>jsc://set-upstream-provenance.js</ResourceURL>
+</Javascript>

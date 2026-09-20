@@ -1,0 +1,21 @@
+# A client entitled only to getBalance cannot initiatePayment. Kong-only:
+# the observation is 401, which is not a classified disposition. An
+# exchange refused at Keycloak is also not a classified disposition and
+# is not a step here. Not merged into the differential corpus.
+ctierSchema: conformance-corpus/0.3.0
+profile: standard
+deployment: level-3
+cases:
+  - id: unentitled-client-cannot-initiate-payment
+    scope: task-entitlement-1
+    agent:
+      id: agent-sub-balance
+      taskId: task-entitlement-1
+    sequence:
+      - request:
+          method: POST
+          path: /payments
+          query: {}
+          headers: {}
+          body: "{}"
+        expect: {disposition: refuse-unauthorized}

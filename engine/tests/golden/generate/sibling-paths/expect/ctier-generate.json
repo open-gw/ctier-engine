@@ -1,0 +1,8 @@
+{
+  "deploymentDigest": "sha256:62de3c9a650bfbd3c9afe83985b3976310d5400ea9fed3f570920763d37be0ba",
+  "generator": {
+    "mode": "bundle",
+    "target": "apigee",
+    "version": "0.3.0"
+  }
+}

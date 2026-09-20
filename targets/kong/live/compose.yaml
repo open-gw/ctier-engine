@@ -1,0 +1,124 @@
+# Live Kong + echo + custody. The proxy image is the plugin as it would be deployed.
+# Bind CTIER_KONG_YAML to the declarative config Kong reads at start.
+#
+# Echo is on `upstream` only, unpublished. Kong and custody attach there
+# as well; Keycloak, the host, and `outsider` do not. Gateway ports stay
+# published. 14a.1: the agent cannot reach the backend without the
+# enforcement point.
+volumes:
+  ctier-ledger:
+
+networks:
+  edge:
+  upstream:
+    internal: true
+
+services:
+  echo:
+    build:
+      context: .
+      dockerfile: echo.Dockerfile
+    networks:
+      - upstream
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/')",
+        ]
+      interval: 1s
+      timeout: 2s
+      retries: 30
+
+  outsider:
+    image: busybox:1.36.1
+    command: ["sleep", "infinity"]
+    networks:
+      - edge
+
+  custody:
+    build:
+      context: ../../..
+      dockerfile: targets/kong/live/custody.Dockerfile
+    ports:
+      - "18200:8080"
+    networks:
+      - edge
+      - upstream
+    environment:
+      CTIER_SQLITE: /data/custody.sqlite
+      CTIER_BACKEND_URL: http://echo:8080
+      CTIER_SERVICE_TOKEN: local-dev-custody-token
+      CTIER_LEDGER_FALLBACK: /var/ctier/ledger/attempts.jsonl
+      CTIER_DECAY_SECONDS: "5"
+      CTIER_ESCALATE_ABOVE: "9"
+      CTIER_KEYCLOAK_URL: http://keycloak:8080
+      CTIER_KEYCLOAK_REALM: ctier
+      CTIER_KEYCLOAK_ADMIN_USER: local-dev-admin
+      CTIER_KEYCLOAK_ADMIN_PASSWORD: local-dev-admin-password
+    volumes:
+      - ctier-ledger:/var/ctier/ledger
+    depends_on:
+      echo:
+        condition: service_healthy
+      keycloak:
+        condition: service_started
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/health')",
+        ]
+      interval: 1s
+      timeout: 2s
+      retries: 30
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.3.3
+    command: ["start-dev", "--import-realm"]
+    environment:
+      KC_BOOTSTRAP_ADMIN_USERNAME: local-dev-admin
+      KC_BOOTSTRAP_ADMIN_PASSWORD: local-dev-admin-password
+      KC_HTTP_ENABLED: "true"
+      KC_HOSTNAME_STRICT: "false"
+      KC_HEALTH_ENABLED: "true"
+    ports:
+      - "18400:8080"
+    networks:
+      - edge
+    volumes:
+      - ${CTIER_KEYCLOAK_REALM:-./realm.json}:/opt/keycloak/data/import/realm.json:ro
+
+  kong:
+    build:
+      context: ..
+      dockerfile: live/Dockerfile
+    environment:
+      KONG_DATABASE: "off"
+      KONG_DECLARATIVE_CONFIG: /kong/kong.yaml
+      KONG_PLUGINS: bundled,ctier,ctier-estate-probe
+      KONG_PROXY_LISTEN: 0.0.0.0:8000
+      KONG_ADMIN_LISTEN: "off"
+      KONG_STATUS_LISTEN: 0.0.0.0:8100
+      KONG_ADMIN_GUI_LISTEN: "off"
+      KONG_ANONYMOUS_REPORTS: "off"
+      KONG_NGINX_WORKER_PROCESSES: "1"
+      KONG_NGINX_HTTP_LUA_SHARED_DICT: ctier_floors 1m
+    ports:
+      - "18000:8000"
+      - "18100:8100"
+    networks:
+      - edge
+      - upstream
+    volumes:
+      - ${CTIER_KONG_YAML}:/kong/kong.yaml:ro
+      - ctier-ledger:/var/ctier/ledger
+    depends_on:
+      echo:
+        condition: service_healthy
+      custody:
+        condition: service_healthy

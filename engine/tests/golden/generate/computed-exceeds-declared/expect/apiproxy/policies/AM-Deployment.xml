@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage name="AM-Deployment">
+  <DisplayName>AM-Deployment</DisplayName>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <AssignVariable>
+    <Name>ctier.deployment</Name>
+    <Value>sha256:9cefa92eeb19cef0165daf895283521aaa5b1f25ed5acc370357b84000e3bfae</Value>
+  </AssignVariable>
+</AssignMessage>

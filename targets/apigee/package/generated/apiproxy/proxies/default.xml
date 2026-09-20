@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ProxyEndpoint name="default">
+  <PreFlow>
+    <Request>
+      <Step>
+        <Name>JS-StripCtierNamespace</Name>
+      </Step>
+      <Step>
+        <Name>SC-StripCtierHeaders</Name>
+      </Step>
+      <Step>
+        <Name>AM-DefaultTier</Name>
+      </Step>
+      <Step>
+        <Name>AM-Deployment</Name>
+      </Step>
+    </Request>
+  </PreFlow>
+  <Flows>
+    <Flow name="getBalance">
+      <Condition>(proxy.pathsuffix MatchesPath "/accounts/*/balance") and (request.verb = "GET")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Tier-getBalance</Name>
+        </Step>
+      </Request>
+    </Flow>
+    <Flow name="closeAccount">
+      <Condition>(proxy.pathsuffix MatchesPath "/accounts/*/closure") and (request.verb = "POST")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Exclude-closeAccount</Name>
+        </Step>
+      </Request>
+    </Flow>
+    <Flow name="listTransactions">
+      <Condition>(proxy.pathsuffix MatchesPath "/accounts/*/transactions") and (request.verb = "GET")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Tier-listTransactions</Name>
+        </Step>
+        <Step>
+          <Name>AM-Tier-listTransactions-bounds</Name>
+          <Condition>request.queryparam.limit &gt; 100</Condition>
+        </Step>
+      </Request>
+    </Flow>
+    <Flow name="updateFeatureFlags">
+      <Condition>(proxy.pathsuffix MatchesPath "/config/feature-flags") and (request.verb = "PUT")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Tier-updateFeatureFlags</Name>
+        </Step>
+      </Request>
+    </Flow>
+    <Flow name="modifyCreditLimit">
+      <Condition>(proxy.pathsuffix MatchesPath "/credit/*/limit") and (request.verb = "PATCH")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Tier-modifyCreditLimit</Name>
+        </Step>
+      </Request>
+    </Flow>
+    <Flow name="recordKycDecision">
+      <Condition>(proxy.pathsuffix MatchesPath "/customers/*/kyc-decision") and (request.verb = "POST")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Tier-recordKycDecision</Name>
+        </Step>
+      </Request>
+    </Flow>
+    <Flow name="updateCommunicationPreferences">
+      <Condition>(proxy.pathsuffix MatchesPath "/customers/*/preferences/communication") and (request.verb = "PUT")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Tier-updateCommunicationPreferences</Name>
+        </Step>
+      </Request>
+    </Flow>
+    <Flow name="updateDisplayPreferences">
+      <Condition>(proxy.pathsuffix MatchesPath "/customers/*/preferences/display") and (request.verb = "PUT")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Tier-updateDisplayPreferences</Name>
+        </Step>
+      </Request>
+    </Flow>
+    <Flow name="updateCustomerProfile">
+      <Condition>(proxy.pathsuffix MatchesPath "/customers/*/profile") and (request.verb = "PUT")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Tier-updateCustomerProfile</Name>
+        </Step>
+      </Request>
+    </Flow>
+    <Flow name="raiseDispute">
+      <Condition>(proxy.pathsuffix MatchesPath "/disputes") and (request.verb = "POST")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Tier-raiseDispute</Name>
+        </Step>
+      </Request>
+    </Flow>
+    <Flow name="getPaymentAuthorization">
+      <Condition>(proxy.pathsuffix MatchesPath "/payments/*/authorizations/*") and (request.verb = "GET")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Tier-getPaymentAuthorization</Name>
+        </Step>
+      </Request>
+    </Flow>
+    <Flow name="initiatePayment">
+      <Condition>(proxy.pathsuffix MatchesPath "/payments") and (request.verb = "POST")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Tier-initiatePayment</Name>
+        </Step>
+      </Request>
+    </Flow>
+    <Flow name="restoreSavedSearch">
+      <Condition>(proxy.pathsuffix MatchesPath "/saved-searches/*/restore") and (request.verb = "POST")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Tier-restoreSavedSearch</Name>
+        </Step>
+      </Request>
+    </Flow>
+    <Flow name="deleteSavedSearch">
+      <Condition>(proxy.pathsuffix MatchesPath "/saved-searches/*") and (request.verb = "DELETE")</Condition>
+      <Request>
+        <Step>
+          <Name>AM-Tier-deleteSavedSearch</Name>
+        </Step>
+      </Request>
+    </Flow>
+  </Flows>
+  <PostFlow>
+    <Request>
+      <Step>
+        <Name>JS-RecordRefuse</Name>
+        <Condition>(ctier.excluded = "true") or (ctier.tier = "3") or (ctier.tier = "4")</Condition>
+      </Step>
+      <Step>
+        <Name>SC-RecordDecision</Name>
+        <Condition>(ctier.excluded = "true") or (ctier.tier = "3") or (ctier.tier = "4")</Condition>
+      </Step>
+      <Step>
+        <Name>RF-Provisioning</Name>
+        <Condition>ctier.excluded = "true"</Condition>
+      </Step>
+      <Step>
+        <Name>SC-CustodyPending</Name>
+        <Condition>ctier.tier = "3"</Condition>
+      </Step>
+      <Step>
+        <Name>RF-CustodyUnavailable</Name>
+        <Condition>(ctier.tier = "3") and (custodyPending.status.code != 202)</Condition>
+      </Step>
+      <Step>
+        <Name>RF-Withhold</Name>
+        <Condition>ctier.tier = "3"</Condition>
+      </Step>
+      <Step>
+        <Name>RF-Tier4</Name>
+        <Condition>ctier.tier = "4"</Condition>
+      </Step>
+    </Request>
+  </PostFlow>
+  <HTTPProxyConnection>
+    <BasePath>/</BasePath>
+    <VirtualHost>default</VirtualHost>
+  </HTTPProxyConnection>
+  <RouteRule name="default">
+    <TargetEndpoint>default</TargetEndpoint>
+  </RouteRule>
+</ProxyEndpoint>

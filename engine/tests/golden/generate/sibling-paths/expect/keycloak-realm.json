@@ -1,0 +1,115 @@
+{
+  "id": "ctier",
+  "realm": "ctier",
+  "enabled": true,
+  "sslRequired": "none",
+  "accessTokenLifespan": 30,
+  "accessTokenLifespanForImplicitFlow": 30,
+  "ssoSessionIdleTimeout": 300,
+  "ssoSessionMaxLifespan": 300,
+  "clients": [
+    {
+      "clientId": "agent-a",
+      "name": "agent-a",
+      "enabled": true,
+      "secret": "local-dev-agent-secret",
+      "clientAuthenticatorType": "client-secret",
+      "publicClient": false,
+      "protocol": "openid-connect",
+      "standardFlowEnabled": false,
+      "implicitFlowEnabled": false,
+      "directAccessGrantsEnabled": false,
+      "serviceAccountsEnabled": true,
+      "fullScopeAllowed": false,
+      "defaultClientScopes": [
+        "ctier-identity"
+      ],
+      "optionalClientScopes": [
+        "operation-getOrderSummary",
+        "operation-cancelOrder"
+      ],
+      "attributes": {
+        "standard.token.exchange.enabled": "true"
+      }
+    }
+  ],
+  "clientScopes": [
+    {
+      "name": "ctier-identity",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "false",
+        "display.on.consent.screen": "false"
+      },
+      "protocolMappers": [
+        {
+          "name": "cid",
+          "protocol": "openid-connect",
+          "protocolMapper": "oidc-hardcoded-claim-mapper",
+          "consentRequired": false,
+          "config": {
+            "claim.name": "cid",
+            "claim.value": "ctier",
+            "jsonType.label": "String",
+            "id.token.claim": "false",
+            "access.token.claim": "true",
+            "userinfo.token.claim": "false"
+          }
+        }
+      ]
+    },
+    {
+      "name": "operation-getOrderSummary",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      },
+      "protocolMappers": []
+    },
+    {
+      "name": "operation-cancelOrder",
+      "protocol": "openid-connect",
+      "attributes": {
+        "include.in.token.scope": "true",
+        "display.on.consent.screen": "false"
+      },
+      "protocolMappers": []
+    }
+  ],
+  "defaultDefaultClientScopes": [
+    "ctier-identity"
+  ],
+  "defaultOptionalClientScopes": [],
+  "components": {
+    "org.keycloak.keys.KeyProvider": [
+      {
+        "name": "rsa",
+        "providerId": "rsa",
+        "config": {
+          "priority": [
+            "100"
+          ],
+          "enabled": [
+            "true"
+          ],
+          "active": [
+            "true"
+          ],
+          "algorithm": [
+            "RS256"
+          ],
+          "kid": [
+            "ctier-realm"
+          ],
+          "privateKey": [
+            "LOCAL-DEV-ONLY-NOT-A-REAL-PRIVATE-KEY-SEE-engine-ctier-authz-README"
+          ],
+          "certificate": [
+            "LOCAL-DEV-ONLY-NOT-A-REAL-CERTIFICATE-SEE-engine-ctier-authz-README"
+          ]
+        }
+      }
+    ]
+  }
+}

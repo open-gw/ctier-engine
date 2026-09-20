@@ -1,0 +1,14 @@
+# CODEOWNERS
+# Automatically requested for review on every PR.
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+*                                                @rinu-dhanaraj
+
+engine/ctier/                                    @rinu-dhanaraj
+engine/docs/PRD.md                               @rinu-dhanaraj
+engine/docs/adr/                                 @rinu-dhanaraj
+SECURITY.md                                      @rinu-dhanaraj
+LICENSE                                          @rinu-dhanaraj
+NOTICE                                           @rinu-dhanaraj
+LICENSING.md                                     @rinu-dhanaraj
+.github/                                         @rinu-dhanaraj

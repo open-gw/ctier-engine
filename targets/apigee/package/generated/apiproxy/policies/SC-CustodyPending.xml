@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ServiceCallout name="SC-CustodyPending">
+  <DisplayName>SC-CustodyPending</DisplayName>
+  <Request>
+    <Set>
+      <Verb>POST</Verb>
+      <Path>/v1/pending</Path>
+      <Headers>
+        <Header name="Content-Type">application/json</Header>
+      </Headers>
+      <Payload contentType="application/json">{
+  "method": "{request.verb}",
+  "path": "{proxy.pathsuffix}",
+  "operationAnchor": "{ctier.operation}",
+  "agentId": "{request.header.X-Agent-Id}",
+  "declaredTier": {ctier.tier},
+  "appliedTier": {ctier.tier},
+  "deploymentDigest": "{ctier.deployment}"
+}</Payload>
+    </Set>
+  </Request>
+  <Response>custodyPending</Response>
+  <HTTPTargetConnection>
+    <URL>https://custody.example.invalid</URL>
+    <Properties>
+      <Property name="io.timeout.millis">200</Property>
+    </Properties>
+  </HTTPTargetConnection>
+</ServiceCallout>

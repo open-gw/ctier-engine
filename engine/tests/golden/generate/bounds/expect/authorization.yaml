@@ -1,0 +1,14 @@
+realm: ctier
+accessTokenLifespan: 30
+jwt:
+  claim: cid
+  claimValue: ctier
+scopes:
+- name: operation-listItems
+  operation: listItems
+  excluded: false
+excluded: []
+clients:
+- id: agent-a
+  scopes:
+  - operation-listItems

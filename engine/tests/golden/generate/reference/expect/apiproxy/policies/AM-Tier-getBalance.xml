@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage name="AM-Tier-getBalance">
+  <DisplayName>AM-Tier-getBalance</DisplayName>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <AssignVariable>
+    <Name>ctier.tier</Name>
+    <Value>1</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>ctier.declared</Name>
+    <Value>true</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>ctier.operation</Name>
+    <Value>getBalance</Value>
+  </AssignVariable>
+</AssignMessage>

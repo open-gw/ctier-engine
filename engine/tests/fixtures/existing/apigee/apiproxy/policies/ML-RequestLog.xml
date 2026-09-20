@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<MessageLogging name="ML-RequestLog">
+  <DisplayName>ML-RequestLog</DisplayName>
+  <File>
+    <Message>{request.header.x-ctier-tier}|{request.header.x-correlation-id}</Message>
+    <FileName>estate.log</FileName>
+    <FileRotationOptions>
+      <FileRotationType>SIZE</FileRotationType>
+      <MaxFileSizeInMB>1</MaxFileSizeInMB>
+    </FileRotationOptions>
+  </File>
+</MessageLogging>

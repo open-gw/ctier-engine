@@ -1,0 +1,19 @@
+name: Tier boundary
+description: Propose a different boundary, criterion, or accumulation rule.
+title: "[boundary] "
+labels: ["boundary"]
+body:
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: The change, and the case that the current rule gets wrong.
+    validations:
+      required: true
+  - type: textarea
+    id: effect
+    attributes:
+      label: Effect
+      description: Which operations move tier, and from what to what.
+    validations:
+      required: true

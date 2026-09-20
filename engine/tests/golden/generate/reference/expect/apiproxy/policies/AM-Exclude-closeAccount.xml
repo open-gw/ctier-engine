@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage name="AM-Exclude-closeAccount">
+  <DisplayName>AM-Exclude-closeAccount</DisplayName>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <AssignVariable>
+    <Name>ctier.excluded</Name>
+    <Value>true</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>ctier.declared</Name>
+    <Value>true</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>ctier.operation</Name>
+    <Value>closeAccount</Value>
+  </AssignVariable>
+</AssignMessage>

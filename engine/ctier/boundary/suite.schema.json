@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/open-gw/ctier-engine/runtime-suite/0.3.0-draft",
+  "title": "ctier runtime suite (draft)",
+  "description": "Observed behaviour of a running deployment. Not promoted. A format used by one implementation is a serialisation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["ctierSchema", "cases"],
+  "properties": {
+    "ctierSchema": { "const": "runtime-suite/0.3.0-draft" },
+    "cases": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/case" }
+    }
+  },
+  "$defs": {
+    "case": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "send", "expect"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "requires": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["observer", "probe", "recordSource", "execute", "custodyControl"]
+          },
+          "uniqueItems": true
+        },
+        "send": { "$ref": "#/$defs/send" },
+        "expect": { "$ref": "#/$defs/expect" },
+        "when": { "$ref": "#/$defs/when" },
+        "then": { "$ref": "#/$defs/then" }
+      }
+    },
+    "send": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["method", "path"],
+      "properties": {
+        "method": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "headers": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "repeat": { "type": "integer", "minimum": 1, "maximum": 8 },
+        "body": { "type": "string" }
+      }
+    },
+    "when": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "deployment": { "type": "string", "enum": ["level-1", "level-2", "level-3"] },
+        "custody": { "type": "string", "enum": ["unavailable", "available"] }
+      }
+    },
+    "then": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "approve": { "type": "boolean" },
+        "expect": { "$ref": "#/$defs/recordExpect" }
+      }
+    },
+    "recordedItem": {
+      "type": "object",
+      "required": ["type"],
+      "properties": {
+        "type": { "type": "string", "enum": ["attempt", "decision", "outcome"] },
+        "absent": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    },
+    "recordExpect": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "recorded": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/recordedItem" }
+        },
+        "unrecorded": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/recordedItem" }
+        }
+      }
+    },
+    "expect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status"],
+      "properties": {
+        "status": { "type": "integer", "minimum": 100, "maximum": 599 },
+        "absent": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "present": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "equals": {
+          "type": "object",
+          "additionalProperties": { "type": "string", "minLength": 1 }
+        },
+        "notEquals": {
+          "type": "object",
+          "additionalProperties": { "type": "string", "minLength": 1 }
+        },
+        "recorded": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/recordedItem" }
+        },
+        "unrecorded": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/recordedItem" }
+        },
+        "induceGap": { "type": "boolean" }
+      }
+    }
+  }
+}

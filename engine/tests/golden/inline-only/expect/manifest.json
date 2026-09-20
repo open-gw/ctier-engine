@@ -1,0 +1,19 @@
+{
+  "composedAt": "<composedAt>",
+  "compositionDigest": "sha256:1857f410347bbf5ec41d4ccf44f657b9da24636ab87f2d5de83d5414f06a7986",
+  "coverage": {
+    "absent": 0,
+    "declared": 1,
+    "recommended": 0
+  },
+  "ctierSchema": "composition-manifest/0.1.0",
+  "inputs": [
+    {
+      "digest": "sha256:4b62570d861f097f65878108032fb1f1f052560c9273f4504cd59004327a9457",
+      "path": "description.yaml",
+      "role": "description"
+    }
+  ],
+  "operations": 1,
+  "specVersion": "1.4.0"
+}

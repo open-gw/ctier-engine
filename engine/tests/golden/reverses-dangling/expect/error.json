@@ -1,0 +1,4 @@
+{
+  "rule": "dangling-reverses",
+  "message": "x-ctier-reverses names 'doesNotExist' which does not exist"
+}

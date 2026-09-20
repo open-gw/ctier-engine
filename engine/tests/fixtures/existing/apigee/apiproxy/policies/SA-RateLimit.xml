@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<SpikeArrest name="SA-RateLimit">
+  <DisplayName>SA-RateLimit</DisplayName>
+  <Rate>1000ps</Rate>
+</SpikeArrest>

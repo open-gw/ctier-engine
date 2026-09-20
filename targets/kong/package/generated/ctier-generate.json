@@ -1,0 +1,100 @@
+{
+  "deploymentDigest": "sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8",
+  "generator": {
+    "mode": "bundle",
+    "target": "kong",
+    "version": "0.3.0"
+  },
+  "governed-set": [
+    {
+      "assignment": 1,
+      "method": "GET",
+      "operation": "getBalance",
+      "path": "/accounts/{accountId}/balance"
+    },
+    {
+      "assignment": 4,
+      "method": "POST",
+      "operation": "closeAccount",
+      "path": "/accounts/{accountId}/closure"
+    },
+    {
+      "assignment": "undeclared",
+      "method": "POST",
+      "operation": "exportStatements",
+      "path": "/accounts/{accountId}/statements/export"
+    },
+    {
+      "assignment": 2,
+      "method": "GET",
+      "operation": "listTransactions",
+      "path": "/accounts/{accountId}/transactions"
+    },
+    {
+      "assignment": 4,
+      "method": "PUT",
+      "operation": "updateFeatureFlags",
+      "path": "/config/feature-flags"
+    },
+    {
+      "assignment": 3,
+      "method": "PATCH",
+      "operation": "modifyCreditLimit",
+      "path": "/credit/{accountId}/limit"
+    },
+    {
+      "assignment": 4,
+      "method": "POST",
+      "operation": "recordKycDecision",
+      "path": "/customers/{customerId}/kyc-decision"
+    },
+    {
+      "assignment": 3,
+      "method": "PUT",
+      "operation": "updateCommunicationPreferences",
+      "path": "/customers/{customerId}/preferences/communication"
+    },
+    {
+      "assignment": 2,
+      "method": "PUT",
+      "operation": "updateDisplayPreferences",
+      "path": "/customers/{customerId}/preferences/display"
+    },
+    {
+      "assignment": 3,
+      "method": "PUT",
+      "operation": "updateCustomerProfile",
+      "path": "/customers/{customerId}/profile"
+    },
+    {
+      "assignment": 4,
+      "method": "POST",
+      "operation": "raiseDispute",
+      "path": "/disputes"
+    },
+    {
+      "assignment": 4,
+      "method": "POST",
+      "operation": "initiatePayment",
+      "path": "/payments"
+    },
+    {
+      "assignment": 4,
+      "method": "GET",
+      "operation": "getPaymentAuthorization",
+      "path": "/payments/{paymentId}/authorizations/{authorizationId}"
+    },
+    {
+      "assignment": 2,
+      "method": "DELETE",
+      "operation": "deleteSavedSearch",
+      "path": "/saved-searches/{searchId}"
+    },
+    {
+      "assignment": 2,
+      "method": "POST",
+      "operation": "restoreSavedSearch",
+      "path": "/saved-searches/{searchId}/restore"
+    }
+  ]
+}

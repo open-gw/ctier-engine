@@ -1,0 +1,132 @@
+# Sequential accumulation cases. Single-request cases remain valid as a
+# sequence of one; these extras are not merged into the generated 24-case
+# corpus. appliedTierAtLeast does not encode the poll interval: the live
+# runner asserts the bound (threshold-crossing plus one interval).
+ctierSchema: conformance-corpus/0.3.0
+profile: standard
+deployment: level-3
+cases:
+  - id: decomposition-escalates
+    scope: task-decomp-1
+    agent:
+      id: agent-a
+      taskId: task-decomp-1
+    sequence:
+      - request: &t1
+          method: GET
+          path: /accounts/12345/balance
+          query: {}
+          headers: {}
+          body: null
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      # Threshold crossed on the tenth Decision. Escalation is one request
+      # late plus up to one poll interval; do not assert an exact index.
+      - request: *t1
+        expect: {appliedTierAtLeast: 2}
+
+  - id: under-threshold-no-escalation
+    scope: task-under-1
+    agent:
+      id: agent-a
+      taskId: task-under-1
+    sequence:
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+
+  - id: isolation-scope-hot
+    scope: task-iso-hot
+    agent:
+      id: agent-a
+      taskId: task-iso-hot
+    sequence:
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTierAtLeast: 2}
+
+  - id: isolation-scope-cold
+    scope: task-iso-cold
+    agent:
+      id: agent-a
+      taskId: task-iso-cold
+    sequence:
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+
+  # The gap longer than the decay window is a live fixture (the live rig
+  # shortens decay to 5 s). The claim: a well-behaved long-running agent
+  # is not eventually treated as hostile.
+  - id: decay-resets-long-running-agent
+    scope: task-decay-1
+    agent:
+      id: agent-a
+      taskId: task-decay-1
+    sequence:
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}
+      - request: *t1
+        expect: {appliedTierAtLeast: 2}
+      - request: *t1
+        expect: {appliedTier: 1, disposition: execute}

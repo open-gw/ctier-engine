@@ -1,0 +1,70 @@
+realm: ctier
+accessTokenLifespan: 30
+jwt:
+  claim: cid
+  claimValue: ctier
+scopes:
+- name: operation-getBalance
+  operation: getBalance
+  excluded: false
+- name: operation-closeAccount
+  operation: closeAccount
+  excluded: true
+- name: operation-listTransactions
+  operation: listTransactions
+  excluded: false
+- name: operation-updateFeatureFlags
+  operation: updateFeatureFlags
+  excluded: false
+- name: operation-modifyCreditLimit
+  operation: modifyCreditLimit
+  excluded: false
+- name: operation-recordKycDecision
+  operation: recordKycDecision
+  excluded: false
+- name: operation-updateCommunicationPreferences
+  operation: updateCommunicationPreferences
+  excluded: false
+- name: operation-updateDisplayPreferences
+  operation: updateDisplayPreferences
+  excluded: false
+- name: operation-updateCustomerProfile
+  operation: updateCustomerProfile
+  excluded: false
+- name: operation-raiseDispute
+  operation: raiseDispute
+  excluded: false
+- name: operation-initiatePayment
+  operation: initiatePayment
+  excluded: false
+- name: operation-getPaymentAuthorization
+  operation: getPaymentAuthorization
+  excluded: false
+- name: operation-deleteSavedSearch
+  operation: deleteSavedSearch
+  excluded: false
+- name: operation-restoreSavedSearch
+  operation: restoreSavedSearch
+  excluded: false
+excluded:
+- operation-closeAccount
+clients:
+- id: agent-a
+  scopes:
+  - operation-getBalance
+  - operation-listTransactions
+  - operation-updateFeatureFlags
+  - operation-modifyCreditLimit
+  - operation-recordKycDecision
+  - operation-updateCommunicationPreferences
+  - operation-updateDisplayPreferences
+  - operation-updateCustomerProfile
+  - operation-raiseDispute
+  - operation-initiatePayment
+  - operation-getPaymentAuthorization
+  - operation-deleteSavedSearch
+  - operation-restoreSavedSearch
+- id: agent-sub-balance
+  parent: agent-a
+  scopes:
+  - operation-getBalance

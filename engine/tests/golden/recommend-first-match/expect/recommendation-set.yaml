@@ -1,0 +1,23 @@
+ctierSchema: recommendation-set/0.1.0
+overlay: 1.1.0
+info:
+  title: ctier recommendations
+  version: 0.1.0
+actions:
+- target: $.paths['/x'].get
+  description: First rule wins.
+  update:
+    x-ctier-status: recommended
+    x-ctier-recommended-at: '2026-09-06T14:00:00Z'
+    x-ctier-criteria:
+      reversibility: not-applicable
+    x-ctier-rationale: First rule wins.
+  x-ctier-provenance:
+    inputText: 'GET /x
+
+      x'
+    inputDigest: sha256:f9ae00336285568df7c00cad7d528b2959a9fc2e585316c69172942b6c2b4ec5
+    source: first
+    version: 0.1.0
+    confidence: high
+    timestamp: '2026-09-06T14:00:00Z'

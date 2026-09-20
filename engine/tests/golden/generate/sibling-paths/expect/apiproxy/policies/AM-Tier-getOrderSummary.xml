@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AssignMessage name="AM-Tier-getOrderSummary">
+  <DisplayName>AM-Tier-getOrderSummary</DisplayName>
+  <IgnoreUnresolvedVariables>true</IgnoreUnresolvedVariables>
+  <AssignVariable>
+    <Name>ctier.tier</Name>
+    <Value>1</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>ctier.declared</Name>
+    <Value>true</Value>
+  </AssignVariable>
+  <AssignVariable>
+    <Name>ctier.operation</Name>
+    <Value>getOrderSummary</Value>
+  </AssignVariable>
+</AssignMessage>

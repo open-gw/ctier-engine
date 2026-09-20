@@ -1,0 +1,9 @@
+overlay: "1.1.0"
+info:
+  title: blanket tier 2
+  version: 1.0.0
+actions:
+  - target: "$.paths[*].get"
+    update:
+      x-ctier-tier: 2
+      x-ctier-status: declared

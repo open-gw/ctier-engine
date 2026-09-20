@@ -1,0 +1,60 @@
+consumers: []
+# Header reader is serverless-post-function on a global rule, not the
+# strip's serverless-pre-function slot. Priority 30000 > strip 21000.
+global_rules:
+- id: estate-outside-slot
+  plugins:
+    serverless-post-function:
+      _meta:
+        priority: 30000
+      phase: rewrite
+      functions:
+      - |
+        return function(conf, ctx)
+          local watch = {["x-correlation-id"]=true, ["x-idempotency-key"]=true}
+          local emit = {
+            ["x-ctier-deployment"]=true,
+            ["x-ctier-correlation-id"]=true,
+            ["x-ctier-tier"]=true,
+            ["x-ctier-operation"]=true,
+            ["x-ctier-composition"]=true,
+          }
+          local seen = {}
+          local h = ngx.req.get_headers()
+          for name, _ in pairs(h) do
+            local l = string.lower(name)
+            if watch[l] or (string.sub(l, 1, 8) == "x-ctier-" and not emit[l]) then
+              table.insert(seen, l)
+            end
+          end
+          if #seen > 0 then
+            ngx.req.set_header("x-boundary-probe", table.concat(seen, ","))
+          end
+        end
+routes:
+- id: estate-catchall
+  name: estate-catchall
+  uris:
+  - /*
+  priority: 1
+  plugins:
+    limit-count:
+      count: 100000
+      time_window: 60
+      rejected_code: 429
+      key: remote_addr
+    cors:
+      allow_origins: "*"
+      allow_headers: "Authorization,X-Agent-Id,X-Correlation-Id,Content-Type"
+    http-logger:
+      uri: http://127.0.0.1:9/estate-log
+      timeout: 1
+      keepalive: false
+      include_req_body: false
+  upstream:
+    type: roundrobin
+    scheme: http
+    nodes:
+      "echo:8080": 1
+
+#END

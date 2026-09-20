@@ -1,0 +1,154 @@
+{
+  "compositionDigest": "sha256:fc7eedebcba8fa1c5a7d4ef8059620ade412832772a2c69475e2e89c08561676",
+  "ctierSchema": "coverage-report/0.1.0",
+  "findings": {
+    "confirmedBelowFloor": [
+      {
+        "declaredTier": 2,
+        "method": "delete",
+        "operationId": "deleteSavedSearch",
+        "path": "/saved-searches/{searchId}",
+        "structuralFloor": 3
+      }
+    ],
+    "descriptionUnderstates": [
+      {
+        "declaredTier": 4,
+        "method": "get",
+        "operationId": "getPaymentAuthorization",
+        "path": "/payments/{paymentId}/authorizations/{authorizationId}",
+        "structuralFloor": 1
+      }
+    ]
+  },
+  "operations": [
+    {
+      "method": "post",
+      "operationId": "exportStatements",
+      "path": "/accounts/{accountId}/statements/export",
+      "status": "absent"
+    },
+    {
+      "declaredTier": 4,
+      "method": "put",
+      "operationId": "updateFeatureFlags",
+      "path": "/config/feature-flags",
+      "recommendedTier": 3,
+      "status": "declared",
+      "structuralFloor": 3
+    },
+    {
+      "declaredTier": 3,
+      "method": "patch",
+      "operationId": "modifyCreditLimit",
+      "path": "/credit/{accountId}/limit",
+      "recommendedTier": 3,
+      "status": "declared",
+      "structuralFloor": 3
+    },
+    {
+      "declaredTier": 3,
+      "method": "put",
+      "operationId": "updateCommunicationPreferences",
+      "path": "/customers/{customerId}/preferences/communication",
+      "recommendedTier": 3,
+      "status": "declared",
+      "structuralFloor": 3
+    },
+    {
+      "declaredTier": 3,
+      "method": "put",
+      "operationId": "updateCustomerProfile",
+      "path": "/customers/{customerId}/profile",
+      "recommendedTier": 3,
+      "status": "declared",
+      "structuralFloor": 3
+    },
+    {
+      "declaredTier": 2,
+      "divergence": "below-floor",
+      "method": "delete",
+      "operationId": "deleteSavedSearch",
+      "path": "/saved-searches/{searchId}",
+      "recommendedTier": 3,
+      "status": "declared",
+      "structuralFloor": 3
+    },
+    {
+      "declaredTier": 2,
+      "method": "put",
+      "operationId": "updateDisplayPreferences",
+      "path": "/customers/{customerId}/preferences/display",
+      "recommendedTier": 2,
+      "status": "declared",
+      "structuralFloor": 2
+    },
+    {
+      "declaredTier": 1,
+      "method": "get",
+      "operationId": "getBalance",
+      "path": "/accounts/{accountId}/balance",
+      "recommendedTier": 1,
+      "status": "declared",
+      "structuralFloor": 1
+    },
+    {
+      "declaredTier": 1,
+      "method": "get",
+      "operationId": "listTransactions",
+      "path": "/accounts/{accountId}/transactions",
+      "recommendedTier": 1,
+      "status": "declared",
+      "structuralFloor": 1
+    },
+    {
+      "declaredTier": 4,
+      "divergence": "understates",
+      "method": "get",
+      "operationId": "getPaymentAuthorization",
+      "path": "/payments/{paymentId}/authorizations/{authorizationId}",
+      "recommendedTier": 1,
+      "status": "declared",
+      "structuralFloor": 1
+    },
+    {
+      "method": "post",
+      "operationId": "closeAccount",
+      "path": "/accounts/{accountId}/closure",
+      "status": "declared"
+    },
+    {
+      "declaredTier": 4,
+      "method": "post",
+      "operationId": "recordKycDecision",
+      "path": "/customers/{customerId}/kyc-decision",
+      "status": "declared"
+    },
+    {
+      "declaredTier": 3,
+      "method": "post",
+      "operationId": "raiseDispute",
+      "path": "/disputes",
+      "status": "declared"
+    },
+    {
+      "declaredTier": 4,
+      "method": "post",
+      "operationId": "initiatePayment",
+      "path": "/payments",
+      "status": "declared"
+    },
+    {
+      "declaredTier": 2,
+      "method": "post",
+      "operationId": "restoreSavedSearch",
+      "path": "/saved-searches/{searchId}/restore",
+      "status": "declared"
+    }
+  ],
+  "totals": {
+    "absent": 1,
+    "declared": 14,
+    "recommended": 0
+  }
+}

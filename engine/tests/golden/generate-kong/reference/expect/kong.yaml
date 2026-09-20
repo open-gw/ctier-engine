@@ -1,0 +1,356 @@
+_format_version: '3.0'
+consumers:
+- username: ctier-agents
+  jwt_secrets:
+  - algorithm: RS256
+    key: ctier
+    secret: unused-rs256
+    rsa_public_key: '-----BEGIN PUBLIC KEY-----
+
+      LOCAL-DEV-ONLY-NOT-A-REAL-PUBLIC-KEY-SEE-engine-ctier-authz-README
+
+      -----END PUBLIC KEY-----
+
+      '
+services:
+- name: retail-banking-api-consequence-tiered-reference
+  url: https://api.example-bank.com/v1
+  routes:
+  - name: getBalance
+    methods:
+    - GET
+    paths:
+    - ~/accounts/(?<accountId>[^/]+)/balance$
+    strip_path: false
+    regex_priority: 2
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 1
+        deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+        operation: getBalance
+        excluded: false
+        required_scope: operation-getBalance
+  - name: closeAccount
+    methods:
+    - POST
+    paths:
+    - ~/accounts/(?<accountId>[^/]+)/closure$
+    strip_path: false
+    regex_priority: 2
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 4
+        deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+        operation: closeAccount
+        excluded: true
+  - name: exportStatements
+    methods:
+    - POST
+    paths:
+    - ~/accounts/(?<accountId>[^/]+)/statements/export$
+    strip_path: false
+    regex_priority: 3
+  - name: listTransactions
+    methods:
+    - GET
+    paths:
+    - ~/accounts/(?<accountId>[^/]+)/transactions$
+    strip_path: false
+    regex_priority: 2
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 2
+        deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+        operation: listTransactions
+        excluded: false
+        required_scope: operation-listTransactions
+        bound_parameter: limit
+        bound_max: 100
+  - name: updateFeatureFlags
+    methods:
+    - PUT
+    paths:
+    - ~/config/feature\-flags$
+    strip_path: false
+    regex_priority: 2
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 4
+        deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+        operation: updateFeatureFlags
+        excluded: false
+        required_scope: operation-updateFeatureFlags
+  - name: modifyCreditLimit
+    methods:
+    - PATCH
+    paths:
+    - ~/credit/(?<accountId>[^/]+)/limit$
+    strip_path: false
+    regex_priority: 2
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 3
+        deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+        operation: modifyCreditLimit
+        excluded: false
+        required_scope: operation-modifyCreditLimit
+  - name: recordKycDecision
+    methods:
+    - POST
+    paths:
+    - ~/customers/(?<customerId>[^/]+)/kyc\-decision$
+    strip_path: false
+    regex_priority: 2
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 4
+        deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+        operation: recordKycDecision
+        excluded: false
+        required_scope: operation-recordKycDecision
+  - name: updateCommunicationPreferences
+    methods:
+    - PUT
+    paths:
+    - ~/customers/(?<customerId>[^/]+)/preferences/communication$
+    strip_path: false
+    regex_priority: 3
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 3
+        deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+        operation: updateCommunicationPreferences
+        excluded: false
+        required_scope: operation-updateCommunicationPreferences
+  - name: updateDisplayPreferences
+    methods:
+    - PUT
+    paths:
+    - ~/customers/(?<customerId>[^/]+)/preferences/display$
+    strip_path: false
+    regex_priority: 3
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 2
+        deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+        operation: updateDisplayPreferences
+        excluded: false
+        required_scope: operation-updateDisplayPreferences
+  - name: updateCustomerProfile
+    methods:
+    - PUT
+    paths:
+    - ~/customers/(?<customerId>[^/]+)/profile$
+    strip_path: false
+    regex_priority: 2
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 3
+        deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+        operation: updateCustomerProfile
+        excluded: false
+        required_scope: operation-updateCustomerProfile
+  - name: raiseDispute
+    methods:
+    - POST
+    paths:
+    - ~/disputes$
+    strip_path: false
+    regex_priority: 1
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 4
+        deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+        operation: raiseDispute
+        excluded: false
+        required_scope: operation-raiseDispute
+  - name: initiatePayment
+    methods:
+    - POST
+    paths:
+    - ~/payments$
+    strip_path: false
+    regex_priority: 1
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 4
+        deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+        operation: initiatePayment
+        excluded: false
+        required_scope: operation-initiatePayment
+  - name: getPaymentAuthorization
+    methods:
+    - GET
+    paths:
+    - ~/payments/(?<paymentId>[^/]+)/authorizations/(?<authorizationId>[^/]+)$
+    strip_path: false
+    regex_priority: 2
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 4
+        deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+        operation: getPaymentAuthorization
+        excluded: false
+        required_scope: operation-getPaymentAuthorization
+  - name: deleteSavedSearch
+    methods:
+    - DELETE
+    paths:
+    - ~/saved\-searches/(?<searchId>[^/]+)$
+    strip_path: false
+    regex_priority: 1
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 2
+        deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+        operation: deleteSavedSearch
+        excluded: false
+        required_scope: operation-deleteSavedSearch
+  - name: restoreSavedSearch
+    methods:
+    - POST
+    paths:
+    - ~/saved\-searches/(?<searchId>[^/]+)/restore$
+    strip_path: false
+    regex_priority: 2
+    plugins:
+    - name: jwt
+      config:
+        key_claim_name: cid
+        claims_to_verify:
+        - exp
+        header_names:
+        - authorization
+    - name: ctier
+      config:
+        tier: 2
+        deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+        operation: restoreSavedSearch
+        excluded: false
+        required_scope: operation-restoreSavedSearch
+plugins:
+- name: ctier
+  config:
+    tier: 4
+    deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+    excluded: false
+    governed-set:
+    - getBalance
+    - closeAccount
+    - exportStatements
+    - listTransactions
+    - updateFeatureFlags
+    - modifyCreditLimit
+    - recordKycDecision
+    - updateCommunicationPreferences
+    - updateDisplayPreferences
+    - updateCustomerProfile
+    - raiseDispute
+    - initiatePayment
+    - getPaymentAuthorization
+    - deleteSavedSearch
+    - restoreSavedSearch

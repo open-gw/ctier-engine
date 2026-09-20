@@ -1,0 +1,14 @@
+# Default standalone routes. Tests overwrite this file and restart APISIX.
+# MUST end with #END or APISIX will not load the file.
+
+routes:
+  - id: echo
+    name: echo
+    uris:
+      - /*
+    upstream:
+      type: roundrobin
+      nodes:
+        "echo:8080": 1
+
+#END
