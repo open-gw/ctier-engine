@@ -400,16 +400,22 @@ Two workers do not share a counter and do not reuse an epoch.
 the claimed sink's contents can see that a record is missing on
 one emitter: missing integers between that epoch's min and max.
 
-**What the one-worker pin hides.** The live rig sets
-`KONG_NGINX_WORKER_PROCESSES=1` and APISIX `worker_processes: 1`.
-That is not production-shaped. A second worker would interleave
-its epoch into the same file. `detect_gaps` groups by epoch, so
-interleave is not a hole by design. Workers do not contend on one
-counter. Collision is not the hidden property. The hidden
-property is multi-emitter interleave: it has not been run. The
-induced-gap live result is **Observed under a configuration that
-is not production-shaped**, not a plain Observed. See
-[`findings/50a.md`](findings/50a.md).
+**Default live pin is one worker.** Compose defaults
+`KONG_NGINX_WORKER_PROCESSES` / APISIX `worker_processes` to 1.
+The rig can raise that (`CTIER_KONG_WORKERS` /
+`CTIER_APISIX_CONFIG` with substituted `worker_processes`).
+`detect_gaps` groups by epoch, so interleave is not a hole by
+design. Workers do not contend on one counter. Collision is not
+the property under test.
+
+**Multi-worker (70).** Both engines ran the induced-gap case with
+two workers. Concurrent requests produced at least two
+`sinkEpoch` values in one sink file; `detect_gaps` reported no
+false hole from that interleave; dropping a middle seq on one
+epoch still detected the gap. 50a's reasoning held. The default
+suite still pins one worker; the two-worker cases are
+`test_*_induced_gap_with_two_workers`. See
+[`findings/50a.md`](findings/50a.md) and [`findings/70.md`](findings/70.md).
 
 **What it does not detect.** Wholesale delete or truncate of the
 sink. An emitter that never started — a worker that wrote nothing

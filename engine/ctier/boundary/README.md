@@ -291,10 +291,10 @@ sink. They are written at NOTICE. An `error_log` of warn or above
 discards them; sequencing cannot see a sink that was never written.
 The sequence is per worker (`epoch=` carries the pid). Kong keeps
 the counter in a worker-local upvalue. APISIX increments
-`ngx.shared.ctier_seq` under a pid key. The live suite pins one
-worker; `induced-gap-is-detected` is **Observed under a
-configuration that is not production-shaped**, not a plain
-Observed. Ledger POST fails open and is not claimed; the error-log line
+`ngx.shared.ctier_seq` under a pid key. The default live pin is
+one worker; task 70 also ran `induced-gap-is-detected` with two
+workers on both engines and confirmed interleave is not a hole.
+Ledger POST fails open and is not claimed; the error-log line
 is the backstop. Other error-log lines are diagnostics. nginx
 `access.log` is not written and is not claimed. The contract is what
 a conforming implementation **exposes**, in one shape, so a runner

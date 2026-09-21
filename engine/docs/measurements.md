@@ -31,8 +31,8 @@ were typical or as if it were the bound.
 | Kong plugin `PRIORITY` | **10000** | `targets/kong/plugin/handler.lua`. Raised from 800 in 16c so the strip runs before cors/jwt/request-transformer. 800 is history, not a second current value. |
 | APISIX strip `_meta.priority` | **21000** | `generate._APISIX_PRI_STRIP` |
 | Shared-dict size | **1m** | Kong compose `KONG_NGINX_HTTP_LUA_SHARED_DICT`; APISIX `lua_shared_dict ctier_floors 1m` |
-| Live Kong workers | **1** | `KONG_NGINX_WORKER_PROCESSES` in `targets/kong/live/compose.yaml`. Not production-shaped. |
-| Live APISIX workers | **1** | `nginx_config.worker_processes` in `targets/apisix/live/config.yaml`. Not production-shaped. |
+| Live Kong workers (default) | **1** | `KONG_NGINX_WORKER_PROCESSES=${CTIER_KONG_WORKERS:-1}` in `targets/kong/live/compose.yaml`. Multi-worker cases raise to 2 via the rig. |
+| Live APISIX workers (default) | **1** | `nginx_config.worker_processes` default 1; live cases substitute via `CTIER_APISIX_CONFIG`. Multi-worker cases raise to 2 via the rig. |
 | Accumulation threshold | **9** | `GovernanceConfig.escalate_above` |
 | T1 weight | **1** | `TIER_WEIGHT[LOW]` |
 | Decay window (production default) | **1800 s** | `GovernanceConfig.decay_seconds` |
@@ -77,12 +77,13 @@ take an Observed visibility sample. There is no Kong counterpart to
 the 216 ms row, and inventing one from the bound would be the error
 this file exists to prevent.
 
-`induced-gap-is-detected` (50) passed on both engines. That result
-is **Observed under a configuration that is not production-shaped**:
-the live rig pins one worker. A production node interleaves
-emitters. The mechanism groups by epoch; that interleave has not
-been run. It is not a plain Observed. See
-[`findings/50a.md`](findings/50a.md).
+`induced-gap-is-detected` (50) passed on both engines under the
+default one-worker pin. Task 70 also ran it with two workers on
+both engines: interleave of epochs was Observed in the sink;
+`detect_gaps` did not treat that as a hole; an induced missing
+seq on one epoch was still reported. 50a's design claim is
+Confirmed, not only reasoned. See [`findings/50a.md`](findings/50a.md)
+and [`findings/70.md`](findings/70.md).
 
 C4 witnesses (54) are **Observed witnesses of a property that cannot
 be exhaustively observed.** Taxonomy 33. The suite cannot verify C4.

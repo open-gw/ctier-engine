@@ -6,6 +6,7 @@ import hashlib
 import hmac
 import json
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -109,23 +110,57 @@ def with_end(text: str) -> str:
 
 
 class ApisixStack:
-    def __init__(self, workdir: Path):
+    def __init__(self, workdir: Path, *, project: str = PROJECT):
         self.workdir = workdir
+        self.project = project
         self.yaml_path = workdir / "apisix.yaml"
         self.yaml_path.write_text(MINIMAL, encoding="utf-8")
         self.realm_path = workdir / "realm.json"
+        self.config_path = workdir / "apisix-config.yaml"
         self._scopes = ""
         self._token_cache: dict[str, tuple[str, float]] = {}
+        self.nginx_workers = 1
+        self._write_apisix_config()
+
+    def _write_apisix_config(self) -> None:
+        template = (REPO / "targets" / "apisix" / "live" / "config.yaml").read_text(
+            encoding="utf-8"
+        )
+        text, n = re.subn(
+            r"(worker_processes:\s*)\d+",
+            rf"\g<1>{self.nginx_workers}",
+            template,
+            count=1,
+        )
+        if n != 1:
+            raise RuntimeError("apisix live config.yaml: worker_processes not found")
+        self.config_path.write_text(text, encoding="utf-8")
 
     def _env(self) -> dict[str, str]:
         env = dict(os.environ)
         env["CTIER_APISIX_YAML"] = str(self.yaml_path)
         env["CTIER_KEYCLOAK_REALM"] = str(self.realm_path)
+        env["CTIER_APISIX_CONFIG"] = str(self.config_path)
         return env
+
+    def reconfigure_workers(self, count: int) -> None:
+        if count < 1:
+            raise ValueError("worker count must be at least 1")
+        if count == self.nginx_workers:
+            return
+        self.nginx_workers = count
+        self._write_apisix_config()
+        recreated = self._compose("up", "-d", "--force-recreate", "apisix", check=False)
+        if recreated.returncode != 0:
+            raise RuntimeError(
+                f"apisix recreate for {count} workers failed\nstdout:\n{recreated.stdout}\n"
+                f"stderr:\n{recreated.stderr}"
+            )
+        self._wait_proxy(timeout=90.0)
 
     def _compose(self, *args: str, check: bool = True) -> subprocess.CompletedProcess:
         return subprocess.run(
-            ["docker", "compose", "-p", PROJECT, "-f", str(COMPOSE), *args],
+            ["docker", "compose", "-p", self.project, "-f", str(COMPOSE), *args],
             check=check,
             env=self._env(),
             capture_output=True,

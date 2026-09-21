@@ -104,7 +104,7 @@ services:
       - edge
       - upstream
     volumes:
-      - ./config.yaml:/usr/local/apisix/conf/config.yaml:ro
+      - ${CTIER_APISIX_CONFIG:-./config.yaml}:/usr/local/apisix/conf/config.yaml:ro
       - ${CTIER_APISIX_YAML}:/usr/local/apisix/conf/apisix.yaml:ro
     depends_on:
       echo:

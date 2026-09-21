@@ -84,22 +84,39 @@ def wait_url(url: str, timeout: float = 60.0) -> None:
 
 
 class KongStack:
-    def __init__(self, workdir: Path):
+    def __init__(self, workdir: Path, *, project: str = PROJECT):
         self.workdir = workdir
+        self.project = project
         self.yaml_path = workdir / "kong.yaml"
         self.yaml_path.write_text(MINIMAL, encoding="utf-8")
         self.realm_path = workdir / "realm.json"
         self._token_cache: dict[str, tuple[str, float]] = {}
+        self.nginx_workers = 1
 
     def _env(self) -> dict[str, str]:
         env = dict(os.environ)
         env["CTIER_KONG_YAML"] = str(self.yaml_path)
         env["CTIER_KEYCLOAK_REALM"] = str(self.realm_path)
+        env["CTIER_KONG_WORKERS"] = str(self.nginx_workers)
         return env
+
+    def reconfigure_workers(self, count: int) -> None:
+        if count < 1:
+            raise ValueError("worker count must be at least 1")
+        if count == self.nginx_workers:
+            return
+        self.nginx_workers = count
+        recreated = self._compose("up", "-d", "--force-recreate", "kong", check=False)
+        if recreated.returncode != 0:
+            raise RuntimeError(
+                f"kong recreate for {count} workers failed\nstdout:\n{recreated.stdout}\n"
+                f"stderr:\n{recreated.stderr}"
+            )
+        wait_url(STATUS, timeout=90.0)
 
     def _compose(self, *args: str, check: bool = True) -> subprocess.CompletedProcess:
         return subprocess.run(
-            ["docker", "compose", "-p", PROJECT, "-f", str(COMPOSE), *args],
+            ["docker", "compose", "-p", self.project, "-f", str(COMPOSE), *args],
             check=check,
             env=self._env(),
             capture_output=True,
