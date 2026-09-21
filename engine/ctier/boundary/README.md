@@ -19,6 +19,28 @@ This draft used to be named `boundary-suite`. There is no compatibility
 shim for that name. It was a draft with no external consumers; a shim
 would have been a row in a deprecation table that is empty on purpose.
 
+## Names kept after the suite rename
+
+The schema id moved to `runtime-suite`. Three older names stayed.
+Keeping them is deliberate, not inherited silence.
+
+| Name | Kept | Why |
+|---|---|---|
+| `ctier.boundary` (Python package) | yes | Renaming would break every import path. The package hosts the runtime suite; the schema id is the public name that moved. |
+| `x-boundary-probe` (header) | yes | On the wire. Renaming a header that already participates in suite cases and probe Lua is a protocol change, not a tidy. See C16 below. |
+| "async withhold" (phrase) | **rejected** | Not an identifier in this tree. Do not use it. A withhold is a synchronous persist that completes the decision and returns 202. Approval and later execution are a separate path. Calling the withhold "async" teaches the opposite of C4. |
+
+### C16 and `x-boundary-probe`
+
+C16 strips unknown `x-ctier-*` headers at the trust boundary. The probe
+header is **outside** that namespace on purpose so the strip does not
+remove the probe's report. It crosses to the backend as harness
+instrumentation, not as an agent-supplied ctier claim. An agent who
+sets `x-boundary-probe` does not satisfy or defeat C16: the criterion
+is about the `x-ctier-*` namespace. The suite's `absent:
+[x-boundary-probe]` cases check probe placement relative to strip, not
+C16's property.
+
 A format used by one implementation is a serialisation; a format used
 by two is an interface, and only the second has been tested as one.
 This draft has been read by its author. It is a serialisation until a
