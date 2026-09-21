@@ -1,5 +1,9 @@
 # Covering note — read this first
 
+Source:
+https://github.com/open-gw/ctier-engine
+(`targets/kong/package/`).
+
 You know Kong. You do not know ctier.
 You will not read the specification.
 You cannot ask the same day. Stop at

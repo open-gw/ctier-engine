@@ -1,3 +1,5 @@
+[![test](https://github.com/open-gw/ctier-engine/actions/workflows/test.yml/badge.svg)](https://github.com/open-gw/ctier-engine/actions/workflows/test.yml)
+
 # ctier-engine
 
 This engine was developed in a private repository and is published here as a
@@ -117,7 +119,6 @@ This engine implements the `standard` profile. It does not implement
 | Solution design | [`engine/docs/SOLUTION-DESIGN.md`](engine/docs/SOLUTION-DESIGN.md) |
 | Decisions | [`engine/docs/adr/`](engine/docs/adr/) |
 | Still open | [`engine/docs/DECISIONS.md`](engine/docs/DECISIONS.md) |
-| Implementation plan | [`engine/docs/IMPLEMENTATION-PLAN.md`](engine/docs/IMPLEMENTATION-PLAN.md) |
 | Kit matrices | [`engine/docs/kit/matrices.md`](engine/docs/kit/matrices.md) |
 
 ## Contributing

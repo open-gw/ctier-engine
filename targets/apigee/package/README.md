@@ -2,6 +2,9 @@
 
 This directory is for someone who has an Apigee organisation. There is **no
 local Apigee runtime** in this repository. The bundle is generated, not run.
+Get the package from
+[open-gw/ctier-engine](https://github.com/open-gw/ctier-engine)
+(`targets/apigee/package/`).
 
 `print()` in the generated JavaScript is Trace (`stepExecution-stdout`). It is
 not a Cloud Logging sink. Precedence against a PreProxy FlowHook is untestable

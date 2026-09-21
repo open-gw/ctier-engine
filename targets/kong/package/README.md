@@ -3,7 +3,9 @@
 This directory is for someone who can run Kong. A local compose stack
 lives under `targets/kong/live/`. The checklist is the same
 **conformance-kit/1.1** as Apigee's package; only provisioning is
-Kong-shaped.
+Kong-shaped. Get the package from
+[open-gw/ctier-engine](https://github.com/open-gw/ctier-engine)
+(`targets/kong/package/`).
 
 ## Start here (external run)
 
