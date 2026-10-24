@@ -382,10 +382,11 @@ def _evaluate(case: dict[str, Any], obs: Observation, target: Target,
         queue = target.pending()
         cid = body.get("correlationId")
         if pending_exp.get("correlationAbsent"):
+            # The named handover carries no correlation identifier.
+            # Checking the pending list only when one came back passes
+            # without observing that absence.
             if cid:
-                held = [p for p in queue if p.get("correlationId") == cid]
-                if held:
-                    fail("pending.correlationAbsent", "absent", cid)
+                fail("pending.correlationAbsent", "no correlation identifier", cid)
         if pending_exp.get("noCredential"):
             match = [p for p in queue if cid and p.get("correlationId") == cid] or queue[-1:]
             item = match[-1] if match else {}

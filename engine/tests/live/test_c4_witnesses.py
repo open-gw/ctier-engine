@@ -13,9 +13,8 @@ from ctier.compose import compose
 from ctier.generate import generate
 from ctier.spec_loader import SPEC_DIR
 from tests.golden_util import NOW
-from tests.live.apisix_rig import CUSTODY as APISIX_CUSTODY
 from tests.live.apisix_rig import CUSTODY_INTERNAL as APISIX_CUSTODY_INTERNAL
-from tests.live.rig import CUSTODY, CUSTODY_INTERNAL, http
+from tests.live.rig import CUSTODY_INTERNAL
 
 pytestmark = pytest.mark.live
 
@@ -32,12 +31,6 @@ def _body(raw: bytes) -> dict:
     except ValueError:
         payload = {}
     return payload if isinstance(payload, dict) else {}
-
-
-def _pending(custody_base: str) -> list[dict]:
-    status, raw, _ = http("GET", custody_base + "/v1/pending")
-    assert status == 200, raw
-    return json.loads(raw.decode("utf-8")).get("pending") or []
 
 
 def _load(stack, *, target: str, custody: dict | None) -> None:
@@ -72,19 +65,20 @@ def _assert_l2_t3_is_refuse_not_wait(status: int, raw: bytes, hdrs: dict[str, st
     return body
 
 
-def _assert_t4_completes_nothing_holding(
-    status: int, raw: bytes, custody_base: str,
-) -> dict:
+def _assert_t4_completes_nothing_holding(status: int, raw: bytes) -> dict:
+    """Handover returns, and it carries no correlation identifier.
+
+    C9's named mechanism is status 423 with no correlation identifier.
+    The other admitted response names no resume handle. Absence is the
+    property. A pending-list check that runs only when an identifier
+    came back passes without observing it.
+    """
     body = _body(raw)
     assert status == 423, body
     assert body.get("agentAction") == "halt_and_hand_off"
     assert body.get("status") == "agent_suspended"
     assert "pollUrl" not in body
-    cid = body.get("correlationId")
-    pending = _pending(custody_base)
-    if cid:
-        held = [p for p in pending if p.get("correlationId") == cid]
-        assert not held, held
+    assert not body.get("correlationId"), body
     return body
 
 
@@ -154,7 +148,7 @@ def test_kong_t4_completes_nothing_holding_for_approver(kong_stack):
         ),
         body="{}",
     )
-    _assert_t4_completes_nothing_holding(status, raw, CUSTODY)
+    _assert_t4_completes_nothing_holding(status, raw)
 
 
 def test_apisix_t4_completes_nothing_holding_for_approver(apisix_stack):
@@ -167,4 +161,4 @@ def test_apisix_t4_completes_nothing_holding_for_approver(apisix_stack):
         ),
         body="{}",
     )
-    _assert_t4_completes_nothing_holding(status, raw, APISIX_CUSTODY)
+    _assert_t4_completes_nothing_holding(status, raw)
