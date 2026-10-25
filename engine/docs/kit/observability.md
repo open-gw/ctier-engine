@@ -103,3 +103,20 @@ the enforcement point's own memory.
 The kit does not. There is no
 witness. The criterion stays not
 observable. This is not a new letter.
+
+---
+
+## What the kit does not cover
+
+suspension as a mechanism — covered,
+by C2 and C9
+(`c2-undeclared-is-highest-class-refuse`,
+`c9-highest-class-names-no-resume`),
+which require agent_suspended on a
+Tier 4 refuse
+
+withheld-then-approved — covered in
+the live suite, not in the kit
+
+withheld-then-rejected-then-suspended
+— not covered anywhere

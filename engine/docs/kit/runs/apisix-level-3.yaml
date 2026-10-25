@@ -1,0 +1,89 @@
+ctierSchema: conformance-kit-report/1.1
+version: '1.1'
+level: '3'
+passed: 15
+failed: 1
+skipped: 2
+inconclusive: 0
+ran: 16
+cases:
+- id: c1-classified-refuse-does-not-execute
+  criterion: C1
+  result: passed
+- id: c2-undeclared-is-highest-class-refuse
+  criterion: C2
+  result: passed
+- id: c3-bound-crossing-is-the-higher-class
+  criterion: C3
+  result: passed
+- id: c4-w1-withhold-has-no-poll-url
+  criterion: C4
+  result: passed
+- id: c4-w2-level-2-class-3-is-a-decision
+  criterion: C4
+  result: skipped
+  reason: not applicable at this level
+- id: c4-w3-highest-class-holds-nothing
+  criterion: C4
+  result: passed
+- id: c5-withheld-caller-is-released
+  criterion: C5
+  result: passed
+- id: c6-execute-is-the-approved-bytes
+  criterion: C6
+  result: passed
+- id: c7-caller-does-not-choose-the-identifier
+  criterion: C7
+  result: failed
+  observed:
+    status: 200
+    body: {}
+    failures:
+    - field: observer.present.idempotency-key
+      expected: present
+      observed: null
+- id: c9-highest-class-names-no-resume
+  criterion: C9
+  result: passed
+- id: c10-execute-has-a-decision
+  criterion: C10
+  result: passed
+- id: c10-highest-class-has-a-decision
+  criterion: C10
+  result: passed
+- id: c10-undeclared-has-a-decision
+  criterion: C10
+  result: passed
+- id: c11-inbound-tier-is-not-honoured
+  criterion: C11
+  result: passed
+- id: c12-unassigned-is-refused-undetermined
+  criterion: C12
+  result: passed
+- id: c13-assignment-does-not-apply-to-another-composition
+  criterion: C13
+  result: skipped
+  reason: covered at generation rather than runtime
+- id: c14-w1-pending-publishes-no-credential
+  criterion: C14
+  result: passed
+- id: c16-unknown-prefix-name-is-absent
+  criterion: C16
+  result: passed
+---
+record:
+  date: '2026-10-24'
+  target: apisix
+  targetVersion: apache/apisix:3.13.0-debian
+  kit: conformance-kit/1.1
+  kitReport: conformance-kit-report/1.1
+  deploymentLevel: '3'
+  specification: 1.25.0
+  specificationCommit: c5c6af025a8f2baab527ebb8518dcbea13ef2058
+  generatorCommit: fd797887d6352ffe06402780846166293980f17c
+  compose: targets/apisix/live/compose.yaml
+  invocation: run_kit then dump_report, the text python -m ctier.kit --out writes
+  signingMaterial: Committed keycloak-rsa.json is a placeholder and Keycloak will
+    not start on it. This run used a local PKCS#8 keypair written into that file and
+    public.pem for the duration of the run. The key is not in this record and is not
+    part of the generator commit.
