@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -33,6 +34,30 @@ def dump_manifest(manifest: dict) -> str:
 
 def dump_error(exc: ComposeError) -> str:
     return json.dumps({"rule": exc.rule, "message": str(exc)}, indent=2) + "\n"
+
+
+_PEM_RE = re.compile(
+    r"-----BEGIN PUBLIC KEY-----.*?-----END PUBLIC KEY-----",
+    re.DOTALL,
+)
+_JSON_MATERIAL_RE = re.compile(
+    r'("(?:privateKey|certificate)"\s*:\s*(?:\[\s*)?")(?:[^"\\]|\\.)*(")',
+)
+
+
+def normalise_signing_material(text: str) -> str:
+    """The golden does not depend on the realm key's value.
+
+    ``privateKey``, ``certificate``, and a public-key PEM are replaced
+    with a fixed marker. The committed golden stays on the placeholder.
+    A local key does not fail the comparison, and it is not written
+    into the golden.
+    """
+    text = _PEM_RE.sub(
+        "-----BEGIN PUBLIC KEY-----\nNORMALISED\n-----END PUBLIC KEY-----",
+        text,
+    )
+    return _JSON_MATERIAL_RE.sub(r"\1NORMALISED\2", text)
 
 
 def case_inputs(case_dir: Path) -> tuple[Path, list[Path]]:

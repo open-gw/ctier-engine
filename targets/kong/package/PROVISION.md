@@ -79,6 +79,16 @@ bring the stack up. Gateway:
 `http://127.0.0.1:18200`. Keycloak:
 `http://127.0.0.1:18400`.
 
+The published `engine/ctier/authz/keycloak-rsa.json`
+is a placeholder. Keycloak does not
+start on it. Install a local key as
+`engine/ctier/authz/README.md` describes,
+for the run only, and do not commit it.
+The golden files stay on the placeholder.
+The comparison does not use the key's
+value, so the two golden tests stay
+green after you set your own key.
+
 **Why:** unlike Apigee, a local Kong
 runtime ships here. You still have to
 start it.

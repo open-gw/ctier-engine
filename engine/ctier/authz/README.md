@@ -15,8 +15,12 @@ openssl pkcs8 -topk8 -nocrypt -in /tmp/ctier-key.pem
 ```
 
 Write the PKCS#8 body and the certificate body (PEM headers stripped) into
-`keycloak-rsa.json` as `privateKey` and `certificate`, then regenerate
-goldens and `targets/*/live/realm.json` via `generate()`.
+`keycloak-rsa.json` as `privateKey` and `certificate` for the rig only.
+Do not commit that key. Do not regenerate the goldens with it.
+
+The committed goldens stay on the placeholder. The comparison normalises
+`privateKey`, `certificate`, and the public-key PEM, so a local key does
+not fail `test_golden_generate_cases` or `test_golden_kong_cases`.
 
 Local-dev compose defaults (`local-dev-admin`, `local-dev-custody-token`,
 `local-dev-agent-secret`) are fixtures for localhost only — change them

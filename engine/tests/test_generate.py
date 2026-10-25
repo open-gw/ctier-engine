@@ -13,7 +13,7 @@ from ctier.conformance.adapter import ReferenceAdapter
 from ctier.corpus import load_extras
 from ctier.generate import flow_sort_key, generate, matches_path
 from ctier.spec_loader import SPEC_DIR
-from tests.golden_util import GOLDEN_ROOT, NOW
+from tests.golden_util import GOLDEN_ROOT, NOW, normalise_signing_material
 
 GENERATE_ROOT = GOLDEN_ROOT / "generate"
 
@@ -59,8 +59,8 @@ def _assert_bundle(expect_dir: Path, files: dict[str, str]) -> None:
     if expected != actual:
         raise AssertionError(f"bundle files differ\nexpect={expected}\nactual={actual}")
     for rel in actual:
-        want = (expect_dir / rel).read_text(encoding="utf-8")
-        got = files[rel]
+        want = normalise_signing_material((expect_dir / rel).read_text(encoding="utf-8"))
+        got = normalise_signing_material(files[rel])
         if want != got:
             diff = "".join(
                 difflib.unified_diff(
@@ -380,6 +380,26 @@ def test_unbounded_compiles_max_of_declared_and_computed():
     assert ctier["config"]["tier"] == 3
     assert "bound_parameter" not in ctier["config"]
     _structural(apigee)
+
+
+def test_golden_comparison_ignores_the_realm_key():
+    placeholder = (
+        '"privateKey": ["placeholder-private"]\n'
+        '"certificate": ["placeholder-cert"]\n'
+        "-----BEGIN PUBLIC KEY-----\nPLACEHOLDER\n-----END PUBLIC KEY-----\n"
+        "route: balance\n"
+    )
+    local = (
+        '"privateKey": ["local-private"]\n'
+        '"certificate": ["local-cert"]\n'
+        "-----BEGIN PUBLIC KEY-----\nLOCAL\n-----END PUBLIC KEY-----\n"
+        "route: balance\n"
+    )
+    other = local.replace("route: balance", "route: other")
+    assert normalise_signing_material(placeholder) == normalise_signing_material(local)
+    assert "placeholder-private" not in normalise_signing_material(placeholder)
+    assert "local-private" not in normalise_signing_material(local)
+    assert normalise_signing_material(placeholder) != normalise_signing_material(other)
 
 
 def test_golden_generate_cases():

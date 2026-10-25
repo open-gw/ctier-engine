@@ -11,7 +11,7 @@ from ctier.compose import compose
 from ctier.generate import generate, kong_path, kong_regex_priority
 from ctier.spec_loader import SPEC_DIR
 from ctier.validate import iter_operations
-from tests.golden_util import GOLDEN_ROOT, NOW
+from tests.golden_util import GOLDEN_ROOT, NOW, normalise_signing_material
 from tests.test_generate import _declared, _spec
 
 KONG_ROOT = GOLDEN_ROOT / "generate-kong"
@@ -27,8 +27,8 @@ def _assert_bundle(expect_dir: Path, files: dict[str, str]) -> None:
     if expected != actual:
         raise AssertionError(f"bundle files differ\nexpect={expected}\nactual={actual}")
     for rel in actual:
-        want = (expect_dir / rel).read_text(encoding="utf-8")
-        got = files[rel]
+        want = normalise_signing_material((expect_dir / rel).read_text(encoding="utf-8"))
+        got = normalise_signing_material(files[rel])
         if want != got:
             diff = "".join(
                 difflib.unified_diff(
