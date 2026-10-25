@@ -49,11 +49,11 @@ The same paragraph is [`KNOWN-ISSUES.md`](KNOWN-ISSUES.md).
 
 ## Try it
 
-Before `make demo` or `pytest --live`, the published signing material is a
-placeholder and Keycloak does not start on it. Install a local key as
-[`engine/ctier/authz/README.md`](engine/ctier/authz/README.md) describes, for
-the run only, and do not commit it. The same note sits in
-[`targets/kong/package/PROVISION.md`](targets/kong/package/PROVISION.md)
+`make demo` and `pytest --live` boot Keycloak from the lab test key in
+[`engine/ctier/authz/`](engine/ctier/authz/README.md). That key was
+generated for this repository, is used by nothing outside this lab, and
+must not be reused. A visitor does not generate a key. The same note sits
+in [`targets/kong/package/PROVISION.md`](targets/kong/package/PROVISION.md)
 before the local Kong stack is started.
 
 ```bash
