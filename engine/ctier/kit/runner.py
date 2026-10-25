@@ -245,6 +245,26 @@ def _observer_headers(entry: dict[str, Any] | None) -> dict[str, str]:
     return _lower(entry.get("headers") or {})
 
 
+def _observer_hop(case: dict[str, Any], new: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """The hop for this case, not whatever line was appended last.
+
+    The echo healthcheck is GET / and shares the harness log. present,
+    absent, and notEquals on new[-1] score that line. C7 then reports
+    the identifier missing. C16 can pass without seeing the request.
+    """
+    send = case.get("send") or {}
+    method = str(send.get("method") or "").upper()
+    path = str(send.get("path") or "")
+    if not method or not path:
+        return new[-1] if new else None
+    hits = [
+        entry for entry in new
+        if str(entry.get("method") or "").upper() == method
+        and str(entry.get("path") or "").startswith(path)
+    ]
+    return hits[-1] if hits else None
+
+
 def _contains_secret(obj: Any, secret: str) -> bool:
     if not secret:
         return False
@@ -355,8 +375,7 @@ def _evaluate(case: dict[str, Any], obs: Observation, target: Target,
     if observer_exp and "observer" in caps and target.observer_log:
         after = target.observer_log()
         new = after[len(before_observer or []):]
-        last = new[-1] if new else None
-        hdrs = _observer_headers(last)
+        hdrs = _observer_headers(_observer_hop(case, new))
         if observer_exp.get("unreached"):
             path = case["send"]["path"]
             method = case["send"]["method"]

@@ -190,6 +190,77 @@ def test_level_2_skips_level_3_only_rows():
     assert c5["reason"] == SKIP_NOT_APPLICABLE_AT_LEVEL
 
 
+def test_c7_reads_the_balance_hop_not_a_later_healthcheck():
+    log: list[dict] = []
+
+    def send(*_a, **_k):
+        log.append({
+            "method": "GET",
+            "path": "/accounts/12345/balance",
+            "headers": {"idempotency-key": "minted-not-agent"},
+        })
+        log.append({"method": "GET", "path": "/", "headers": {}})
+        return _obs(200)
+
+    case = next(c for c in load_cases()["cases"] if c["id"].startswith("c7-"))
+    report = run_kit(
+        {"ctierSchema": SCHEMA_ID, "version": KIT_VERSION, "cases": [case]},
+        Target(send=send, token="t", observer_log=lambda: list(log)),
+        level="3",
+    )
+    assert report["cases"][0]["result"] == "passed"
+
+
+def test_c7_still_fails_when_the_balance_hop_has_no_identifier():
+    log: list[dict] = []
+
+    def send(*_a, **_k):
+        log.append({
+            "method": "GET",
+            "path": "/accounts/12345/balance",
+            "headers": {},
+        })
+        log.append({
+            "method": "GET",
+            "path": "/",
+            "headers": {"idempotency-key": "somewhere-else"},
+        })
+        return _obs(200)
+
+    case = next(c for c in load_cases()["cases"] if c["id"].startswith("c7-"))
+    report = run_kit(
+        {"ctierSchema": SCHEMA_ID, "version": KIT_VERSION, "cases": [case]},
+        Target(send=send, token="t", observer_log=lambda: list(log)),
+        level="3",
+    )
+    row = report["cases"][0]
+    assert row["result"] == "failed"
+    assert row["observed"]["failures"][0]["field"] == "observer.present.idempotency-key"
+
+
+def test_c16_does_not_pass_on_a_later_healthcheck():
+    log: list[dict] = []
+
+    def send(*_a, **_k):
+        log.append({
+            "method": "GET",
+            "path": "/accounts/12345/balance",
+            "headers": {"x-ctier-unknown-audit": "forged"},
+        })
+        log.append({"method": "GET", "path": "/", "headers": {}})
+        return _obs(200)
+
+    case = next(c for c in load_cases()["cases"] if c["id"].startswith("c16-"))
+    report = run_kit(
+        {"ctierSchema": SCHEMA_ID, "version": KIT_VERSION, "cases": [case]},
+        Target(send=send, token="t", observer_log=lambda: list(log)),
+        level="3",
+    )
+    row = report["cases"][0]
+    assert row["result"] == "failed"
+    assert row["observed"]["failures"][0]["field"] == "observer.absent.x-ctier-unknown-audit"
+
+
 def test_c7_at_level_2_is_not_applicable():
     def send(*_a, **_k):
         return _obs(200)
