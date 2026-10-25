@@ -49,6 +49,13 @@ The same paragraph is [`KNOWN-ISSUES.md`](KNOWN-ISSUES.md).
 
 ## Try it
 
+Before `make demo` or `pytest --live`, the published signing material is a
+placeholder and Keycloak does not start on it. Install a local key as
+[`engine/ctier/authz/README.md`](engine/ctier/authz/README.md) describes, for
+the run only, and do not commit it. The same note sits in
+[`targets/kong/package/PROVISION.md`](targets/kong/package/PROVISION.md)
+before the local Kong stack is started.
+
 ```bash
 cd engine && pip install -e ".[dev,serve]" && cd ..
 make demo   # needs Docker; warns, then resets volumes, then ten beats on Kong and APISIX
