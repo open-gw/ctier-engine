@@ -39,6 +39,14 @@ Level 3: zero failed rows, skips carry stated reasons, matrices in
 A clean matrix is a claim about the cases in the kit. It is not a claim about
 the specification.
 
+## Known issues
+
+`generate` does not re-validate. A partially declared criteria object is
+completed from defaults, then `max(declared, computed)` runs. `compose`
+rejects a half-written object.
+
+The same paragraph is [`KNOWN-ISSUES.md`](KNOWN-ISSUES.md).
+
 ## Try it
 
 ```bash
