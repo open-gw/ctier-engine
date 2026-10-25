@@ -83,6 +83,87 @@ def wait_url(url: str, timeout: float = 60.0) -> None:
     raise TimeoutError(f"not ready: {url} ({last})")
 
 
+def wait_custody_accepts(base_url: str, timeout: float = 60.0) -> None:
+    """Health can answer before the ledger and the pending queue do.
+
+    A test that needs custody waits here. If custody never accepts,
+    the failure names that, instead of a later 503 or a missing row.
+    """
+    deadline = time.time() + timeout
+    root = base_url.rstrip("/")
+    checks = (
+        root + "/v1/ledger?type=decision",
+        root + "/v1/pending",
+    )
+    last = "no response"
+    while time.time() < deadline:
+        failed = False
+        for url in checks:
+            try:
+                code, raw, _ = http("GET", url, timeout=2)
+            except Exception as exc:
+                last = f"{url} {exc}"
+                failed = True
+                break
+            if code != 200:
+                snippet = raw[:160]
+                last = f"{url} status {code} {snippet!r}"
+                failed = True
+                break
+        if not failed:
+            return
+        time.sleep(0.4)
+    raise RuntimeError(f"custody did not accept: {base_url} ({last})")
+
+
+def _custody_unavailable(raw: bytes) -> bool:
+    try:
+        body = json.loads(raw.decode("utf-8")) if raw else {}
+    except ValueError:
+        return False
+    return isinstance(body, dict) and body.get("status") == "custody_unavailable"
+
+
+def _custody_reads(base_url: str) -> bool:
+    try:
+        code, _, _ = http(
+            "GET", base_url.rstrip("/") + "/v1/pending", timeout=0.5,
+        )
+    except Exception:
+        return False
+    return code == 200
+
+
+def http_for_live(
+    method: str,
+    url: str,
+    *,
+    headers: dict | None = None,
+    body: bytes | None = None,
+    custody_base: str,
+) -> tuple[int, bytes, dict[str, str]]:
+    """Retry a 503 only while custody is answering.
+
+    The gateway reports custody_unavailable when its persist does not
+    come back in time. If custody is actually down, the 503 is returned
+    at once so a fail-closed test still sees it. If custody is up, wait
+    and send again. Eight misses while it is up is "custody did not accept".
+    """
+    last: tuple[int, bytes, dict[str, str]] | None = None
+    for _attempt in range(8):
+        status, raw, hdrs = http(method, url, headers=headers, body=body)
+        last = (status, raw, hdrs)
+        if status != 503 or not _custody_unavailable(raw):
+            return status, raw, hdrs
+        if not _custody_reads(custody_base):
+            return status, raw, hdrs
+        time.sleep(0.25)
+    assert last is not None
+    raise RuntimeError(
+        f"custody did not accept: {custody_base} (gateway 503)"
+    )
+
+
 class KongStack:
     def __init__(self, workdir: Path, *, project: str = PROJECT):
         self.workdir = workdir
@@ -142,6 +223,7 @@ class KongStack:
         wait_url(KEYCLOAK + "/realms/ctier/.well-known/openid-configuration", timeout=120.0)
         wait_url(STATUS, timeout=90.0)
         wait_url(CUSTODY + "/health", timeout=90.0)
+        wait_custody_accepts(CUSTODY, timeout=90.0)
 
     def exec(self, service: str, *args: str, check: bool = True) -> subprocess.CompletedProcess:
         return self._compose("exec", "-T", service, *args, check=check)
@@ -183,6 +265,7 @@ class KongStack:
                 f"kong restart failed\nstdout:\n{restarted.stdout}\nstderr:\n{restarted.stderr}"
             )
         wait_url(STATUS, timeout=60.0)
+        wait_custody_accepts(CUSTODY)
 
     def load_generated(self, files: dict[str, str], *, echo: bool = True) -> None:
         text = files["kong.yaml"]
@@ -205,6 +288,7 @@ class KongStack:
             )
         if name == "custody":
             wait_url(CUSTODY + "/health", timeout=60.0)
+            wait_custody_accepts(CUSTODY)
         elif name == "kong":
             wait_url(STATUS, timeout=60.0)
 
@@ -223,6 +307,7 @@ class KongStack:
             )
         if name == "custody":
             wait_url(CUSTODY + "/health", timeout=60.0)
+            wait_custody_accepts(CUSTODY)
         elif name == "kong":
             wait_url(STATUS, timeout=60.0)
 
@@ -329,7 +414,9 @@ class KongStack:
             from urllib.parse import urlencode
             url = url + "?" + urlencode(query)
         data = None if body is None else body.encode("utf-8")
-        return http(method, url, headers=headers, body=data)
+        return http_for_live(
+            method, url, headers=headers, body=data, custody_base=CUSTODY,
+        )
 
     def echo_json(self, method: str, path: str, **kwargs) -> tuple[int, dict]:
         status, raw, _hdrs = self.request(method, path, **kwargs)

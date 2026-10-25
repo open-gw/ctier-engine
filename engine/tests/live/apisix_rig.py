@@ -15,7 +15,7 @@ from pathlib import Path
 
 import yaml
 
-from tests.live.rig import http, wait_url
+from tests.live.rig import http, http_for_live, wait_custody_accepts, wait_url
 
 REPO = Path(__file__).resolve().parents[3]
 COMPOSE = REPO / "targets" / "apisix" / "live" / "compose.yaml"
@@ -188,6 +188,7 @@ class ApisixStack:
                 )
         wait_url(KEYCLOAK + "/realms/ctier/.well-known/openid-configuration", timeout=120.0)
         wait_url(CUSTODY + "/health", timeout=90.0)
+        wait_custody_accepts(CUSTODY, timeout=90.0)
         self._wait_proxy(timeout=90.0)
 
     def exec(self, service: str, *args: str, check: bool = True) -> subprocess.CompletedProcess:
@@ -201,6 +202,7 @@ class ApisixStack:
                 f"apisix restart failed\nstdout:\n{restarted.stdout}\nstderr:\n{restarted.stderr}"
             )
         self._wait_proxy(timeout=60.0)
+        wait_custody_accepts(CUSTODY)
 
     def stop(self) -> None:
         self._compose("down", "-v", "--remove-orphans", check=False)
@@ -229,7 +231,9 @@ class ApisixStack:
             from urllib.parse import urlencode
             url = url + "?" + urlencode(query)
         data = None if body is None else body.encode("utf-8")
-        return http(method, url, headers=headers, body=data)
+        return http_for_live(
+            method, url, headers=headers, body=data, custody_base=CUSTODY,
+        )
 
     def echo_json(self, method: str, path: str, **kwargs) -> tuple[int, dict]:
         status, raw, _hdrs = self.request(method, path, **kwargs)
@@ -294,6 +298,7 @@ class ApisixStack:
             )
         if name == "custody":
             wait_url(CUSTODY + "/health", timeout=60.0)
+            wait_custody_accepts(CUSTODY)
         elif name == "apisix":
             self._wait_proxy(timeout=60.0)
 
