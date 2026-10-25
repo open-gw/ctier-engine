@@ -261,6 +261,196 @@ def test_c16_does_not_pass_on_a_later_healthcheck():
     assert row["observed"]["failures"][0]["field"] == "observer.absent.x-ctier-unknown-audit"
 
 
+def test_c16_passes_when_the_balance_hop_lacks_the_forged_header():
+    log: list[dict] = []
+
+    def send(*_a, **_k):
+        log.append({
+            "method": "GET",
+            "path": "/accounts/12345/balance",
+            "headers": {"idempotency-key": "minted"},
+        })
+        log.append({"method": "GET", "path": "/", "headers": {}})
+        return _obs(200)
+
+    case = next(c for c in load_cases()["cases"] if c["id"].startswith("c16-"))
+    report = run_kit(
+        {"ctierSchema": SCHEMA_ID, "version": KIT_VERSION, "cases": [case]},
+        Target(send=send, token="t", observer_log=lambda: list(log)),
+        level="3",
+    )
+    assert report["cases"][0]["result"] == "passed"
+
+
+def test_c16_does_not_pass_when_the_only_new_line_is_a_healthcheck():
+    log: list[dict] = []
+
+    def send(*_a, **_k):
+        log.append({"method": "GET", "path": "/", "headers": {}})
+        return _obs(200)
+
+    case = next(c for c in load_cases()["cases"] if c["id"].startswith("c16-"))
+    report = run_kit(
+        {"ctierSchema": SCHEMA_ID, "version": KIT_VERSION, "cases": [case]},
+        Target(send=send, token="t", observer_log=lambda: list(log)),
+        level="3",
+    )
+    row = report["cases"][0]
+    assert row["result"] == "failed"
+    assert row["observed"]["failures"][0]["field"] == "observer.hop"
+
+
+def test_c7_not_equals_does_not_pass_on_a_healthcheck_alone():
+    log: list[dict] = []
+
+    def send(*_a, **_k):
+        log.append({"method": "GET", "path": "/", "headers": {}})
+        return _obs(200)
+
+    case = next(c for c in load_cases()["cases"] if c["id"].startswith("c7-"))
+    report = run_kit(
+        {"ctierSchema": SCHEMA_ID, "version": KIT_VERSION, "cases": [case]},
+        Target(send=send, token="t", observer_log=lambda: list(log)),
+        level="3",
+    )
+    row = report["cases"][0]
+    assert row["result"] == "failed"
+    assert row["observed"]["failures"][0]["field"] == "observer.hop"
+
+
+def _one(case_id: str) -> dict:
+    case = next(c for c in load_cases()["cases"] if c["id"] == case_id)
+    return {"ctierSchema": SCHEMA_ID, "version": KIT_VERSION, "cases": [case]}
+
+
+def test_c10_ignores_a_decision_from_another_request():
+    case_id = "c10-execute-has-a-decision"
+    rows: list[dict] = []
+
+    def send(*_a, **_k):
+        rows.append({
+            "ctierSchema": "decision-record/0.2.0",
+            "id": "other",
+            "correlationScope": "kit-someone-else",
+        })
+        return _obs(200)
+
+    report = run_kit(
+        _one(case_id),
+        Target(send=send, token="t", records=lambda: list(rows)),
+        level="3",
+    )
+    row = report["cases"][0]
+    assert row["result"] == "failed"
+    assert row["observed"]["failures"][0]["field"] == "record.present"
+
+
+def test_c10_passes_on_the_decision_for_this_task():
+    case_id = "c10-execute-has-a-decision"
+    rows: list[dict] = []
+
+    def send(*_a, **_k):
+        rows.append({
+            "ctierSchema": "decision-record/0.2.0",
+            "id": "other",
+            "correlationScope": "kit-someone-else",
+        })
+        rows.append({
+            "ctierSchema": "decision-record/0.2.0",
+            "id": "this",
+            "correlationScope": f"kit-{case_id}-1",
+        })
+        return _obs(200)
+
+    report = run_kit(
+        _one(case_id),
+        Target(send=send, token="t", records=lambda: list(rows)),
+        level="3",
+    )
+    assert report["cases"][0]["result"] == "passed"
+
+
+def test_c12_scores_this_attempt_not_a_later_row():
+    case_id = "c12-unassigned-is-refused-undetermined"
+    rows: list[dict] = []
+
+    def send(*_a, **_k):
+        rows.append({
+            "ctierSchema": "attempt-record/0.3.0",
+            "id": "this-attempt",
+            "correlationScope": f"kit-{case_id}-1",
+            "appliedTier": None,
+            "reason": "unassigned",
+        })
+        rows.append({
+            "ctierSchema": "attempt-record/0.3.0",
+            "id": "later-attempt",
+            "correlationScope": "kit-someone-else",
+            "appliedTier": 4,
+            "reason": "custody-unavailable",
+        })
+        rows.append({
+            "ctierSchema": "decision-record/0.2.0",
+            "id": "other-decision",
+            "correlationScope": "kit-someone-else",
+        })
+        return _obs(423, {"status": "unassigned", "agentAction": "halt"})
+
+    report = run_kit(
+        _one(case_id),
+        Target(send=send, token="t", records=lambda: list(rows)),
+        level="3",
+    )
+    assert report["cases"][0]["result"] == "passed", report["cases"][0]
+
+
+def test_c14_does_not_score_the_last_pending_row():
+    case_id = "c14-w1-pending-publishes-no-credential"
+
+    def send(*_a, **_k):
+        return _obs(202, {"correlationId": "this-request"})
+
+    def pending():
+        return [{
+            "correlationId": "older",
+            "method": "PUT",
+            "path": "/customers/12345/preferences/communication",
+        }]
+
+    report = run_kit(
+        _one(case_id),
+        Target(send=send, token="caller-token", pending=pending),
+        level="3",
+    )
+    row = report["cases"][0]
+    assert row["result"] == "failed"
+    assert row["observed"]["failures"][0]["field"] == "pending.noCredential"
+
+
+def test_c14_scores_the_pending_row_for_this_correlation_identifier():
+    case_id = "c14-w1-pending-publishes-no-credential"
+
+    def send(*_a, **_k):
+        return _obs(202, {"correlationId": "this-request"})
+
+    def pending():
+        return [
+            {"correlationId": "older", "authorization": "Bearer caller-token"},
+            {
+                "correlationId": "this-request",
+                "method": "PUT",
+                "path": "/customers/12345/preferences/communication",
+            },
+        ]
+
+    report = run_kit(
+        _one(case_id),
+        Target(send=send, token="caller-token", pending=pending),
+        level="3",
+    )
+    assert report["cases"][0]["result"] == "passed"
+
+
 def test_c7_at_level_2_is_not_applicable():
     def send(*_a, **_k):
         return _obs(200)

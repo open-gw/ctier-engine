@@ -251,6 +251,10 @@ def _observer_hop(case: dict[str, Any], new: list[dict[str, Any]]) -> dict[str, 
     The echo healthcheck is GET / and shares the harness log. present,
     absent, and notEquals on new[-1] score that line. C7 then reports
     the identifier missing. C16 can pass without seeing the request.
+
+    None means the hop was not in the slice. Callers that score
+    present, absent, or notEquals fail on None. An empty header map
+    would make absent and notEquals true.
     """
     send = case.get("send") or {}
     method = str(send.get("method") or "").upper()
@@ -263,6 +267,18 @@ def _observer_hop(case: dict[str, Any], new: list[dict[str, Any]]) -> dict[str, 
         and str(entry.get("path") or "").startswith(path)
     ]
     return hits[-1] if hits else None
+
+
+def _rows_for_request(rows: list[dict[str, Any]], task_id: str | None) -> list[dict[str, Any]]:
+    """Rows whose correlation scope is the task identifier on this send.
+
+    The records sink is shared. Any new decision satisfies present, and
+    any new decision falsifies absent. The gateway stamps the request's
+    X-Task-Id as correlationScope. A row with another scope is not this hop.
+    """
+    if not task_id:
+        return rows
+    return [row for row in rows if str(row.get("correlationScope") or "") == task_id]
 
 
 def _contains_secret(obj: Any, secret: str) -> bool:
@@ -291,7 +307,8 @@ def _inconclusive_reason(case: dict[str, Any], obs: Observation) -> str | None:
 
 def _evaluate(case: dict[str, Any], obs: Observation, target: Target,
               before_records: list[dict[str, Any]] | None,
-              before_observer: list[dict[str, Any]] | None) -> list[dict[str, Any]]:
+              before_observer: list[dict[str, Any]] | None,
+              task_id: str | None = None) -> list[dict[str, Any]]:
     failures: list[dict[str, Any]] = []
     expect = case.get("expect") or {}
     caps = target.capabilities()
@@ -347,7 +364,10 @@ def _evaluate(case: dict[str, Any], obs: Observation, target: Target,
                 pass
         else:
             after = target.records() if target.records else []
-            written = _new_records(before_records or [], after)
+            written = _rows_for_request(
+                _new_records(before_records or [], after),
+                task_id,
+            )
             if "present" in record_exp:
                 kind = record_exp["present"]
                 found = [r for r in written if _schema_of(r, kind)]
@@ -375,7 +395,8 @@ def _evaluate(case: dict[str, Any], obs: Observation, target: Target,
     if observer_exp and "observer" in caps and target.observer_log:
         after = target.observer_log()
         new = after[len(before_observer or []):]
-        hdrs = _observer_headers(_observer_hop(case, new))
+        hop = _observer_hop(case, new)
+        hdrs = _observer_headers(hop)
         if observer_exp.get("unreached"):
             path = case["send"]["path"]
             method = case["send"]["method"]
@@ -386,15 +407,23 @@ def _evaluate(case: dict[str, Any], obs: Observation, target: Target,
             ]
             if hit:
                 fail("observer.unreached", "no backend hit", hit[-1].get("path"))
-        for name in observer_exp.get("absent") or []:
-            if name.lower() in hdrs:
-                fail(f"observer.absent.{name}", "absent", hdrs.get(name.lower()))
-        for name in observer_exp.get("present") or []:
-            if not hdrs.get(name.lower()):
-                fail(f"observer.present.{name}", "present", hdrs.get(name.lower()))
-        for name, forbidden in (observer_exp.get("notEquals") or {}).items():
-            if hdrs.get(name.lower()) == str(forbidden):
-                fail(f"observer.notEquals.{name}", f"not {forbidden}", hdrs.get(name.lower()))
+        needs_hop = bool(
+            observer_exp.get("absent")
+            or observer_exp.get("present")
+            or observer_exp.get("notEquals")
+        )
+        if needs_hop and hop is None:
+            fail("observer.hop", "the case hop", "none")
+        else:
+            for name in observer_exp.get("absent") or []:
+                if name.lower() in hdrs:
+                    fail(f"observer.absent.{name}", "absent", hdrs.get(name.lower()))
+            for name in observer_exp.get("present") or []:
+                if not hdrs.get(name.lower()):
+                    fail(f"observer.present.{name}", "present", hdrs.get(name.lower()))
+            for name, forbidden in (observer_exp.get("notEquals") or {}).items():
+                if hdrs.get(name.lower()) == str(forbidden):
+                    fail(f"observer.notEquals.{name}", f"not {forbidden}", hdrs.get(name.lower()))
 
     pending_exp = expect.get("pending")
     if pending_exp and "pending" in caps and target.pending:
@@ -407,17 +436,23 @@ def _evaluate(case: dict[str, Any], obs: Observation, target: Target,
             if cid:
                 fail("pending.correlationAbsent", "no correlation identifier", cid)
         if pending_exp.get("noCredential"):
-            match = [p for p in queue if cid and p.get("correlationId") == cid] or queue[-1:]
-            item = match[-1] if match else {}
-            blob = _lower({k: str(v) for k, v in item.items() if v is not None})
-            cred = [k for k in blob if k.lower() in CREDENTIAL_KEYS]
-            headers = item.get("headers") or {}
-            if isinstance(headers, dict):
-                cred.extend(k for k in headers if str(k).lower() in CREDENTIAL_KEYS)
-            if cred:
-                fail("pending.noCredential", "no credential", cred)
-            if _contains_secret(item, target.token):
-                fail("pending.noCredential", "no bearer material", "token present")
+            match = [
+                p for p in queue
+                if cid and str(p.get("correlationId") or "") == str(cid)
+            ]
+            if not match:
+                fail("pending.noCredential", "the pending row for this request", "none")
+            else:
+                item = match[-1]
+                blob = _lower({k: str(v) for k, v in item.items() if v is not None})
+                cred = [k for k in blob if k.lower() in CREDENTIAL_KEYS]
+                headers = item.get("headers") or {}
+                if isinstance(headers, dict):
+                    cred.extend(k for k in headers if str(k).lower() in CREDENTIAL_KEYS)
+                if cred:
+                    fail("pending.noCredential", "no credential", cred)
+                if _contains_secret(item, target.token):
+                    fail("pending.noCredential", "no bearer material", "token present")
 
     then = case.get("then")
     if then and then.get("approve"):
@@ -498,10 +533,11 @@ def run_kit(
         send = case.get("send") or {}
         before_records = target.records() if target.records else None
         before_observer = target.observer_log() if target.observer_log else None
+        task_id = f"kit-{cid}-{n}"
         hdrs = {
             "Authorization": f"Bearer {target.token}",
             "X-Agent-Id": "kit-agent",
-            "X-Task-Id": f"kit-{cid}-{n}",
+            "X-Task-Id": task_id,
         }
         hdrs.update(extra_headers or {})
         hdrs.update(send.get("headers") or {})
@@ -529,7 +565,9 @@ def run_kit(
                 },
             })
             continue
-        failures = _evaluate(case, obs, target, before_records, before_observer)
+        failures = _evaluate(
+            case, obs, target, before_records, before_observer, task_id,
+        )
         row: dict[str, Any] = {
             "id": cid,
             "criterion": case.get("criterion"),
