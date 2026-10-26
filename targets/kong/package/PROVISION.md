@@ -85,10 +85,10 @@ for this repository, used by nothing
 outside this lab, and must not be reused.
 `generate()` reads them, and Keycloak boots
 from that realm. A visitor does not
-generate a key. The golden files stay on
-the placeholder. The comparison does not
-use the key's value, so the two golden
-tests stay green.
+generate a key. The package realms and the
+golden files carry that same lab key. The
+comparison does not use the key's value,
+so the two golden tests stay green.
 
 **Why:** unlike Apigee, a local Kong
 runtime ships here. You still have to

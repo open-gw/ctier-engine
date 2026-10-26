@@ -7,7 +7,19 @@ consumers:
     secret: unused-rs256
     rsa_public_key: '-----BEGIN PUBLIC KEY-----
 
-      LOCAL-DEV-ONLY-NOT-A-REAL-PUBLIC-KEY-SEE-engine-ctier-authz-README
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAirDQlU6TLPrlC82kZedH
+
+      J2p+JO2/2zeEcuoIQ4Yg109f2NkGwMrie8/xf0YS4dHW1ELHguqqJPlVQPBMHWBH
+
+      ozbWFIu75XcKlvazuv+pzor0FpDcZkgwPYKJcWEwYXfmIwoKnaAcEsj8oz9Oo7Fx
+
+      jLpgWd65ckohn+h9WYCnjQmwbUJB3Hu4XAPRPYt/UhDW2KCNJ26f/lgSV5j4f5YW
+
+      V7DyGRHClnJhjbHla+wHGY7ycbumBoVxS29mNoprC/NmBtfpLCb+BeqocwNdEJXR
+
+      EonnB6ywT6wTjX1N9P2eB4jdgUGQh5yrxUK79FyTw6q7P1VvZUC+bN5EUUWWk0u8
+
+      SQIDAQAB
 
       -----END PUBLIC KEY-----
 
