@@ -1,7 +1,8 @@
-"""A1's drawing code stays at or above 8 pt.
+"""A1 and the §5.1 comparison stay at or above 8 pt.
 
-The check reads the FIG A1 section of make_diagrams.py. A2–A6 are
-outside that section and are not scanned.
+The check reads from the FIG A1 marker through the line before FIG A2.
+That span is the A1 sheet and fig 2, the two-panel comparison. A2–A6
+are outside that span and are not scanned.
 """
 from __future__ import annotations
 
@@ -25,6 +26,7 @@ def test_a1_drawing_code_font_size_is_at_least_8pt():
     end = text.index(END, start)
     section = text[start:end]
     assert "def build_a1(" in section
+    assert "def build_fig2(" in section
     sizes = [float(value) for value in _SIZE.findall(section)]
     assert sizes, "A1 drawing code sets no font size"
     below = [size for size in sizes if size < 8]
