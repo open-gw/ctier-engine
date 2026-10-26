@@ -47,11 +47,12 @@ def arrow(ax,x1,y1,x2,y2,label=None,color=BLUE,style='->',ls='-',fs=7):
 _A1_WIDTH_PT = 510.24
 _A1_HEIGHT_PT = 324.0
 _INK = '#1A1A1A'
-# Fig 2 is two stacked panels of 110 mm, a 7 mm gap, and a caption.
-# 697.32 pt = 697.32 / 72 * 25.4 mm.
-_FIG2_HEIGHT_PT = 697.32
-_FIG2_HEIGHT_MM = 697.32 * 25.4 / 72.0
-_FIG2_B_BASE = 15.0
+# Fig 2 is two stacked panels of 110 mm and a 7 mm gap.
+# The caption is in the manuscript. Bottom margin matches the top.
+# 666.14 pt = 666.14 / 72 * 25.4 mm.
+_FIG2_HEIGHT_PT = 666.14
+_FIG2_HEIGHT_MM = 666.14 * 25.4 / 72.0
+_FIG2_B_BASE = 4.0
 _FIG2_PANEL_SPAN = 110.0
 _FIG2_PANEL_GAP = 7.0
 _FIG2_A_BASE = _FIG2_B_BASE + _FIG2_PANEL_SPAN + _FIG2_PANEL_GAP
@@ -356,10 +357,6 @@ def build_fig2():
     draw_implemented_architecture(ax, built, properties=False, emission_modes=False)
     _panel_label(ax, specified, '(a)')
     _panel_label(ax, built, '(b)')
-    ax.text(90, 9.4, 'Panel (b) reproduces Figure 1 without the classification properties',
-            ha='center', va='center', fontsize=8, color=_INK, zorder=4)
-    ax.text(90, 5.2, 'and the emission modes, which are unchanged by the revision.',
-            ha='center', va='center', fontsize=8, color=_INK, zorder=4)
     _assert_fonts(ax)
     arrows = [p for p in ax.patches if isinstance(p, FancyArrowPatch)]
     # (a) round trip is two arrows inside run time. (b) keeps the two generator
@@ -385,7 +382,7 @@ def build_fig2():
     assert '(a)' in blob and '(b)' in blob
     assert 'disposition' in blob
     assert 'configuration' in blob and 'at deploy' in blob
-    assert 'Panel (b) reproduces Figure 1' in blob
+    assert 'Panel (b) reproduces Figure 1' not in blob
     resolution_ys = [t.get_position()[1] for t in ax.texts
                      if t.get_text() == 'resolution    max(declared, computed)']
     assert len(resolution_ys) == 2
@@ -406,7 +403,7 @@ def write_fig2_pdf(dest):
     plt.close(fig)
     raw = dest.read_bytes()
     assert raw.count(b'/MediaBox') == 1
-    assert b'/MediaBox [ 0 0 510.24 697.32 ]' in raw
+    assert b'/MediaBox [ 0 0 510.24 666.14 ]' in raw
     return raw
 
 fig = build_a1()
