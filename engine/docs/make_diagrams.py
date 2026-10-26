@@ -41,54 +41,128 @@ def arrow(ax,x1,y1,x2,y2,label=None,color=BLUE,style='->',ls='-',fs=7):
                 color=color, style='italic')
 
 # ============================================================ FIG A1
-fig, ax = newfig('FIG. A1  —  Three phases',
-                 'Where design-time declaration becomes runtime enforcement')
+# Page is 180 mm by 4.5 in. Every fontsize literal in this section is >= 8.
+_A1_WIDTH_PT = 510.24
+_A1_HEIGHT_PT = 324.0
 
-for i,(x,t,c) in enumerate([(4,'DESIGN TIME',NAVY),(36,'DEPLOY TIME',NAVY),(68,'RUN TIME',NAVY)]):
-    ax.add_patch(Rectangle((x,80),28,5, facecolor=c, edgecolor='none'))
-    ax.text(x+14,82.5,t,ha='center',va='center',fontsize=10,fontweight='bold',color='white')
+def build_a1():
+    fig, ax = plt.subplots(figsize=(_A1_WIDTH_PT / 72.0, _A1_HEIGHT_PT / 72.0))
+    fig.subplots_adjust(left=0, right=1, bottom=0, top=1)
+    ax.set_xlim(0, 180)
+    ax.set_ylim(0, 114.3)
+    ax.axis('off')
+    fig.patch.set_facecolor('white')
+    ax.set_facecolor('white')
+    ink = '#1A1A1A'
+    # Bands. Run time is the heavy frame; only one arrow crosses it.
+    design = (4.0, 84.0, 172.0, 26.5)
+    deploy = (4.0, 32.0, 172.0, 44.0)
+    run = (4.0, 3.2, 172.0, 16.6)
+    ax.add_patch(Rectangle(design[:2], design[2], design[3], facecolor='#F7F7F7',
+                           edgecolor=ink, linewidth=0.8, zorder=1))
+    ax.add_patch(Rectangle(deploy[:2], deploy[2], deploy[3], facecolor='white',
+                           edgecolor=ink, linewidth=1.15, zorder=1))
+    ax.add_patch(Rectangle(run[:2], run[2], run[3], facecolor='#F3F3F3',
+                           edgecolor=ink, linewidth=2.0, zorder=1))
 
-box(ax,4,58,28,18,'OpenAPI document',
-    'x-ctier-tier declared per operation\nfive criteria evaluated\nby a human, once',fill='#EFF6FF',edge=BLUE,sfs=7)
-box(ax,36,58,28,18,'Gateway configuration',
-    'tier compiled into each operation flow\nTier 4 default set in\nthe request pre-flow',fill='#FFFBEB',edge=AMBER,sfs=7)
-box(ax,68,58,28,18,'Request in flight',
-    'gateway resolves the operation\ninjects the declared tier\nengine escalates on context',fill='#F0FDF4',edge=G,sfs=7)
+    def tag(x, y, words):
+        ax.add_patch(Rectangle((x, y), 32.0, 5.6, facecolor=ink, edgecolor=ink,
+                               linewidth=0.6, zorder=3))
+        ax.text(x + 16.0, y + 2.8, words, ha='center', va='center', fontsize=8,
+                fontweight='bold', color='white', zorder=4)
 
-arrow(ax,32,67,36,67,'generator')
-arrow(ax,64,67,68,67,'deploy')
+    tag(6.0, 103.6, 'DESIGN TIME')
+    tag(6.0, 68.8, 'DEPLOY TIME')
+    tag(6.0, 12.6, 'RUN TIME')
 
-ax.text(50,53,'The declared tier is a floor. Runtime adjustment is unidirectional.',
-        ha='center',fontsize=10,fontweight='bold',color=NAVY)
+    ax.text(90, 98.2, 'Composed interface description', ha='center', va='center',
+            fontsize=9, fontweight='bold', color=ink, zorder=4)
+    ax.text(90, 93.0, 'declared tiers', ha='center', va='center',
+            fontsize=8, color=ink, zorder=4)
+    ax.text(90, 87.6, 'reversibility    blast radius    data sensitivity    compliance trigger',
+            ha='center', va='center', fontsize=8, color=ink, zorder=4)
 
-# consequences panel
-ax.add_patch(FancyBboxPatch((4,16),92,32,boxstyle='round,pad=0.4,rounding_size=1.2',
-                            facecolor='white',edgecolor=NAVY,linewidth=1.2))
-ax.text(8,44.5,'Why the assignment is compiled at deploy time',fontsize=10,fontweight='bold',color=NAVY)
-items = [
- ('No second router',
-  ['The gateway already resolves which operation matched. An engine that re-derived it would be a second routing',
-   'implementation capable of silent disagreement. The possibility is removed rather than reduced.']),
- ('One artefact',
-  ['The assignment travels in the generated configuration. C12 is governed-set coverage;',
-   'binding that assignment to the composition is C13. No separate governance document is loaded at request time.']),
- ('Fail-closed is structural',
-  ['An unclassified operation receives no override and inherits Tier 4 — not because a rule enforces it, but because',
-   'the absence of a policy produces it. The safe default is the default.']),
-]
-y=41.0
-for bold,lines in items:
-    ax.text(8,y,bold,fontsize=8.6,fontweight='bold',color=NAVY)
-    y-=3.0
-    for l in lines:
-        ax.text(8,y,l,fontsize=8.0,color=SLATE)
-        y-=2.8
-    y-=0.6
+    bundle = (8.0, 46.2, 78.0, 20.4)
+    fragments = (94.0, 46.2, 78.0, 20.4)
+    ax.add_patch(Rectangle(bundle[:2], bundle[2], bundle[3], facecolor='white',
+                           edgecolor=ink, linewidth=1.7, linestyle='solid', zorder=2))
+    ax.add_patch(Rectangle(fragments[:2], fragments[2], fragments[3], facecolor='white',
+                           edgecolor=ink, linewidth=1.15, linestyle=(0, (2.4, 1.3)),
+                           zorder=2))
+    # Shape channel: filled square on the bundle, open diamond on the fragments.
+    ax.add_patch(Rectangle((11.2, 60.2), 2.3, 2.3, facecolor=ink, edgecolor=ink,
+                           linewidth=0.4, zorder=3))
+    ax.add_patch(Rectangle((97.6, 60.15), 2.2, 2.2, angle=45, rotation_point='center',
+                           facecolor='none', edgecolor=ink, linewidth=1.0, zorder=3))
+    ax.text(47, 61.2, 'Complete policy bundle', ha='center', va='center',
+            fontsize=8, fontweight='bold', color=ink, zorder=4)
+    ax.text(47, 55.4, 'generator owns the gateway configuration', ha='center', va='center',
+            fontsize=8, color=ink, zorder=4)
+    ax.text(133, 61.2, 'Mergeable fragments', ha='center', va='center',
+            fontsize=8, fontweight='bold', color=ink, zorder=4)
+    ax.text(133, 55.4, 'existing estate the generator must not replace', ha='center',
+            va='center', fontsize=8, color=ink, zorder=4)
+    ax.plot([12, 168], [42.6, 42.6], color=ink, linewidth=0.6, solid_capstyle='butt', zorder=2)
+    ax.text(90, 37.6, 'resolution    max(declared, computed)', ha='center', va='center',
+            fontsize=8, fontweight='bold', color=ink, zorder=4)
 
-ax.text(50,10,'Per-gateway difference lives entirely in the generator. The engine receives a resolved tier '
-              'over one uniform interface\nand never learns which gateway called it.',
-        ha='center',fontsize=8.6,style='italic',color=MUTED)
-pdf.savefig(fig,bbox_inches='tight'); plt.close(fig)
+    def shaft(x1, y1, x2, y2, weight):
+        ax.add_patch(FancyArrowPatch((x1, y1), (x2, y2), arrowstyle='-|>',
+                                     mutation_scale=11, linewidth=weight, color=ink,
+                                     shrinkA=0, shrinkB=0, clip_on=False, zorder=5))
+
+    # Two generator arrows stop on the deploy boxes. They do not reach run time.
+    shaft(47, 83.6, 47, 66.8, 0.9)
+    shaft(133, 83.6, 133, 66.8, 0.9)
+    # The only arrow that enters run time. Nothing leaves it.
+    shaft(70, 31.6, 70, 15.6, 1.9)
+    ax.text(76, 27.2, 'configuration', ha='left', va='center', fontsize=8,
+            color=ink, zorder=4)
+    ax.text(76, 22.8, 'at deploy', ha='left', va='center', fontsize=8,
+            fontweight='bold', color=ink, zorder=4)
+
+    sizes = [t.get_fontsize() for t in ax.texts]
+    assert sizes and min(sizes) >= 8, sizes
+    run_top = run[1] + run[3]
+    run_left, run_right = run[0], run[0] + run[2]
+    arrows = [p for p in ax.patches if isinstance(p, FancyArrowPatch)]
+    assert len(arrows) == 3, len(arrows)
+    entering = leaving = 0
+    for patch in arrows:
+        (x1, y1), (x2, y2) = patch._posA_posB
+        def inside(x, y):
+            return run_left < x < run_right and y < run_top
+        head_in, tail_in = inside(x2, y2), inside(x1, y1)
+        if head_in and not tail_in:
+            entering += 1
+        if tail_in and not head_in:
+            leaving += 1
+    assert entering == 1 and leaving == 0, (entering, leaving)
+    return fig
+
+def write_a1_pdf(dest):
+    fig = build_a1()
+    # 510.24 pt is 180 mm. figsize is that width over 72, not a tight crop.
+    fig.set_size_inches(_A1_WIDTH_PT / 72.0, _A1_HEIGHT_PT / 72.0)
+    dest = Path(dest)
+    out = PdfPages(str(dest), metadata={
+        'Creator': None,
+        'Producer': None,
+        'Title': None,
+        'Author': None,
+        'Subject': None,
+        'Keywords': None,
+    })
+    out.savefig(fig, bbox_inches=None)
+    out.close()
+    plt.close(fig)
+    raw = dest.read_bytes()
+    assert raw.count(b'/MediaBox') == 1
+    assert b'/MediaBox [ 0 0 510.24 324 ]' in raw
+
+fig = build_a1()
+pdf.savefig(fig, bbox_inches=None)
+plt.close(fig)
 
 # ============================================================ FIG A2
 fig, ax = newfig('FIG. A2  —  Apigee policy execution order',
