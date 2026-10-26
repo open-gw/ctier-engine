@@ -37,7 +37,7 @@ checklist, read in order:
 2. `./build.sh` from this directory.
 3. Start `targets/kong/live/` with `CTIER_KONG_YAML` pointing at
    `generated/kong.yaml` and the Keycloak realm at
-   `generated/keycloak-realm.json`.
+   `generated/keycloak-realm.json`. Keycloak is bound to localhost.
 4. Mint a token with the generated scopes; put it in `kit.conf`.
 5. Optional: set `kit_records`, `kit_observer`, `kit_custody` as
    `PROVISION.md` describes.

@@ -87,7 +87,7 @@ services:
       KC_HOSTNAME_STRICT: "false"
       KC_HEALTH_ENABLED: "true"
     ports:
-      - "18400:8080"
+      - "127.0.0.1:18400:8080"
     networks:
       - edge
     volumes:

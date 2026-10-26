@@ -5,7 +5,8 @@ repository, used by nothing outside this lab, and must not be reused.
 
 `generate()` reads those two files. The local Docker rigs import the
 realm that produces, and Keycloak boots from it. A visitor does not
-generate a key for `make demo` or `pytest --live`.
+generate a key for `make demo` or `pytest --live`. The live compose
+files bind Keycloak to localhost.
 
 The package realms and the offline goldens carry that same lab key. The
 comparison normalises `privateKey`, `certificate`, and the public-key PEM,

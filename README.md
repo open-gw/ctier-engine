@@ -54,7 +54,7 @@ The same paragraph is [`KNOWN-ISSUES.md`](KNOWN-ISSUES.md).
 generated for this repository, is used by nothing outside this lab, and
 must not be reused. A visitor does not generate a key. The same note sits
 in [`targets/kong/package/PROVISION.md`](targets/kong/package/PROVISION.md)
-before the local Kong stack is started.
+before the local Kong stack is started. Keycloak is bound to localhost on the Kong stack and on the APISIX stack.
 
 ```bash
 cd engine && pip install -e ".[dev,serve]" && cd ..

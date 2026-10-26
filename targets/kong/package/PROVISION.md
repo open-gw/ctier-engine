@@ -77,7 +77,8 @@ import the generated Keycloak realm,
 bring the stack up. Gateway:
 `http://127.0.0.1:18000`. Custody:
 `http://127.0.0.1:18200`. Keycloak:
-`http://127.0.0.1:18400`.
+`http://127.0.0.1:18400`. Keycloak is bound
+to localhost.
 
 The committed `engine/ctier/authz/keycloak-rsa.json`
 and `public.pem` are a test key generated
