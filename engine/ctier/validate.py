@@ -95,14 +95,13 @@ def _check_extension_field(name: str, value: Any) -> None:
     errors = sorted(validator.iter_errors(value), key=lambda e: list(e.path))
     if errors:
         err = errors[0]
-        missing = ""
-        if name == "x-ctier-criteria":
-            for field in _CRITERIA_FIELDS:
-                if isinstance(value, dict) and field not in value:
-                    raise ComposeError(
-                        "schema",
-                        f"{field} is a required property",
-                    )
+        if name == "x-ctier-criteria" and isinstance(value, dict):
+            missing = [field for field in _CRITERIA_FIELDS if field not in value]
+            if len(missing) == 1:
+                raise ComposeError("schema", f"{missing[0]} is a required property")
+            if missing:
+                detail = "; ".join(f"{field} is a required property" for field in missing)
+                raise ComposeError("schema", detail)
         path = "/".join(str(p) for p in err.path)
         raise ComposeError("schema", f"{path}: {err.message}" if path else err.message)
 
@@ -131,8 +130,16 @@ def _parameter_names(op: dict, path_params: list) -> set[str]:
 def validate_openapi_extensions(doc: dict) -> None:
     if "x-ctier-defaults" in doc:
         _check_extension_field("x-ctier-defaults", doc["x-ctier-defaults"])
-    for _path, _method, op, _params in iter_operations(doc):
-        validate_operation_extensions(op)
+    for path, method, op, _params in iter_operations(doc):
+        try:
+            validate_operation_extensions(op)
+        except ComposeError as exc:
+            operation = op.get("operationId") or f"{method} {path}"
+            message = str(exc)
+            prefix = f"{operation}: "
+            if message.startswith(prefix):
+                raise
+            raise ComposeError(exc.rule, prefix + message) from exc
 
 
 def validate_operation_extensions(op: dict) -> None:

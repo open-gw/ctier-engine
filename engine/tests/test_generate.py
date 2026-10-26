@@ -5,12 +5,14 @@ import difflib
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
+import pytest
 import yaml
 
 from ctier.compose import compose
 from ctier.conformance import HANDWRITTEN_DIR
 from ctier.conformance.adapter import ReferenceAdapter
 from ctier.corpus import load_extras
+from ctier.errors import ComposeError
 from ctier.generate import flow_sort_key, generate, matches_path
 from ctier.spec_loader import SPEC_DIR
 from tests.golden_util import GOLDEN_ROOT, NOW, normalise_signing_material
@@ -267,21 +269,19 @@ def test_no_bounds_emits_no_bounds_condition():
     _structural(files)
 
 
-def test_partial_bounds_are_absent_not_a_disabled_branch():
-    # Schema forbids a one-sided bounds object; the generator still matches
-    # exceeds_declared_bounds (both fields, or no comparison).
-    files = generate({
-        "openapi": "3.1.0",
-        "info": {"title": "t", "version": "1"},
-        "paths": {
-            "/a": {"get": _declared(1, "onlyParam", {"x-ctier-bounds": {"parameter": "limit"}})},
-            "/b": {"get": _declared(1, "onlyMax", {"x-ctier-bounds": {"max": 10}})},
-        },
-    })
-    proxy = files["apiproxy/proxies/default.xml"]
-    assert "queryparam" not in proxy
-    assert "-bounds" not in proxy
-    _structural(files)
+def test_partial_bounds_are_rejected_before_resolution():
+    # Schema forbids a one-sided bounds object. generate runs the same
+    # extension check compose runs, so the object never reaches resolution.
+    with pytest.raises(ComposeError, match="onlyParam") as exc:
+        generate({
+            "openapi": "3.1.0",
+            "info": {"title": "t", "version": "1"},
+            "paths": {
+                "/a": {"get": _declared(1, "onlyParam", {"x-ctier-bounds": {"parameter": "limit"}})},
+                "/b": {"get": _declared(1, "onlyMax", {"x-ctier-bounds": {"max": 10}})},
+            },
+        })
+    assert exc.value.rule == "schema"
 
 
 def test_escalation_raises_one_tier_and_never_lowers():

@@ -40,7 +40,7 @@ from .compose import Source, _load
 from .errors import GenerateError
 from .fragment import apply_or_refuse
 from .models import Criteria, Tier
-from .validate import iter_operations
+from .validate import iter_operations, validate_openapi_extensions
 
 GENERATOR_VERSION = "0.3.0"
 TARGETS = frozenset({"apigee", "kong", "apisix"})
@@ -1953,6 +1953,8 @@ def generate(
         # Kong/APISIX already emit to the gateway log; records URL is unused.
         rec = None
     doc = _document(qualified_spec)
+    # Same schema check compose runs, on this document, before a tier is resolved.
+    validate_openapi_extensions(doc)
     digest = deployment_digest(doc, agents)
     _refuse_foreign_assignment(doc, agents, existing)
     if target == "kong":

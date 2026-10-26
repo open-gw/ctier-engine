@@ -1,4 +1,4 @@
 {
   "rule": "schema",
-  "message": "compliance-trigger is a required property"
+  "message": "getBalance: compliance-trigger is a required property"
 }
