@@ -13,7 +13,7 @@ from ctier.conformance import HANDWRITTEN_DIR
 from ctier.conformance.adapter import ReferenceAdapter
 from ctier.corpus import load_extras
 from ctier.errors import ComposeError
-from ctier.generate import flow_sort_key, generate, matches_path
+from ctier.generate import _resolved_tier, flow_sort_key, generate, matches_path
 from ctier.spec_loader import SPEC_DIR
 from tests.golden_util import GOLDEN_ROOT, NOW, normalise_signing_material
 
@@ -411,3 +411,47 @@ def test_golden_generate_cases():
         files = generate(qualified)
         _assert_bundle(case / "expect", files)
         _structural(files)
+
+
+def test_generate_rejects_an_incomplete_criteria_object():
+    raw = _spec({
+        "/accounts/{accountId}/balance": {
+            "get": _declared(1, "getBalance", {
+                "x-ctier-criteria": {
+                    "reversibility": "not-applicable",
+                    "blast-radius": "single-record",
+                    "data-sensitivity": "internal",
+                    "compliance-trigger": "none",
+                    "idempotency": "inherently-safe",
+                },
+            }),
+        },
+    })
+    qualified, _ = compose(raw, [], NOW)
+    criteria = qualified["paths"]["/accounts/{accountId}/balance"]["get"]["x-ctier-criteria"]
+    del criteria["reversibility"]
+    del criteria["compliance-trigger"]
+    with pytest.raises(ComposeError, match="getBalance") as exc:
+        generate(qualified)
+    text = str(exc.value)
+    assert exc.value.rule == "schema"
+    assert "reversibility is a required property" in text
+    assert "compliance-trigger is a required property" in text
+
+
+def test_missing_reversibility_resolves_to_tier_4():
+    # This holds because reversibility's default is none and that rule is
+    # evaluated first and returns the ceiling, so the other four defaults
+    # are never read and two of them are permissive. Reorder compute_tier,
+    # or change reversibility's default to compensatable, and the gap opens
+    # while every other test still passes. This test exists so that reorder
+    # fails here.
+    assert _resolved_tier({
+        "x-ctier-tier": 1,
+        "x-ctier-criteria": {
+            "blast-radius": "single-record",
+            "data-sensitivity": "public",
+            "compliance-trigger": "none",
+            "idempotency": "inherently-safe",
+        },
+    }) == 4
