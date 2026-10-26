@@ -1,256 +1,112 @@
 from pathlib import Path
 
 import matplotlib
-matplotlib.use('Agg')
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.patches import Rectangle, FancyArrowPatch
+from matplotlib.patches import FancyBboxPatch, Rectangle
+from matplotlib.lines import Line2D
 from matplotlib.backends.backend_pdf import PdfPages
 
-_OUT = Path(__file__).resolve().parent / 'architecture-diagrams.pdf'
-pdf = PdfPages(str(_OUT))
+plt.rcParams.update({"font.family": "DejaVu Sans", "pdf.fonttype": 42})
+
+_OUT = Path(__file__).resolve().parent / "architecture-diagrams.pdf"
+# 180 mm. The draft's 7.0866 in rounds to 510.2352 pt; the MediaBox is 510.24.
+_PAGE_W_IN = 510.24 / 72.0
+_A1_H_IN = 7.50
+
+BAND = "#f4f4f4"
+TAG = "#e6e6e6"
+
+
+def _pdf_pages(dest):
+    # No author, no path. Library names are omitted too; the page stands alone.
+    return PdfPages(str(dest), metadata={
+        "Creator": None,
+        "Producer": None,
+        "Title": None,
+        "Author": None,
+        "Subject": None,
+        "Keywords": None,
+    })
+
 
 # ============================================================ FIG A1
-# Page is 180 mm by 4.5 in. Every fontsize literal in this section is >= 8.
-# Fig 2, below, is the §5.1 comparison. Panel (b) is this same drawing
-# with the classification properties and the emission modes omitted.
-_A1_WIDTH_PT = 510.24
-_A1_HEIGHT_PT = 324.0
-_INK = '#1A1A1A'
-# Fig 2 is two stacked panels of 110 mm and a 7 mm gap.
-# The caption is in the manuscript. Bottom margin matches the top.
-# 666.14 pt = 666.14 / 72 * 25.4 mm.
-_FIG2_HEIGHT_PT = 666.14
-_FIG2_HEIGHT_MM = 666.14 * 25.4 / 72.0
-_FIG2_B_BASE = 4.0
-_FIG2_PANEL_SPAN = 110.0
-_FIG2_PANEL_GAP = 7.0
-_FIG2_A_BASE = _FIG2_B_BASE + _FIG2_PANEL_SPAN + _FIG2_PANEL_GAP
-
-_A1_GEOM = {
-    'design': (4.0, 84.0, 172.0, 26.5),
-    'deploy': (4.0, 32.0, 172.0, 44.0),
-    'run': (4.0, 3.2, 172.0, 16.6),
-    'tag_x': 6.0,
-    'tag_design_y': 103.6,
-    'tag_deploy_y': 68.8,
-    'tag_run_y': 12.6,
-    'cx': 90,
-    'title_y': 98.2,
-    'declared_y': 93.0,
-    'properties_y': 87.6,
-    'bundle': (8.0, 46.2, 78.0, 20.4),
-    'fragments': (94.0, 46.2, 78.0, 20.4),
-    'square': (11.2, 60.2, 2.3, 2.3),
-    'diamond': (97.6, 60.15, 2.2, 2.2),
-    'bundle_cx': 47,
-    'frag_cx': 133,
-    'mode_title_y': 61.2,
-    'mode_sub_y': 55.4,
-    'rule_x0': 12,
-    'rule_x1': 168,
-    'rule_y': 42.6,
-    'resolution_y': 37.6,
-    'gen_x1': 47,
-    'gen_x2': 133,
-    'gen_y1': 83.6,
-    'gen_y2': 66.8,
-    'cfg_x': 70,
-    'cfg_y1': 31.6,
-    'cfg_y2': 15.6,
-    'cfg_label_x': 76,
-    'cfg_label_y1': 27.2,
-    'cfg_label_y2': 22.8,
-}
+# Both sheets. Every fontsize literal from here to the end of the script
+# is >= 8. Fig 2 is the comparison; both of its panels are panel().
 
 
-def _comparison_geom(base):
-    """Band skeleton shared by fig 2 panels (a) and (b). Y grows upward."""
-    run_y = base
-    deploy_y = base + 52.0
-    design_y = base + 88.0
-    run_h, deploy_h, design_h = 42.0, 32.0, 22.0
-    return {
-        'design': (4.0, design_y, 172.0, design_h),
-        'deploy': (4.0, deploy_y, 172.0, deploy_h),
-        'run': (4.0, run_y, 172.0, run_h),
-        'tag_x': 6.0,
-        'tag_design_y': design_y + design_h - 6.9,
-        'tag_deploy_y': deploy_y + deploy_h - 6.9,
-        'tag_run_y': run_y + run_h - 6.9,
-        'cx': 90,
-        'title_y': design_y + design_h - 6.9 - 6.2,
-        'declared_y': design_y + design_h - 6.9 - 11.4,
-        'rule_x0': 12,
-        'rule_x1': 168,
-        'rule_y': deploy_y + 9.2,
-        'resolution_y': deploy_y + 4.2,
-        'gen_x1': 47,
-        'gen_x2': 133,
-        'gen_y1': design_y - 0.4,
-        'gen_y2': deploy_y + deploy_h - 10.5,
-        'cfg_x': 70,
-        'cfg_y1': deploy_y - 0.4,
-        'cfg_y2': run_y + 18.0,
-        'cfg_label_x': 76,
-        'cfg_label_y1': deploy_y - 2.8,
-        'cfg_label_y2': deploy_y - 6.8,
-        'pass_y1': deploy_y + deploy_h - 6.9 - 4.2,
-        'pass_y2': deploy_y + deploy_h - 6.9 - 8.6,
-        'run_rule_y': run_y + 9.2,
-        'run_resolution_y': run_y + 4.2,
-        'phrase_y': run_y + 14.6,
-        'box_y': run_y + 19.5,
-        'box_h': 11.5,
-        'round_y_hi': run_y + 28.6,
-        'round_y_lo': run_y + 21.6,
-        'round_label_y': run_y + 25.1,
-        'box_x_l': 10.0,
-        'box_x_r': 118.0,
-        'box_w': 52.0,
-    }
+def chip(ax, x, y, w, h, label, fs=8):
+    ax.add_patch(Rectangle((x, y), w, h, facecolor="black", edgecolor="none", zorder=6))
+    ax.text(x + w / 2, y + h / 2, label, color="white", ha="center", va="center",
+            fontsize=fs, fontweight="bold", zorder=7)
 
 
-def _band(ax, rect, face, lw):
-    ax.add_patch(Rectangle(rect[:2], rect[2], rect[3], facecolor=face,
-                           edgecolor=_INK, linewidth=lw, zorder=1))
+def _band_rect(ax, y, h, heavy):
+    ax.add_patch(Rectangle((2, y), 96, h, facecolor=BAND, edgecolor="black",
+                           linewidth=1.9 if heavy else 0.9, zorder=1))
 
 
-def _tag(ax, x, y, words):
-    ax.add_patch(Rectangle((x, y), 32.0, 5.6, facecolor=_INK, edgecolor=_INK,
-                           linewidth=0.6, zorder=3))
-    ax.text(x + 16.0, y + 2.8, words, ha='center', va='center', fontsize=8,
-            fontweight='bold', color='white', zorder=4)
+def band_a1(ax, y, h, label, heavy=False):
+    # A1 chips are 23 by 3.8. Fig 2's are 22 by 3.6, so they do not share a call.
+    _band_rect(ax, y, h, heavy)
+    chip(ax, 2, y + h - 3.8, 23, 3.8, label)
 
 
-def _shaft(ax, x1, y1, x2, y2, weight):
-    ax.add_patch(FancyArrowPatch((x1, y1), (x2, y2), arrowstyle='-|>',
-                                 mutation_scale=11, linewidth=weight, color=_INK,
-                                 shrinkA=0, shrinkB=0, clip_on=False, zorder=5))
+def band_fig2(ax, y, h, label, heavy=False, right=None):
+    _band_rect(ax, y, h, heavy)
+    chip(ax, 2, y + h - 3.6, 22, 3.6, label)
+    if right:
+        chip(ax, 98 - 37, y + h - 3.6, 37, 3.6, right)
 
 
-def _draw_resolution(ax, x0, x1, y_line, y_text):
-    """The block that moves. Same rule, same words, same weight, wherever it sits."""
-    ax.plot([x0, x1], [y_line, y_line], color=_INK, linewidth=0.6,
-            solid_capstyle='butt', zorder=2)
-    ax.text((x0 + x1) / 2.0, y_text, 'resolution    max(declared, computed)',
-            ha='center', va='center', fontsize=8, fontweight='bold', color=_INK,
-            zorder=4)
+def _box(ax, x, y, w, h, title=None, sub=None, dashed=False, heavy=False, fs=8.5,
+         fill="white", lift=1.7, drop=3.4):
+    ax.add_patch(Rectangle((x, y), w, h, facecolor=fill, edgecolor="black",
+                           linewidth=1.9 if heavy else 1.0,
+                           linestyle=(0, (3, 2)) if dashed else "solid", zorder=5))
+    if title:
+        ty = y + h / 2 + (lift if sub else 0)
+        ax.text(x + w / 2, ty, title, ha="center", va="center", fontsize=fs,
+                fontweight="bold", zorder=6)
+        if sub:
+            ax.text(x + w / 2, ty - drop, sub, ha="center", va="center",
+                    fontsize=8, zorder=6)
 
 
-def _draw_bands_and_tags(ax, g):
-    # Run time is the heavy frame. Design is the light one. Deploy sits between.
-    _band(ax, g['design'], '#F7F7F7', 0.8)
-    _band(ax, g['deploy'], 'white', 1.15)
-    _band(ax, g['run'], '#F3F3F3', 2.0)
-    _tag(ax, g['tag_x'], g['tag_design_y'], 'DESIGN TIME')
-    _tag(ax, g['tag_x'], g['tag_deploy_y'], 'DEPLOY TIME')
-    _tag(ax, g['tag_x'], g['tag_run_y'], 'RUN TIME')
+def box_a1(ax, x, y, w, h, title=None, sub=None, dashed=False, heavy=False,
+           fs=8.5, fill="white"):
+    # Title sits 1.7 above centre and the subtitle 3.4 below that. Fig 2 is 1.6 / 3.3.
+    _box(ax, x, y, w, h, title, sub, dashed, heavy, fs, fill, lift=1.7, drop=3.4)
 
 
-def _draw_design_heading(ax, g, properties):
-    ax.text(g['cx'], g['title_y'], 'Composed interface description',
-            ha='center', va='center', fontsize=9, fontweight='bold', color=_INK,
-            zorder=4)
-    ax.text(g['cx'], g['declared_y'], 'declared tiers',
-            ha='center', va='center', fontsize=8, color=_INK, zorder=4)
-    if properties:
-        ax.text(g['cx'], g['properties_y'],
-                'reversibility    blast radius    data sensitivity    compliance trigger',
-                ha='center', va='center', fontsize=8, color=_INK, zorder=4)
+def box_fig2(ax, x, y, w, h, title=None, sub=None, heavy=False, fs=8.5):
+    _box(ax, x, y, w, h, title, sub, False, heavy, fs, "white", lift=1.6, drop=3.3)
 
 
-def _draw_emission_modes(ax, g):
-    bundle, fragments = g['bundle'], g['fragments']
-    ax.add_patch(Rectangle(bundle[:2], bundle[2], bundle[3], facecolor='white',
-                           edgecolor=_INK, linewidth=1.7, linestyle='solid', zorder=2))
-    ax.add_patch(Rectangle(fragments[:2], fragments[2], fragments[3], facecolor='white',
-                           edgecolor=_INK, linewidth=1.15, linestyle=(0, (2.4, 1.3)),
-                           zorder=2))
-    # Shape channel: filled square on the bundle, open diamond on the fragments.
-    sx, sy, sw, sh = g['square']
-    ax.add_patch(Rectangle((sx, sy), sw, sh, facecolor=_INK, edgecolor=_INK,
-                           linewidth=0.4, zorder=3))
-    dx, dy, dw, dh = g['diamond']
-    ax.add_patch(Rectangle((dx, dy), dw, dh, angle=45, rotation_point='center',
-                           facecolor='none', edgecolor=_INK, linewidth=1.0, zorder=3))
-    ax.text(g['bundle_cx'], g['mode_title_y'], 'Complete policy bundle',
-            ha='center', va='center', fontsize=8, fontweight='bold', color=_INK, zorder=4)
-    ax.text(g['bundle_cx'], g['mode_sub_y'], 'generator owns the gateway configuration',
-            ha='center', va='center', fontsize=8, color=_INK, zorder=4)
-    ax.text(g['frag_cx'], g['mode_title_y'], 'Mergeable fragments',
-            ha='center', va='center', fontsize=8, fontweight='bold', color=_INK, zorder=4)
-    ax.text(g['frag_cx'], g['mode_sub_y'], 'existing estate the generator must not replace',
-            ha='center', va='center', fontsize=8, color=_INK, zorder=4)
+def tag(ax, x, y, w, h, label):
+    ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0,rounding_size=1.5",
+                                facecolor=TAG, edgecolor="black", linewidth=0.8, zorder=5))
+    ax.text(x + w / 2, y + h / 2, label, ha="center", va="center", fontsize=8, zorder=6)
 
 
-def _draw_generator_arrows(ax, g):
-    # They stop in deploy time. On Figure 1 that is the top of each emission box.
-    _shaft(ax, g['gen_x1'], g['gen_y1'], g['gen_x1'], g['gen_y2'], 0.9)
-    _shaft(ax, g['gen_x2'], g['gen_y1'], g['gen_x2'], g['gen_y2'], 0.9)
+def vline(ax, x, y1, y2, lw=1.2):
+    ax.add_line(Line2D([x, x], [y1, y2], color="black", linewidth=lw, zorder=7))
 
 
-def _draw_config_arrow(ax, g):
-    # The only arrow that enters run time on the implemented architecture.
-    _shaft(ax, g['cfg_x'], g['cfg_y1'], g['cfg_x'], g['cfg_y2'], 1.9)
-    ax.text(g['cfg_label_x'], g['cfg_label_y1'], 'configuration',
-            ha='left', va='center', fontsize=8, color=_INK, zorder=4)
-    ax.text(g['cfg_label_x'], g['cfg_label_y2'], 'at deploy',
-            ha='left', va='center', fontsize=8, fontweight='bold', color=_INK, zorder=4)
+def hline(ax, y, x1, x2, lw=1.2):
+    ax.add_line(Line2D([x1, x2], [y, y], color="black", linewidth=lw, zorder=7))
 
 
-def draw_implemented_architecture(ax, g, *, properties, emission_modes):
-    """Figure 1. properties and emission_modes are the only omissions fig 2 makes."""
-    _draw_bands_and_tags(ax, g)
-    _draw_design_heading(ax, g, properties)
-    if emission_modes:
-        _draw_emission_modes(ax, g)
-    _draw_resolution(ax, g['rule_x0'], g['rule_x1'], g['rule_y'], g['resolution_y'])
-    # Generator arrows are not the emission boxes. They still stop in deploy time.
-    _draw_generator_arrows(ax, g)
-    _draw_config_arrow(ax, g)
+def varrow(ax, x, y1, y2, lw=1.2, dashed=False):
+    ax.annotate("", xy=(x, y2), xytext=(x, y1), zorder=8, arrowprops=dict(
+        arrowstyle="-|>", color="black", linewidth=lw, mutation_scale=11,
+        shrinkA=0, shrinkB=0, linestyle=(0, (3, 2)) if dashed else "solid"))
 
 
-def draw_specified_request_path(ax, g):
-    """Panel (a). Classification is a run-time round trip. Deploy does not resolve."""
-    _draw_bands_and_tags(ax, g)
-    _draw_design_heading(ax, g, properties=False)
-    ax.text(g['cx'], g['pass_y1'], 'generator passes declarations through',
-            ha='center', va='center', fontsize=8, color=_INK, zorder=4)
-    ax.text(g['cx'], g['pass_y2'], 'it does not resolve',
-            ha='center', va='center', fontsize=8, color=_INK, zorder=4)
-    box_y, box_h, box_w = g['box_y'], g['box_h'], g['box_w']
-    left, right = g['box_x_l'], g['box_x_r']
-    for x, label in ((left, 'Gateway'), (right, 'Consequence Engine')):
-        ax.add_patch(Rectangle((x, box_y), box_w, box_h, facecolor='white',
-                               edgecolor=_INK, linewidth=1.4, linestyle='solid', zorder=2))
-        ax.text(x + box_w / 2.0, box_y + box_h / 2.0, label,
-                ha='center', va='center', fontsize=8, fontweight='bold', color=_INK,
-                zorder=4)
-    # Out to the engine, back with a disposition, before the request is forwarded.
-    _shaft(ax, left + box_w + 1.5, g['round_y_hi'], right - 1.5, g['round_y_hi'], 1.6)
-    _shaft(ax, right - 1.5, g['round_y_lo'], left + box_w + 1.5, g['round_y_lo'], 1.6)
-    ax.text(g['cx'], g['round_label_y'], 'disposition',
-            ha='center', va='center', fontsize=8, color=_INK, zorder=4)
-    ax.text(g['cx'], g['phrase_y'], 'before the request is forwarded',
-            ha='center', va='center', fontsize=8, color=_INK, zorder=4)
-    _draw_resolution(ax, g['rule_x0'], g['rule_x1'], g['run_rule_y'], g['run_resolution_y'])
-
-
-def _panel_label(ax, g, words):
-    design = g['design']
-    ax.text(design[0] + design[2] - 2.2, design[1] + design[3] - 3.4, words,
-            ha='right', va='center', fontsize=9, fontweight='bold', color=_INK, zorder=4)
-
-
-def _blank_figure(width_pt, height_pt, height_mm):
-    fig, ax = plt.subplots(figsize=(width_pt / 72.0, height_pt / 72.0))
-    fig.subplots_adjust(left=0, right=1, bottom=0, top=1)
-    ax.set_xlim(0, 180)
-    ax.set_ylim(0, height_mm)
-    ax.axis('off')
-    fig.patch.set_facecolor('white')
-    ax.set_facecolor('white')
-    return fig, ax
+def harrow(ax, y, x1, x2, lw=1.2):
+    ax.annotate("", xy=(x2, y), xytext=(x1, y), zorder=8, arrowprops=dict(
+        arrowstyle="-|>", color="black", linewidth=lw, mutation_scale=11,
+        shrinkA=0, shrinkB=0))
 
 
 def _assert_fonts(ax):
@@ -258,130 +114,184 @@ def _assert_fonts(ax):
     assert sizes and min(sizes) >= 8, sizes
 
 
-def _arrow_ends(patch):
-    (x1, y1), (x2, y2) = patch._posA_posB
-    return x1, y1, x2, y2
+def newfig(height_in, ylim):
+    fig = plt.figure(figsize=(_PAGE_W_IN, height_in))
+    ax = fig.add_axes([0, 0, 1, 1])
+    ax.set_xlim(0, 100)
+    ax.set_ylim(0, ylim)
+    ax.axis("off")
+    return fig, ax
 
 
-def _inside(rect, x, y):
-    return rect[0] < x < rect[0] + rect[2] and rect[1] < y < rect[1] + rect[3]
+def draw_a1(ax):
+    # DESIGN TIME
+    band_a1(ax, 73, 37, "DESIGN TIME")
+    box_a1(ax, 6, 98, 39, 7, "Base interface description", fs=8.5)
+    box_a1(ax, 53, 98, 41, 7, "ctier OpenAPI overlay", fs=8.5)
+    varrow(ax, 25, 98, 95.4)
+    varrow(ax, 73, 98, 95.4)
 
+    box_a1(ax, 5, 75, 90, 20)
+    ax.text(50, 91.8, "Composed interface description", ha="center", fontsize=8.5,
+            fontweight="bold", zorder=6)
+    box_a1(ax, 8, 76.5, 50, 13.5)
+    ax.text(33, 87.4, "operation governance attributes", ha="center", fontsize=8, zorder=6)
+    tag(ax, 10, 82.2, 22, 4.4, "reversibility")
+    tag(ax, 34, 82.2, 22, 4.4, "blast radius")
+    tag(ax, 10, 77.4, 22, 4.4, "data sensitivity")
+    tag(ax, 34, 77.4, 22, 4.4, "compliance trigger")
+    box_a1(ax, 62, 79.5, 30, 7.5, "Declared tier", "per operation", fs=8.5)
 
-def _count_crossing(arrows, rect):
-    entering = leaving = 0
-    for patch in arrows:
-        x1, y1, x2, y2 = _arrow_ends(patch)
-        head_in, tail_in = _inside(rect, x2, y2), _inside(rect, x1, y1)
-        if head_in and not tail_in:
-            entering += 1
-        if tail_in and not head_in:
-            leaving += 1
-    return entering, leaving
+    varrow(ax, 33, 75, 63.4)
+    ax.text(34.6, 69.4, "computed", ha="left", fontsize=8, zorder=8)
+    varrow(ax, 77, 75, 63.4)
+    ax.text(78.6, 69.4, "declared", ha="left", fontsize=8, zorder=8)
+
+    # DEPLOYMENT TIME
+    band_a1(ax, 28, 40, "DEPLOYMENT TIME")
+    box_a1(ax, 18, 52, 64, 11, "Configuration generator",
+           "resolved tier  =  max(declared, computed)")
+    box_a1(ax, 8, 38, 40, 10, "Complete policy bundle", "generator owns the configuration")
+    box_a1(ax, 52, 38, 40, 10, "Mergeable fragments",
+           "existing configuration preserved", dashed=True)
+    varrow(ax, 28, 52, 48.4)
+    varrow(ax, 72, 52, 48.4)
+    box_a1(ax, 29, 29, 42, 6.5, "Gateway-native compiled configuration", fs=8.5)
+    vline(ax, 28, 38, 36.4)
+    vline(ax, 72, 38, 36.4)
+    hline(ax, 36.4, 28, 72)
+    varrow(ax, 50, 36.4, 35.4)
+
+    # RUN TIME
+    band_a1(ax, 2, 23, "RUN TIME", heavy=True)
+    box_a1(ax, 5, 11, 18, 7, "AI agent")
+    box_a1(ax, 27, 7.5, 49, 15.5, heavy=True)
+    chip(ax, 27, 19.2, 23, 3.8, "API GATEWAY")
+    box_a1(ax, 30, 11, 25, 7, "Platform policies", "authn · rate limits", fs=8)
+    box_a1(ax, 58, 11, 16, 7, "ctier policy", "compiled tier", fs=8, heavy=True)
+    box_a1(ax, 82, 11, 15, 7, "Upstream API", fs=8)
+    box_a1(ax, 58, 3.6, 16, 3.4, "Request refused", fs=8)
+    harrow(ax, 14.5, 23, 26.6)
+    harrow(ax, 14.5, 55, 57.6)
+    harrow(ax, 14.5, 76, 81.6)
+    varrow(ax, 66, 11, 7.4, dashed=True)
+
+    varrow(ax, 66, 29, 18.4, lw=1.8)
+    ax.text(64.2, 26.0, "configuration  at deploy", ha="right", fontsize=8,
+            fontweight="bold", zorder=8)
 
 
 def build_a1():
-    fig, ax = _blank_figure(_A1_WIDTH_PT, _A1_HEIGHT_PT, 114.3)
-    draw_implemented_architecture(ax, _A1_GEOM, properties=True, emission_modes=True)
+    fig, ax = newfig(_A1_H_IN, 112)
+    draw_a1(ax)
     _assert_fonts(ax)
-    run = _A1_GEOM['run']
-    arrows = [p for p in ax.patches if isinstance(p, FancyArrowPatch)]
-    assert len(arrows) == 3, len(arrows)
-    entering, leaving = _count_crossing(arrows, run)
-    assert entering == 1 and leaving == 0, (entering, leaving)
     return fig
 
 
-def _pdf_pages(dest):
-    # No author, no path. Library names are omitted too; the page stands alone.
-    return PdfPages(str(dest), metadata={
-        'Creator': None,
-        'Producer': None,
-        'Title': None,
-        'Author': None,
-        'Subject': None,
-        'Keywords': None,
-    })
+PH = 65
+GAP = 6
+TOT = PH * 2 + GAP
+_FIG2_H_IN = TOT * 4.30 / 72.0
+
+
+def panel(ax, b, variant):
+    band_fig2(
+        ax, b + 51, 14, "DESIGN TIME",
+        right="(a)  AS DESIGNED \u2014 NEVER BUILT" if variant == "a"
+        else "(b)  AS BUILT",
+    )
+    box_fig2(ax, 14, b + 53, 72, 7.5, "Composed interface description",
+             "governance attributes  \u00b7  declared tier")
+
+    band_fig2(ax, b + 28, 19, "DEPLOYMENT TIME")
+    varrow(ax, 50, b + 51, b + 44.4)
+    if variant == "a":
+        box_fig2(ax, 18, b + 35, 64, 9, "Configuration generator",
+                 "declarations forwarded  \u2014  the engine resolves, per request")
+        ax.text(50, b + 31.2, "no resolution at deployment time",
+                ha="center", fontsize=8, style="italic", zorder=6)
+    else:
+        box_fig2(ax, 18, b + 36, 64, 8.5, "Configuration generator",
+                 "resolved tier  =  max(declared, computed)")
+        box_fig2(ax, 29, b + 29, 42, 5.5, "Gateway-native compiled configuration", fs=8)
+        varrow(ax, 50, b + 36, b + 34.9)
+
+    band_fig2(ax, b, 24, "RUN TIME", heavy=True)
+    box_fig2(ax, 24, b + 2.5, 48, 11, heavy=True)
+    chip(ax, 24, b + 9.9, 21, 3.6, "API GATEWAY")
+    box_fig2(ax, 4, b + 4.25, 17, 4.5, "AI agent", fs=8)
+    box_fig2(ax, 79, b + 4.25, 17, 4.5, "Upstream API", fs=8)
+    harrow(ax, b + 6.5, 21, 23.6)
+    harrow(ax, b + 6.5, 72, 78.6)
+
+    if variant == "a":
+        box_fig2(ax, 27, b + 4, 24, 5, "Platform policies", "authn \u00b7 rate limits", fs=8)
+        box_fig2(ax, 45, b + 16, 32, 6, "Consequence Engine",
+                 "resolves the tier on every request", fs=8, heavy=True)
+        varrow(ax, 61, b + 28, b + 22.2)
+        ax.text(59.2, b + 25.8, "declarations", ha="right", fontsize=8, zorder=8)
+        varrow(ax, 53, b + 16, b + 13.7)
+        varrow(ax, 63, b + 13.7, b + 16)
+        ax.text(66.5, b + 14.6, "per request", ha="left", fontsize=8, style="italic", zorder=8)
+    else:
+        box_fig2(ax, 27, b + 4, 24, 5, "Platform policies", "authn \u00b7 rate limits", fs=8)
+        box_fig2(ax, 53, b + 4, 16, 5, "ctier policy", "compiled tier", fs=8, heavy=True)
+        harrow(ax, b + 6.5, 51, 52.6)
+        varrow(ax, 61, b + 29, b + 9.7, lw=1.7)
+        ax.text(59.2, b + 25.8, "configuration  at deploy", ha="right", fontsize=8,
+                fontweight="bold", zorder=8)
+
+
+def build_fig2():
+    fig, ax = newfig(_FIG2_H_IN, TOT)
+    panel(ax, PH + GAP, "a")
+    panel(ax, 0, "b")
+    _assert_fonts(ax)
+    return fig
+
+
+def _save_one(fig, dest, width_in, height_in, mediabox):
+    fig.set_size_inches(width_in, height_in)
+    dest = Path(dest)
+    out = _pdf_pages(dest)
+    out.savefig(fig, bbox_inches=None)
+    out.close()
+    plt.close(fig)
+    raw = dest.read_bytes()
+    assert raw.count(b"/MediaBox") == 1
+    assert mediabox in raw
+    return raw
 
 
 def write_a1_pdf(dest):
     fig = build_a1()
-    # 510.24 pt is 180 mm. figsize is that width over 72, not a tight crop.
-    fig.set_size_inches(_A1_WIDTH_PT / 72.0, _A1_HEIGHT_PT / 72.0)
-    dest = Path(dest)
-    out = _pdf_pages(dest)
-    out.savefig(fig, bbox_inches=None)
-    out.close()
-    plt.close(fig)
-    raw = dest.read_bytes()
-    assert raw.count(b'/MediaBox') == 1
-    assert b'/MediaBox [ 0 0 510.24 324 ]' in raw
-
-
-def build_fig2():
-    fig, ax = _blank_figure(_A1_WIDTH_PT, _FIG2_HEIGHT_PT, _FIG2_HEIGHT_MM)
-    specified = _comparison_geom(_FIG2_A_BASE)
-    built = _comparison_geom(_FIG2_B_BASE)
-    draw_specified_request_path(ax, specified)
-    # Panel (b) is Figure 1 from the same function. Two flags are the whole reduction.
-    draw_implemented_architecture(ax, built, properties=False, emission_modes=False)
-    _panel_label(ax, specified, '(a)')
-    _panel_label(ax, built, '(b)')
-    _assert_fonts(ax)
-    arrows = [p for p in ax.patches if isinstance(p, FancyArrowPatch)]
-    # (a) round trip is two arrows inside run time. (b) keeps the two generator
-    # arrows and the one arrow into run time. Nothing leaves run time.
-    assert len(arrows) == 5, len(arrows)
-    a_enter, a_leave = _count_crossing(arrows, specified['run'])
-    b_enter, b_leave = _count_crossing(arrows, built['run'])
-    assert a_enter == 0 and a_leave == 0, (a_enter, a_leave)
-    assert b_enter == 1 and b_leave == 0, (b_enter, b_leave)
-    inside_a = []
-    for patch in arrows:
-        x1, y1, x2, y2 = _arrow_ends(patch)
-        if _inside(specified['run'], x1, y1) and _inside(specified['run'], x2, y2):
-            inside_a.append((x1, x2, y1, y2))
-    assert len(inside_a) == 2, inside_a
-    directions = {x2 > x1 for x1, x2, y1, y2 in inside_a}
-    assert directions == {True, False}, inside_a
-    blob = '\n'.join(t.get_text() for t in ax.texts)
-    assert blob.count('resolution    max(declared, computed)') == 2
-    assert 'reversibility' not in blob
-    assert 'Complete policy bundle' not in blob
-    assert 'Mergeable fragments' not in blob
-    assert '(a)' in blob and '(b)' in blob
-    assert 'disposition' in blob
-    assert 'configuration' in blob and 'at deploy' in blob
-    assert 'Panel (b) reproduces Figure 1' not in blob
-    resolution_ys = [t.get_position()[1] for t in ax.texts
-                     if t.get_text() == 'resolution    max(declared, computed)']
-    assert len(resolution_ys) == 2
-    a_run, b_deploy = specified['run'], built['deploy']
-    assert any(_inside(a_run, 90, y) for y in resolution_ys)
-    assert any(_inside(b_deploy, 90, y) for y in resolution_ys)
-    assert not any(_inside(specified['deploy'], 90, y) for y in resolution_ys)
-    return fig
+    return _save_one(fig, dest, _PAGE_W_IN, _A1_H_IN, b"/MediaBox [ 0 0 510.24 540 ]")
 
 
 def write_fig2_pdf(dest):
     fig = build_fig2()
-    fig.set_size_inches(_A1_WIDTH_PT / 72.0, _FIG2_HEIGHT_PT / 72.0)
+    return _save_one(
+        fig, dest, _PAGE_W_IN, _FIG2_H_IN, b"/MediaBox [ 0 0 510.24 584.8 ]")
+
+
+def write_architecture_pdf(dest=_OUT):
+    a1 = build_a1()
+    fig2 = build_fig2()
+    a1.set_size_inches(_PAGE_W_IN, _A1_H_IN)
+    fig2.set_size_inches(_PAGE_W_IN, _FIG2_H_IN)
     dest = Path(dest)
     out = _pdf_pages(dest)
-    out.savefig(fig, bbox_inches=None)
+    out.savefig(a1, bbox_inches=None)
+    out.savefig(fig2, bbox_inches=None)
     out.close()
-    plt.close(fig)
+    plt.close(a1)
+    plt.close(fig2)
     raw = dest.read_bytes()
-    assert raw.count(b'/MediaBox') == 1
-    assert b'/MediaBox [ 0 0 510.24 666.14 ]' in raw
+    assert raw.count(b"/MediaBox") == 2
+    assert b"/MediaBox [ 0 0 510.24 540 ]" in raw
+    assert b"/MediaBox [ 0 0 510.24 584.8 ]" in raw
     return raw
 
-fig = build_a1()
-pdf.savefig(fig, bbox_inches=None)
-plt.close(fig)
 
-fig = build_fig2()
-pdf.savefig(fig, bbox_inches=None)
-plt.close(fig)
-
-pdf.close()
-print('2 diagram sheets written')
+write_architecture_pdf()
+print("2 diagram sheets written")
