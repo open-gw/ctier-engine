@@ -1,0 +1,70 @@
+# Generator output for raiseDispute only.
+# Trimmed: removed `consumers` (jwt-auth public_key),
+# all other routes, and the undeclared catch-all route.
+# Stripped from this route's openid-connect plugin: the client credential field and the PEM public key field.
+# Produced by ctier.generate.generate(..., target='apisix') against the
+# composed consequence-tiered-api.yaml (same NOW as package build.sh).
+routes:
+- id: raiseDispute
+  name: raiseDispute
+  uris:
+  - /disputes
+  methods:
+  - POST
+  priority: 11
+  plugins:
+    jwt-auth:
+      _meta:
+        priority: 20000
+      key_claim_name: cid
+    serverless-pre-function:
+      _meta:
+        priority: 21000
+      phase: rewrite
+      functions:
+      - "return function(conf, ctx)\n  local h = ngx.req.get_headers()\n  for k, _ in pairs(h) do\n    local lk = string.lower(k)\n    if string.sub(lk, 1, 8) == \"x-ctier-\" or lk == \"x-correlation-id\" or lk == \"idempotency-key\" or lk == \"x-idempotency-key\" then\n      ngx.req.clear_header(k)\n    end\n  end\nend\n"
+    proxy-rewrite:
+      _meta:
+        priority: 10000
+      headers:
+        remove:
+        - X-Correlation-Id
+        - Idempotency-Key
+        - X-Idempotency-Key
+        set:
+          X-Ctier-Tier: '4'
+          X-Ctier-Deployment: sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8
+          X-Ctier-Operation: raiseDispute
+    openid-connect:
+      _meta:
+        priority: 15000
+      client_id: agent-a
+      discovery: http://127.0.0.1:1/.well-known/openid-configuration
+      bearer_only: true
+      ssl_verify: false
+      claim_validator:
+        issuer:
+          valid_issuers:
+          - ctier
+          - http://keycloak:8080/realms/ctier
+          - http://127.0.0.1:18400/realms/ctier
+          - http://127.0.0.1:19400/realms/ctier
+      set_userinfo_header: false
+      set_id_token_header: false
+      required_scopes:
+      - operation-raiseDispute
+    serverless-post-function:
+      _meta:
+        priority: 7000
+      phase: access
+      functions:
+      - "local function ctier_allocate_sequence()\n  local dict = ngx.shared.ctier_seq\n  local pid = tostring(ngx.worker.pid())\n  if dict then\n    local epoch = dict:get(\"epoch:\" .. pid)\n    if not epoch then\n      epoch = string.format(\"%s-%s\", tostring(ngx.now()), pid)\n      dict:set(\"epoch:\" .. pid, epoch)\n    end\n    local n = dict:incr(\"n:\" .. pid, 1, 0)\n    return epoch, n\n  end\n  local M = package.loaded.ctier_record_seq\n  if not M then\n    M = {\n      epoch = string.format(\"%s-%s\", tostring(ngx.now()), pid),\n      n = 0,\n    }\n    package.loaded.ctier_record_seq = M\n  end\n  M.n = M.n + 1\n  return M.epoch, M.n\nend\nlocal function ctier_emit_sink(marker, rec, cjson)\n  local epoch, seq = ctier_allocate_sequence()\n  ngx.log(ngx.NOTICE, marker .. \"epoch=\" .. epoch .. \" seq=\" .. tostring(seq) .. \" \" .. (cjson.encode(rec) or \"\"))\nend\nreturn function(conf, ctx)\n  local cjson = require(\"cjson.safe\")\n  local agent = ngx.var.http_x_agent_id or\
+        \ \"unknown\"\n  local task = ngx.var.http_x_task_id\n  local cid = tostring(ngx.now()) .. \"-\" .. tostring(ngx.worker.pid()) .. \"-\" .. tostring(math.random(1, 1000000000))\n  local rec = {\n    ctierSchema = \"decision-record/0.2.0\",\n    id = cid,\n    timestamp = os.date(\"!%Y-%m-%dT%H:%M:%SZ\"),\n    operationAnchor = \"raiseDispute\",\n    agentId = agent,\n    correlationScope = task or agent,\n    correlationId = cid,\n    declaredTier = 4,\n    appliedTier = 4,\n    escalationReason = \"none\",\n    disposition = \"refuse-and-suspend\",\n    idempotencyKey = cid,\n    deploymentDigest = \"sha256:cbbddcc056749e21fa111ce65cc7730b6236cee3fd3b967b511010e88dbfeec8\",\n  }\n  ctier_emit_sink(\"[ctier-decision] \", rec, cjson)\n  ngx.status = 423\n  ngx.header[\"Content-Type\"] = \"application/json\"\n  ngx.header[\"Cache-Control\"] = \"no-store\"\n  ngx.header[\"X-Agent-Action\"] = \"halt_and_hand_off\"\n  ngx.say(\"{\\\"status\\\":\\\"agent_suspended\\\",\\\"humanTakeoverRequired\\\
+        \":true,\\\"autoResume\\\":false,\\\"agentAction\\\":\\\"halt_and_hand_off\\\"}\")\n  return ngx.exit(423)\nend\n"
+  upstream:
+    type: roundrobin
+    scheme: https
+    nodes:
+      api.example-bank.com:443: 1
+
+#END

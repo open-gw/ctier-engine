@@ -1,0 +1,24 @@
+# Composed-description fragment for raiseDispute.
+# Source: engine/ctier/spec/consequence-tiered-api.yaml via compose().
+# declared x-ctier-tier: 3
+# compute_tier(x-ctier-criteria): 4  (compliance-trigger: direct -> Tier 4)
+# resolved tier compiled by generate: max(3, 4) = 4
+# Public tip used for generate: see findings 85.
+paths:
+  /disputes:
+    post:
+      operationId: raiseDispute
+      x-ctier-tier: 3
+      x-ctier-status: declared
+      x-ctier-handoff:
+        authority: disputes
+      x-ctier-criteria:
+        reversibility: undo-restores-record-only
+        blast-radius: single-customer
+        data-sensitivity: regulated
+        compliance-trigger: direct
+        idempotency: key-required
+      x-ctier-rationale: 'Withdrawing a dispute does not undo the scheme notification
+        already sent to the acquirer, nor the clock started on the regulatory timetable.
+
+        '
