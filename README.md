@@ -5,7 +5,6 @@
 This engine was developed in a private repository and is published here as a
 single tree. The development record is in
 [`engine/docs/findings/`](engine/docs/findings/), dated and sequential.
-Commit hashes cited in findings refer to that private development repository.
 
 This repository is a reference implementation of consequence-tiered API
 governance: each operation is assigned a consequence class at design time, and
@@ -20,8 +19,9 @@ The release this engine implements is named in
 
 ## What is verified, and how
 
-Kong and APISIX are clean against **conformance-kit/1.1** at both Level 2 and
-Level 3: zero failed rows, skips carry stated reasons, matrices in
+Against **conformance-kit/1.1**, APISIX Level 3 failed before the hop-scoring
+fix at `e594696`. After that commit, Kong and APISIX are clean at Level 2 and
+Level 3: zero failed rows, skips carry stated reasons. Matrices in
 [`engine/docs/kit/matrices.md`](engine/docs/kit/matrices.md).
 
 ## What is not
