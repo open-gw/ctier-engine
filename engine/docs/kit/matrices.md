@@ -68,10 +68,10 @@ observer fix is not that commit.
 
 | Run | Current file | 24 October record | Compose | Target |
 |---|---|---|---|---|
-| Kong Level 3 | `runs/kong-level-3-2026-10-24.yaml` | `runs/kong-level-3.yaml` | `targets/kong/live/compose.yaml` | `kong:3.9` |
-| Kong Level 2 | `runs/kong-level-2-2026-10-24.yaml` | `runs/kong-level-2.yaml` | `targets/kong/live/compose.yaml` | `kong:3.9` |
-| APISIX Level 3 | `runs/apisix-level-3-2026-10-24.yaml` | `runs/apisix-level-3.yaml` | `targets/apisix/live/compose.yaml` | `apache/apisix:3.13.0-debian` |
-| APISIX Level 2 | `runs/apisix-level-2-2026-10-24.yaml` | `runs/apisix-level-2.yaml` | `targets/apisix/live/compose.yaml` | `apache/apisix:3.13.0-debian` |
+| Kong Level 3 | `runs/kong-level-3-e594696-2026-10-24.yaml` | `runs/kong-level-3-pre-e594696.yaml` | `targets/kong/live/compose.yaml` | `kong:3.9` |
+| Kong Level 2 | `runs/kong-level-2-e594696-2026-10-24.yaml` | `runs/kong-level-2-pre-e594696.yaml` | `targets/kong/live/compose.yaml` | `kong:3.9` |
+| APISIX Level 3 | `runs/apisix-level-3-e594696-2026-10-24.yaml` | `runs/apisix-level-3-pre-e594696.yaml` | `targets/apisix/live/compose.yaml` | `apache/apisix:3.13.0-debian` |
+| APISIX Level 2 | `runs/apisix-level-2-e594696-2026-10-24.yaml` | `runs/apisix-level-2-pre-e594696.yaml` | `targets/apisix/live/compose.yaml` | `apache/apisix:3.13.0-debian` |
 
 When these runs were taken, the committed
 `keycloak-rsa.json` was a placeholder and
@@ -154,9 +154,9 @@ column.
 ## Kong Level 3
 
 Current file
-`runs/kong-level-3-2026-10-24.yaml`.
+`runs/kong-level-3-e594696-2026-10-24.yaml`.
 The 24 October file
-`runs/kong-level-3.yaml` has the
+`runs/kong-level-3-pre-e594696.yaml` has the
 same rows. 15/0/2/1.
 
 | Criterion | Case | Outcome | Not this level | Not observed here |
@@ -185,9 +185,9 @@ same rows. 15/0/2/1.
 ## Kong Level 2
 
 Current file
-`runs/kong-level-2-2026-10-24.yaml`.
+`runs/kong-level-2-e594696-2026-10-24.yaml`.
 The 24 October file
-`runs/kong-level-2.yaml` has the
+`runs/kong-level-2-pre-e594696.yaml` has the
 same rows. 11/0/6/1.
 
 | Criterion | Case | Outcome | Not this level | Not observed here |
@@ -216,7 +216,7 @@ same rows. 11/0/6/1.
 ## APISIX Level 3
 
 Current file
-`runs/apisix-level-3-2026-10-24.yaml`.
+`runs/apisix-level-3-e594696-2026-10-24.yaml`.
 16/0/2/0. C7 passed.
 
 | Criterion | Case | Outcome | Not this level | Not observed here |
@@ -242,7 +242,7 @@ Current file
 
 ## APISIX Level 3, 24 October record
 
-File `runs/apisix-level-3.yaml`. Kept.
+File `runs/apisix-level-3-pre-e594696.yaml`. Kept.
 15/1/2/0.
 
 | Criterion | Case | Outcome | Not this level | Not observed here |
@@ -275,9 +275,9 @@ failure entry is `observer.present.idempotency-key` expected `present`, observed
 ## APISIX Level 2
 
 Current file
-`runs/apisix-level-2-2026-10-24.yaml`.
+`runs/apisix-level-2-e594696-2026-10-24.yaml`.
 The 24 October file
-`runs/apisix-level-2.yaml` has the
+`runs/apisix-level-2-pre-e594696.yaml` has the
 same rows. 12/0/6/0.
 
 | Criterion | Case | Outcome | Not this level | Not observed here |
