@@ -49,7 +49,8 @@ C14 is not among them.
 
 Current tables are the dated files
 from 24 October 2026, after the
-observer fix. Host
+observer fix and after kit commit
+`e594696` (hop scoring). Host
 `Rinus-MBP-M3.local`. The undated
 files are the earlier record from
 the same calendar date. They stay.
@@ -57,7 +58,10 @@ They are not deleted.
 
 Specification 1.25.0 at
 `c5c6af025a8f2baab527ebb8518dcbea13ef2058`.
-Kit `conformance-kit/1.1`. Generator
+Kit `conformance-kit/1.1` at
+`e594696978895b3c455e385b12d1ebeb666592e6`
+— the commit that produced the
+post-fix runs. Generator
 `fd797887d6352ffe06402780846166293980f17c`.
 The generator did not change. The
 observer fix is not that commit.
