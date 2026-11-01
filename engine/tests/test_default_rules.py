@@ -83,6 +83,78 @@ def test_get_collection():
     assert m["id"] == "get-collection"
 
 
+def test_get_collection_follows_local_ref():
+    """A $ref to an array schema is still a collection, including under a parent path."""
+    rules = load_rules(DEFAULT_RULES)["rules"]
+    doc = {
+        "paths": {
+            "/orders": {
+                "get": {
+                    "operationId": "listOrders",
+                    "responses": {
+                        "200": {
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "type": "array",
+                                        "items": {"$ref": "#/components/schemas/Order"},
+                                    }
+                                }
+                            }
+                        }
+                    },
+                }
+            },
+            "/users/{id}/orders": {
+                "get": {
+                    "operationId": "listUserOrders",
+                    "parameters": [
+                        {"name": "id", "in": "path", "required": True, "schema": {"type": "string"}}
+                    ],
+                    "responses": {
+                        "200": {
+                            "content": {
+                                "application/json": {
+                                    "schema": {"$ref": "#/components/schemas/Orders"}
+                                }
+                            }
+                        }
+                    },
+                }
+            },
+        },
+        "components": {
+            "schemas": {
+                "Order": {"type": "object"},
+                "Orders": {
+                    "type": "array",
+                    "items": {"$ref": "#/components/schemas/Order"},
+                },
+            }
+        },
+    }
+    reversed_ids = reversed_by(doc)
+    inline = first_match(
+        rules,
+        path="/orders",
+        method="get",
+        op=doc["paths"]["/orders"]["get"],
+        doc=doc,
+        reversed_ids=reversed_ids,
+    )
+    via_ref = first_match(
+        rules,
+        path="/users/{id}/orders",
+        method="get",
+        op=doc["paths"]["/users/{id}/orders"]["get"],
+        doc=doc,
+        reversed_ids=reversed_ids,
+    )
+    assert inline["id"] == "get-collection"
+    assert via_ref["id"] == "get-collection"
+    assert via_ref["propose"]["criteria"]["blast-radius"] == "population"
+
+
 def test_put_with_and_without_reversal():
     put = {"operationId": "replaceItem"}
     assert _match("/items/{id}", "put", put)["id"] == "put-without-declared-reversal"

@@ -102,14 +102,14 @@ def path_ends_with_parameter(path: str) -> bool:
     return bool(segs) and bool(_PARAM_SEGMENT.match(segs[-1]))
 
 
-def response_is_collection(op: dict) -> bool:
+def response_is_collection(op: dict, doc: dict | None = None) -> bool:
     responses = op.get("responses") or {}
     if not isinstance(responses, dict):
         return False
     for code, response in responses.items():
         if str(code) not in _SUCCESS or not isinstance(response, dict):
             continue
-        if _schema_is_array(_response_schema(response)):
+        if _schema_is_array(_response_schema(response), doc):
             return True
     return False
 
@@ -124,12 +124,47 @@ def _response_schema(response: dict) -> dict | None:
     return None
 
 
-def _schema_is_array(schema: dict | None) -> bool:
+def _pointer_get(doc: dict, pointer: str) -> Any:
+    """Resolve a JSON Pointer under ``doc``. ``pointer`` is the path after ``#``."""
+    if not pointer.startswith("/"):
+        return None
+    node: Any = doc
+    for raw in pointer[1:].split("/"):
+        part = raw.replace("~1", "/").replace("~0", "~")
+        if not isinstance(node, dict) or part not in node:
+            return None
+        node = node[part]
+    return node
+
+
+def _resolve_local_schema(
+    schema: dict | None,
+    doc: dict | None,
+    seen: frozenset[str] | None = None,
+) -> dict | None:
+    """Follow local ``#/…`` refs before shape checks. Cycles and misses stay unresolved."""
     if not schema:
+        return None
+    ref = schema.get("$ref")
+    if not isinstance(ref, str) or not ref.startswith("#/") or doc is None:
+        return schema
+    if seen is None:
+        seen = frozenset()
+    if ref in seen:
+        return None
+    target = _pointer_get(doc, ref[1:])
+    if not isinstance(target, dict):
+        return schema
+    return _resolve_local_schema(target, doc, seen | {ref})
+
+
+def _schema_is_array(schema: dict | None, doc: dict | None = None) -> bool:
+    resolved = _resolve_local_schema(schema, doc)
+    if not resolved:
         return False
-    if schema.get("type") == "array":
+    if resolved.get("type") == "array":
         return True
-    if "items" in schema and schema.get("type") is None:
+    if "items" in resolved and resolved.get("type") is None:
         return True
     return False
 
@@ -181,7 +216,7 @@ def rule_matches(
         if path_ends_with_parameter(path) is not bool(when["pathEndsWithParameter"]):
             return False
     if "responseIsCollection" in when:
-        if response_is_collection(op) is not bool(when["responseIsCollection"]):
+        if response_is_collection(op, doc) is not bool(when["responseIsCollection"]):
             return False
     if "hasRequestBody" in when:
         if bool(op.get("requestBody")) is not bool(when["hasRequestBody"]):
