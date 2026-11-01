@@ -1,4 +1,4 @@
-# Headline counts — re-derived (task 89)
+# Headline counts — re-derived (tasks 89 / 92)
 
 `validation.md` was not edited. Figures below are what it
 states, what the mechanised script derives, and what a hand
@@ -16,22 +16,41 @@ Pinned commits:
 
 ## Part A — validation.md 1.16.0 quartet
 
-| Count | Recorded (`validation.md`) | Script @ 1.16.0 sweep (`0a99732`) | Script @ tip (`66c509f`) | Hand recount of finding 43 tables | Agree? |
-|---|---:|---:|---:|---:|---|
-| Identifiers | 195 | 217 | 230 | 195 | **script no**; hand yes |
-| Classes | 33 | 31 | 31 | 33 | **script no**; hand yes |
-| No requirement sentence | 22 | 136 | 128 | 22 | **script no**; hand yes |
-| Stated under a different name | 3 | 62 (proxy) | 65 (proxy) | 3 (C2, C13, `refuse-provisioning`) | **script no**; hand yes |
+Task 89 baseline (strict-only harvest, before task 92's three
+class additions) is kept for comparison. Task 92 adds Concept /
+Extension subfield / Header alias and reports a strict/lenient
+pair. Neither rule is tuned toward 22.
 
-Reason script disagrees: the counting rule in
-`../COUNTING-RULE.md` is the mechanised join finding 43
-described (schema enums/consts/`$defs`/vocab fields + prose
-titles + YAML names, MUST-proximity for requirement). It is
-not the human-curated inventory. HTTP-method enum members and
-other schema tokens inflate the identifier count; MUST-proximity
-under-counts human "yes" rows and the different-name proxy is
-far looser than the reader judgment of three. Disagreement is
-left standing.
+| Count | Recorded (`validation.md`) | Script @ sweep (task 89) | Script @ sweep (task 92) | Script @ tip (task 92) | Hand (finding 43) |
+|---|---:|---:|---:|---:|---:|
+| Identifiers | 195 | 217 | **239** | **252** | 195 |
+| Classes | 33 | 31 | **34** | **34** | 33 |
+| No requirement (strict) | 22 | 136 | **145** | **137** | 22 |
+| No requirement (lenient) | 22 | — | **46** | **41** | 22 |
+| Stated under a different name | 3 | 62 (proxy) | 75 (proxy) | 78 (proxy) | 3 |
+
+Agree with validation.md on the quartet: **no** (script);
+hand recount of finding 43 tables still **yes** at 195/33/22/3.
+
+### Strict → lenient gap (itemised by primary rule)
+
+Priority: class-coverage → titled-section-body →
+requirement-like-prose. Primary counts sum to the gap.
+
+| Pin | Strict no-req | Lenient no-req | Gap | class-coverage | titled-section-body | requirement-like-prose |
+|---|---:|---:|---:|---:|---:|---:|
+| Sweep `0a99732` | 145 | 46 | **99** | 46 | 6 | 47 |
+| Tip `66c509f` | 137 | 41 | **96** | 45 | 8 | 43 |
+
+Lenient does **not** reproduce 22. Residual at sweep (46):
+the 16 agreed hand/script `no` rows, 28 of the task-91
+script-only no-req identifiers, and 2 newly harvested
+concepts (`deploy-time bound`, `structural floor`). Not
+tuned further.
+
+Strict moved 136 → 145 at sweep because Part 3 added 22
+identifier rows (12 Concept + 7 Extension subfield + 3
+Header alias); 13 of those already have a strict MUST hit.
 
 Finding 43's inventory tables are identical at sweep commit
 and at tip (findings not rewritten): **195 / 33 / 22**.
@@ -77,14 +96,23 @@ Source: `engine/docs/findings/46.md` Part 1 table and
 converted afterward; this is a recount of the recorded
 artefact, not a re-scan that expects 74 still present.
 
-## Sweep vs tip (script only)
+## Part D — three classes (task 92)
+
+Harvested at sweep: **Concept** (12), **Extension subfield**
+(7), **Header alias** (3). Script class cardinality is **34**
+(= finding 43's 33 labels + **Unclassified**). Unclassified
+does **not** empty (43 rows at sweep: HTTP methods, camelCase
+stems, rule-artefact headings, …).
+
+## Sweep vs tip (task 92 script)
 
 | | 1.16.0 sweep `0a99732` | tip `66c509f` |
 |---|---:|---:|
-| Identifiers | 217 | 230 |
-| Classes | 31 | 31 |
-| No requirement sentence | 136 | 128 |
-| Different-name proxy | 62 | 65 |
+| Identifiers | 239 | 252 |
+| Classes | 34 | 34 |
+| No requirement (strict) | 145 | 137 |
+| No requirement (lenient) | 46 | 41 |
+| Different-name proxy | 75 | 78 |
 
 Tip growth includes C14–C16, later response tokens, and further
 validation-rule headings — expected after 1.16.0. The human

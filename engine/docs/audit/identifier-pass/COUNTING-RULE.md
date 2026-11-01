@@ -87,8 +87,10 @@ Assigned by the first matching heuristic, in order:
 | outcome `result` enum | Outcome result |
 | criteria dimension enums / `$defs` criteria dims | Criteria value / Criteria dimension / Schema shape |
 | `x-ctier-*` property in extensions schema or extensions.md | Extension field |
+| nested fields under `x-ctier-*` objects (`undeclaredTier`, `authority`, …) | Extension subfield |
 | header `name` / headers.md heading | Header |
 | `X-*` alias called out as alias in headers.md | Header alias |
+| named concepts harvested from prose (`governed set`, …) | Concept |
 | generator mode enum | Generator mode |
 | input role enum | Composition role |
 | coverage / x-ctier-status enum | Coverage status |
@@ -107,7 +109,13 @@ Class cardinality is the number of distinct class labels
 actually assigned. The human sweep used 33 labels; this
 script's label set is allowed to differ.
 
-## Requirement sentence
+## Requirement sentence (strict / lenient pair)
+
+The script reports **two** answers for every row. Do not
+collapse them. Do not retune either rule toward the recorded
+22.
+
+### Strict (task 89; unchanged)
 
 **Yes** if and only if, in prose markdown from the corpus
 (fenced code blocks removed), some paragraph or table row
@@ -121,11 +129,46 @@ contains both:
 **No** when the identifier appears only in JSON Schema,
 YAML components, or non-normative prose (no keyword).
 
-Schema-only is never a requirement sentence (finding 43).
+Schema-only is never a strict requirement sentence
+(finding 43).
 
-This is a mechanical proxy for "is this sentence a
-requirement". Finding 43 said a reader is still needed;
-disagreement with the human column is expected and recorded.
+### Lenient (task 92)
+
+**Yes** if strict is Yes, **or** any of the following fires:
+
+1. **Class-coverage.** A requirement stated about a class
+   covers a member identifier when the requirement names the
+   class by its own name or by a pattern the member matches,
+   its obligation is satisfiable per member, and nothing in
+   the requirement or its scope excludes that member.
+2. **Titled-section body.** An identifier that is a section
+   title or a numbered list label (`Requirement N`) is
+   covered when that section/item body contains uppercase
+   `MUST` / `SHALL` / `REQUIRED`, even if the body does not
+   repeat the title token. (Forced by titled validation-rule
+   and deployment-requirement cases in the hand/script
+   disagreement; the class-coverage formulation alone does
+   not reach them.)
+3. **Requirement-like prose.** A paragraph or titled field /
+   validation-rule section that names the identifier states
+   an obligation, prohibition, contradiction, closed
+   membership, ordering, equality, or field-contract norm in
+   ordinary English (including lowercase must/shall/required,
+   bold normative leads, `Required` tables) without uppercase
+   RFC 2119 keywords.
+
+Lenient closes are itemised by **primary** rule in priority
+order (class-coverage → titled-section-body →
+requirement-like-prose). Overlaps are also recorded; their
+counts may sum above the strict→lenient gap.
+
+The back-compat field `no_requirement_sentence` equals the
+**strict** count.
+
+This is still a mechanical proxy. Finding 43 said a reader
+is still needed; disagreement with the human column is
+expected and recorded. Lenient is **not** tuned to reproduce
+the recorded 22.
 
 ## "Stated under a different name"
 

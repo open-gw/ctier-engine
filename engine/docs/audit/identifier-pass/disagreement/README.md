@@ -55,4 +55,9 @@ Full C list: *(empty)*.
 | `part3-classes.md` | 31 vs 33 |
 | `part4-fourth-figure.md` | 62 vs 3; task 88 pending |
 
-Task 90 owns `engine/docs/audit/replication/`. Untouched.
+Task 90 owns `engine/docs/audit/replication/`. Untouched by 91.
+
+Task 92 states the class-coverage rule in Procedure B step 4,
+adds the strict/lenient script pair, and harvests the three
+missing classes — without retuning toward 22. See private
+finding 92.

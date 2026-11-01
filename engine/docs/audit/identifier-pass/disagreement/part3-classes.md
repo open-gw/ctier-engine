@@ -34,3 +34,10 @@ rows; the rows themselves are missing.
 **Short answer:** the two-count gap is three misses (Concept,
 Extension subfield, Header alias) minus one catch-all
 (Unclassified). Not record oversplit.
+
+## Follow-up (task 92)
+
+The script now harvests all three hand-only labels. At the
+1.16.0 sweep pin that yields **34** classes (33 + Unclassified).
+Unclassified remains populated (rule artefacts). See
+`../derived/HEADLINES.md` Part D and private finding 92.

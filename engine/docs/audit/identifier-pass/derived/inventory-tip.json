@@ -22,15 +22,29 @@
       "spec/schemas/recommendation-set-0.1.0.json",
       "spec/validation.md"
     ],
-    "identifiers": 230,
-    "classes": 31,
-    "no_requirement_sentence": 128,
-    "stated_under_different_name_proxy": 65,
+    "identifiers": 252,
+    "classes": 34,
+    "no_requirement_sentence": 137,
+    "no_requirement_sentence_strict": 137,
+    "no_requirement_sentence_lenient": 41,
+    "strict_lenient_gap": 96,
+    "lenient_closes_by_rule_counts": {
+      "class-coverage": 45,
+      "requirement-like-prose": 43,
+      "titled-section-body": 8
+    },
+    "lenient_closes_by_rule_counts_all_firing": {
+      "class-coverage": 45,
+      "requirement-like-prose": 75,
+      "titled-section-body": 10
+    },
+    "stated_under_different_name_proxy": 78,
     "per_class": {
       "Unclassified": 44,
       "Validation rule": 19,
       "Criteria value": 17,
       "Criterion": 16,
+      "Concept": 12,
       "Extension field": 12,
       "Header": 12,
       "Response identifier": 10,
@@ -38,6 +52,7 @@
       "Document type": 9,
       "Criteria dimension": 8,
       "Deployment level": 7,
+      "Extension subfield": 7,
       "Ledger field": 7,
       "Escalation reason": 6,
       "Corpus field": 5,
@@ -48,6 +63,7 @@
       "agentAction": 4,
       "Confidence": 3,
       "Coverage status": 3,
+      "Header alias": 3,
       "Measurement kind": 3,
       "Record type": 3,
       "Record version": 3,
@@ -69,6 +85,7 @@
       "identifiers": false,
       "classes": false,
       "no_requirement_sentence": false,
+      "no_requirement_sentence_lenient": false,
       "stated_under_different_name": false
     }
   },
@@ -81,7 +98,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/criteria:shape"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "$defs/criteriaProposal",
@@ -91,7 +114,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/criteriaProposal:shape"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "1.1.0",
@@ -101,7 +130,13 @@
       "sources": [
         "spec/schemas/recommendation-set-0.1.0.json:$.overlay"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "4.1 Rules become data, not code",
@@ -111,7 +146,12 @@
       "sources": [
         "docs/adr/0009-the-contract-is-the-documents.md:heading:4.1 Rules become data, not code"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "4.2 Recommendations are an overlay",
@@ -121,7 +161,12 @@
       "sources": [
         "docs/adr/0009-the-contract-is-the-documents.md:heading:4.2 Recommendations are an overlay"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "4.3 The schemas live in the specification repository, not the engine",
@@ -131,7 +176,12 @@
       "sources": [
         "docs/adr/0009-the-contract-is-the-documents.md:heading:4.3 The schemas live in the specification repository, not the engine"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "403",
@@ -141,7 +191,13 @@
       "sources": [
         "spec/README.md:bold-backtick:Excluded \u2014 `403`."
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "absent",
@@ -151,7 +207,13 @@
       "sources": [
         "spec/schemas/coverage-report-0.1.0.json:$/$defs/operation.status"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "accountId",
@@ -161,7 +223,10 @@
       "sources": [
         "spec/consequence-tiered-api.yaml:yaml-name"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "action",
@@ -171,7 +236,13 @@
       "sources": [
         "spec/schemas/recommendation-set-0.1.0.json:$defs/action"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Additive evolution",
@@ -181,7 +252,14 @@
       "sources": [
         "spec/validation.md:heading:Additive evolution"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "adjacent",
@@ -191,7 +269,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/complianceTrigger"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "agent",
@@ -201,7 +285,13 @@
       "sources": [
         "spec/schemas/conformance-corpus-0.3.0.json:$defs/agent"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "agent_suspended",
@@ -213,7 +303,10 @@
         "spec/README.md:named-token",
         "spec/consequence-tiered-api.yaml:yaml-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "agentAction",
@@ -223,7 +316,13 @@
       "sources": [
         "spec/README.md:heading-backtick:`agentAction`"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "agentId",
@@ -234,7 +333,10 @@
         "spec/schemas/attempt-record-0.3.0.json:$.properties.agentId",
         "spec/schemas/decision-record-0.2.0.json:$.properties.agentId"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "AgentSuspended",
@@ -244,7 +346,12 @@
       "sources": [
         "spec/README.md:named-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "appliedTierAtLeast",
@@ -254,7 +361,12 @@
       "sources": [
         "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/expect.properties.appliedTierAtLeast"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "artefact",
@@ -264,7 +376,13 @@
       "sources": [
         "spec/schemas/composition-manifest-0.1.0.json:$defs/artefact"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Attempt",
@@ -274,7 +392,13 @@
       "sources": [
         "spec/schemas/attempt-record-0.3.0.json:$.ctierSchema:record-type"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "attempt-record/0.3.0",
@@ -284,7 +408,30 @@
       "sources": [
         "spec/schemas/attempt-record-0.3.0.json:$.ctierSchema"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "authority",
+      "class_name": "Extension subfield",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/extensions.md:extension-subfield:authority"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Authorization",
@@ -294,7 +441,13 @@
       "sources": [
         "spec/consequence-tiered-api.yaml:yaml-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "authorizationId",
@@ -304,7 +457,10 @@
       "sources": [
         "spec/consequence-tiered-api.yaml:yaml-name"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "autoResume",
@@ -314,7 +470,12 @@
       "sources": [
         "spec/README.md:named-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "blast-radius",
@@ -324,7 +485,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/criteriaFields.properties.blast-radius:dim"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "blastRadius",
@@ -334,7 +501,12 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/blastRadius"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "Bound comparison",
@@ -344,7 +516,13 @@
       "sources": [
         "spec/validation.md:heading:Bound comparison"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "bounds",
@@ -354,7 +532,10 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/bounds"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "Bounds coherence",
@@ -364,7 +545,12 @@
       "sources": [
         "spec/validation.md:heading:Bounds coherence"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "bundle",
@@ -374,7 +560,13 @@
       "sources": [
         "spec/schemas/composition-manifest-0.1.0.json:$.generator.mode"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage"
+      ]
     },
     {
       "identifier": "C1",
@@ -385,7 +577,13 @@
         "spec/README.md:bold:C1 \u2014 Classification precedes routing.",
         "spec/README.md:prose-criterion"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "C10",
@@ -398,7 +596,13 @@
         "spec/conformance.md:bold:Declared evidence \u2014 C10 via gateway log.",
         "spec/conformance.md:prose-criterion"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "C11",
@@ -409,7 +613,12 @@
         "spec/README.md:bold:C11 \u2014 The agent does not choose its tier.",
         "spec/README.md:prose-criterion"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "C12",
@@ -421,7 +630,12 @@
         "spec/conformance.md:bold:Declared evidence \u2014 C12 miss, live.",
         "spec/conformance.md:prose-criterion"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "C13",
@@ -437,7 +651,13 @@
         "spec/validation.md:heading:C13 \u2014 Digest discipline",
         "spec/validation.md:bold:1.17.0 admits C13."
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "C13 \u2014 Digest discipline",
@@ -447,7 +667,13 @@
       "sources": [
         "spec/validation.md:heading:C13 \u2014 Digest discipline"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "C14",
@@ -461,7 +687,12 @@
         "spec/conformance.md:prose-criterion",
         "spec/validation.md:heading:C14 \u2014 No credential persistence"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "C14 \u2014 No credential persistence",
@@ -471,7 +702,13 @@
       "sources": [
         "spec/validation.md:heading:C14 \u2014 No credential persistence"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "C15",
@@ -485,7 +722,12 @@
         "spec/conformance.md:prose-criterion",
         "spec/validation.md:heading:C15 \u2014 Agent suspension is an authorisation concern"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "C15 \u2014 Agent suspension is an authorisation concern",
@@ -495,7 +737,13 @@
       "sources": [
         "spec/validation.md:heading:C15 \u2014 Agent suspension is an authorisation concern"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "C16",
@@ -510,7 +758,12 @@
         "spec/headers.md:heading:C16 \u2014 The namespace is stripped on ingress",
         "spec/validation.md:heading:C16 \u2014 The namespace is stripped on ingress"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "C16 \u2014 The namespace is stripped on ingress",
@@ -520,7 +773,12 @@
       "sources": [
         "spec/validation.md:heading:C16 \u2014 The namespace is stripped on ingress"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "C2",
@@ -532,7 +790,13 @@
         "spec/README.md:prose-criterion",
         "spec/validation.md:heading:C2 \u2014 Fail-closed"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "C2 \u2014 Fail-closed",
@@ -542,7 +806,12 @@
       "sources": [
         "spec/validation.md:heading:C2 \u2014 Fail-closed"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "C3",
@@ -555,7 +824,13 @@
         "spec/examples/README.md:prose-criterion",
         "spec/validation.md:heading:C3 \u2014 Unidirectionality"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "C3 \u2014 Unidirectionality",
@@ -565,7 +840,10 @@
       "sources": [
         "spec/validation.md:heading:C3 \u2014 Unidirectionality"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "C4",
@@ -578,7 +856,12 @@
         "spec/conformance.md:bold:Declared evidence \u2014 C4.",
         "spec/conformance.md:prose-criterion"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "C5",
@@ -588,7 +871,12 @@
       "sources": [
         "spec/README.md:prose-criterion"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "C6",
@@ -598,7 +886,13 @@
       "sources": [
         "spec/README.md:prose-criterion"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "C7",
@@ -612,7 +906,13 @@
         "spec/conformance.md:bold:Declared gap \u2014 C7 at Level 2.",
         "spec/conformance.md:prose-criterion"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "C8",
@@ -624,7 +924,12 @@
         "spec/README.md:prose-criterion",
         "spec/conformance.md:prose-criterion"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "C9",
@@ -634,7 +939,12 @@
       "sources": [
         "spec/README.md:prose-criterion"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "case",
@@ -644,7 +954,10 @@
       "sources": [
         "spec/schemas/conformance-corpus-0.3.0.json:$defs/case"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "classification-rules/0.1.0",
@@ -654,7 +967,12 @@
       "sources": [
         "spec/schemas/classification-rules-0.1.0.json:$.ctierSchema"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "compliance-trigger",
@@ -664,7 +982,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/criteriaFields.properties.compliance-trigger:dim"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "complianceTrigger",
@@ -674,7 +998,12 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/complianceTrigger"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "composition-manifest/0.1.0",
@@ -684,7 +1013,12 @@
       "sources": [
         "spec/schemas/composition-manifest-0.1.0.json:$.ctierSchema"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "compositionDigest",
@@ -695,7 +1029,12 @@
         "spec/schemas/composition-manifest-0.1.0.json:$.properties.compositionDigest",
         "spec/schemas/coverage-report-0.1.0.json:$.properties.compositionDigest"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "computed-tier-exceeds-declared",
@@ -705,7 +1044,10 @@
       "sources": [
         "spec/schemas/decision-record-0.2.0.json:$.escalationReason"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "Configured",
@@ -715,7 +1057,10 @@
       "sources": [
         "spec/conformance.md:measurement-kind"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "conformance-corpus/0.3.0",
@@ -725,7 +1070,13 @@
       "sources": [
         "spec/schemas/conformance-corpus-0.3.0.json:$.ctierSchema"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage"
+      ]
     },
     {
       "identifier": "constrained",
@@ -736,7 +1087,12 @@
         "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/case.profile",
         "spec/schemas/conformance-corpus-0.3.0.json:$.profile"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "continue_task_without_this_step",
@@ -749,7 +1105,12 @@
         "spec/consequence-tiered-api.yaml:yaml-token",
         "spec/headers.md:named-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "correlationScope",
@@ -760,7 +1121,10 @@
         "spec/schemas/attempt-record-0.3.0.json:$.properties.correlationScope",
         "spec/schemas/decision-record-0.2.0.json:$.properties.correlationScope"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "countMatch",
@@ -770,7 +1134,10 @@
       "sources": [
         "spec/schemas/classification-rules-0.1.0.json:$defs/countMatch"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "Coverage sort",
@@ -780,7 +1147,12 @@
       "sources": [
         "spec/validation.md:heading:Coverage sort"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "coverage-report/0.1.0",
@@ -790,7 +1162,12 @@
       "sources": [
         "spec/schemas/coverage-report-0.1.0.json:$.ctierSchema"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "criteria",
@@ -800,7 +1177,14 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/criteria"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Criteria",
@@ -810,7 +1194,12 @@
       "sources": [
         "spec/validation.md:heading-backtick:Engine `Criteria` defaults are not the contract"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "criteriaFields",
@@ -820,7 +1209,10 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/criteriaFields"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "criteriaProposal",
@@ -830,7 +1222,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/criteriaProposal"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "ctierSchema",
@@ -847,7 +1245,12 @@
         "spec/schemas/outcome-record-0.1.0.json:$.properties.ctierSchema",
         "spec/schemas/recommendation-set-0.1.0.json:$.properties.ctierSchema"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "ctierSchemaId",
@@ -857,7 +1260,10 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/ctierSchemaId"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "custody_unavailable",
@@ -869,7 +1275,12 @@
         "spec/README.md:named-token",
         "spec/validation.md:named-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "customerId",
@@ -879,7 +1290,10 @@
       "sources": [
         "spec/consequence-tiered-api.yaml:yaml-name"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "data-sensitivity",
@@ -889,7 +1303,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/criteriaFields.properties.data-sensitivity:dim"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "dataSensitivity",
@@ -899,7 +1319,27 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/dataSensitivity"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "decaySeconds",
+      "class_name": "Extension subfield",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/extensions.md:extension-subfield:decaySeconds"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Decision",
@@ -909,7 +1349,13 @@
       "sources": [
         "spec/schemas/decision-record-0.2.0.json:$.ctierSchema:record-type"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "decision-record/0.2.0",
@@ -919,7 +1365,13 @@
       "sources": [
         "spec/schemas/decision-record-0.2.0.json:$.ctierSchema"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "declared",
@@ -930,7 +1382,13 @@
         "spec/schemas/coverage-report-0.1.0.json:$/$defs/operation.status",
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/status"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "defaults",
@@ -940,7 +1398,12 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/defaults"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "delegation-authority-expansion",
@@ -950,7 +1413,10 @@
       "sources": [
         "spec/schemas/decision-record-0.2.0.json:$.escalationReason"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "delete",
@@ -960,7 +1426,24 @@
       "sources": [
         "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "deploy-time bound",
+      "class_name": "Concept",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:concept:deploy-time bound",
+        "spec/conformance.md:concept:deploy-time bound"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "deployment",
@@ -970,7 +1453,14 @@
       "sources": [
         "spec/schemas/conformance-corpus-0.3.0.json:$.properties.deployment"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "deploymentDigest",
@@ -981,7 +1471,12 @@
         "spec/schemas/attempt-record-0.3.0.json:$.properties.deploymentDigest",
         "spec/schemas/decision-record-0.2.0.json:$.properties.deploymentDigest"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "Derived",
@@ -992,7 +1487,12 @@
         "spec/README.md:measurement-kind",
         "spec/conformance.md:measurement-kind"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "description",
@@ -1002,7 +1502,13 @@
       "sources": [
         "spec/schemas/composition-manifest-0.1.0.json:$/$defs/input.role"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "digest",
@@ -1012,7 +1518,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/digest"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "direct",
@@ -1022,7 +1534,14 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/complianceTrigger"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "disposition",
@@ -1034,7 +1553,13 @@
         "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/expect.properties.disposition",
         "spec/schemas/decision-record-0.2.0.json:$.properties.disposition"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Engine `Criteria` defaults are not the contract",
@@ -1044,7 +1569,27 @@
       "sources": [
         "spec/validation.md:heading:Engine `Criteria` defaults are not the contract"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "escalateAbove",
+      "class_name": "Extension subfield",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/extensions.md:extension-subfield:escalateAbove"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "escalationReason",
@@ -1054,7 +1599,10 @@
       "sources": [
         "spec/schemas/decision-record-0.2.0.json:$.properties.escalationReason"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "exclude",
@@ -1064,7 +1612,10 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/exclude"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "Exclusion exclusivity",
@@ -1074,7 +1625,12 @@
       "sources": [
         "spec/validation.md:heading:Exclusion exclusivity"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "execute",
@@ -1086,7 +1642,13 @@
         "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/disposition",
         "spec/schemas/decision-record-0.2.0.json:$.disposition"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "executed",
@@ -1096,7 +1658,12 @@
       "sources": [
         "spec/schemas/outcome-record-0.1.0.json:$.result"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "expect",
@@ -1106,7 +1673,10 @@
       "sources": [
         "spec/schemas/conformance-corpus-0.3.0.json:$defs/expect"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "failed",
@@ -1116,7 +1686,10 @@
       "sources": [
         "spec/schemas/outcome-record-0.1.0.json:$.result"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "fragments",
@@ -1126,7 +1699,12 @@
       "sources": [
         "spec/schemas/composition-manifest-0.1.0.json:$.generator.mode"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "get",
@@ -1136,7 +1714,45 @@
       "sources": [
         "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "governed set",
+      "class_name": "Concept",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:concept:governed set",
+        "spec/extensions.md:concept:governed set",
+        "spec/validation.md:concept:governed set"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "granted scope",
+      "class_name": "Concept",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/extensions.md:concept:granted scope",
+        "spec/validation.md:concept:granted scope"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "halt",
@@ -1149,7 +1765,13 @@
         "spec/headers.md:named-token",
         "spec/validation.md:named-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "halt_and_hand_off",
@@ -1165,7 +1787,12 @@
         "spec/headers.md:named-token",
         "spec/validation.md:named-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "handoff",
@@ -1175,7 +1802,10 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/handoff"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "hasDeclaredReversal",
@@ -1185,7 +1815,12 @@
       "sources": [
         "spec/validation.md:when-predicate-closed-list"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "hasRequestBody",
@@ -1195,7 +1830,12 @@
       "sources": [
         "spec/validation.md:when-predicate-closed-list"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "head",
@@ -1205,7 +1845,10 @@
       "sources": [
         "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "high",
@@ -1216,7 +1859,12 @@
         "spec/schemas/classification-rules-0.1.0.json:$/$defs/rule.confidence",
         "spec/schemas/recommendation-set-0.1.0.json:$/$defs/provenance.confidence"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "idempotency",
@@ -1227,7 +1875,14 @@
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/idempotency",
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/criteriaFields.properties.idempotency:dim"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Idempotency-Key",
@@ -1237,7 +1892,13 @@
       "sources": [
         "spec/headers.md:heading-backtick:`Idempotency-Key`"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "idempotencyKey",
@@ -1247,7 +1908,10 @@
       "sources": [
         "spec/schemas/decision-record-0.2.0.json:$.properties.idempotencyKey"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "incidentId",
@@ -1257,7 +1921,12 @@
       "sources": [
         "spec/README.md:named-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "inherently-safe",
@@ -1267,7 +1936,14 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/idempotency"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "input",
@@ -1277,7 +1953,28 @@
       "sources": [
         "spec/schemas/composition-manifest-0.1.0.json:$defs/input"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "integrity-protection",
+      "class_name": "Concept",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:concept:integrity-protection",
+        "spec/extensions.md:concept:integrity-protection"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "internal",
@@ -1287,7 +1984,32 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/dataSensitivity"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "join key",
+      "class_name": "Concept",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:concept:join key",
+        "spec/conformance.md:concept:join key",
+        "spec/extensions.md:concept:join key",
+        "spec/headers.md:concept:join key",
+        "spec/validation.md:concept:join key"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "key-required",
@@ -1297,7 +2019,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/idempotency"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Ledger records",
@@ -1307,7 +2035,13 @@
       "sources": [
         "spec/validation.md:heading:Ledger records"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Level 0",
@@ -1317,7 +2051,12 @@
       "sources": [
         "spec/README.md:prose-level"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "Level 1",
@@ -1327,7 +2066,12 @@
       "sources": [
         "spec/README.md:prose-level"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "Level 2",
@@ -1338,7 +2082,14 @@
         "spec/README.md:prose-level",
         "spec/conformance.md:prose-level"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Level 3",
@@ -1348,7 +2099,13 @@
       "sources": [
         "spec/README.md:prose-level"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage"
+      ]
     },
     {
       "identifier": "Level 4",
@@ -1358,7 +2115,13 @@
       "sources": [
         "spec/README.md:prose-level"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage"
+      ]
     },
     {
       "identifier": "level-2",
@@ -1369,7 +2132,12 @@
         "spec/conformance.md:prose-level-slug",
         "spec/schemas/conformance-corpus-0.3.0.json:$.deployment"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "level-3",
@@ -1380,7 +2148,12 @@
         "spec/conformance.md:prose-level-slug",
         "spec/schemas/conformance-corpus-0.3.0.json:$.deployment"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "low",
@@ -1391,7 +2164,27 @@
         "spec/schemas/classification-rules-0.1.0.json:$/$defs/rule.confidence",
         "spec/schemas/recommendation-set-0.1.0.json:$/$defs/provenance.confidence"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "max",
+      "class_name": "Extension subfield",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/extensions.md:extension-subfield:max"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "medium",
@@ -1402,7 +2195,12 @@
         "spec/schemas/classification-rules-0.1.0.json:$/$defs/rule.confidence",
         "spec/schemas/recommendation-set-0.1.0.json:$/$defs/provenance.confidence"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "method",
@@ -1412,7 +2210,34 @@
       "sources": [
         "spec/validation.md:when-predicate-closed-list"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "namespace strip",
+      "class_name": "Concept",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "docs/adr/0009-the-contract-is-the-documents.md:concept:namespace strip",
+        "spec/README.md:concept:namespace strip",
+        "spec/extensions.md:concept:namespace strip",
+        "spec/headers.md:concept:namespace strip",
+        "spec/schemas/README.md:concept:namespace strip",
+        "spec/validation.md:concept:namespace strip"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "No agent-facing URL",
@@ -1422,7 +2247,12 @@
       "sources": [
         "spec/validation.md:heading:No agent-facing URL"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "none",
@@ -1434,7 +2264,13 @@
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/complianceTrigger",
         "spec/schemas/decision-record-0.2.0.json:$.escalationReason"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "not-applicable",
@@ -1444,7 +2280,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/reversibility"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Observed",
@@ -1455,7 +2297,12 @@
         "spec/README.md:measurement-kind",
         "spec/conformance.md:measurement-kind"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "On the maturity of these criteria",
@@ -1465,7 +2312,13 @@
       "sources": [
         "spec/validation.md:heading:On the maturity of these criteria"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "operation",
@@ -1476,7 +2329,13 @@
         "spec/schemas/coverage-report-0.1.0.json:$defs/operation",
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/operation"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "operationAnchor",
@@ -1487,7 +2346,10 @@
         "spec/schemas/attempt-record-0.3.0.json:$.properties.operationAnchor",
         "spec/schemas/decision-record-0.2.0.json:$.properties.operationAnchor"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "operationIdMatches",
@@ -1497,7 +2359,12 @@
       "sources": [
         "spec/validation.md:when-predicate-closed-list"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "options",
@@ -1507,7 +2374,10 @@
       "sources": [
         "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "Outcome",
@@ -1517,7 +2387,12 @@
       "sources": [
         "spec/schemas/outcome-record-0.1.0.json:$.ctierSchema:record-type"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "outcome-record/0.1.0",
@@ -1527,7 +2402,14 @@
       "sources": [
         "spec/schemas/outcome-record-0.1.0.json:$.ctierSchema"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "overlay",
@@ -1537,7 +2419,13 @@
       "sources": [
         "spec/schemas/composition-manifest-0.1.0.json:$/$defs/input.role"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Pagination is refused as a predicate",
@@ -1547,7 +2435,28 @@
       "sources": [
         "spec/validation.md:heading:Pagination is refused as a predicate"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "parameter",
+      "class_name": "Extension subfield",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/extensions.md:extension-subfield:parameter"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "patch",
@@ -1557,7 +2466,10 @@
       "sources": [
         "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "pathEndsWithParameter",
@@ -1567,7 +2479,12 @@
       "sources": [
         "spec/validation.md:when-predicate-closed-list"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "pathParameterCount",
@@ -1577,7 +2494,12 @@
       "sources": [
         "spec/validation.md:when-predicate-closed-list"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "pathSegmentCount",
@@ -1587,7 +2509,12 @@
       "sources": [
         "spec/validation.md:when-predicate-closed-list"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "payload-exceeds-declared-bounds",
@@ -1597,7 +2524,10 @@
       "sources": [
         "spec/schemas/decision-record-0.2.0.json:$.escalationReason"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "paymentId",
@@ -1607,7 +2537,10 @@
       "sources": [
         "spec/consequence-tiered-api.yaml:yaml-name"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "pending_authorization",
@@ -1619,7 +2552,27 @@
         "spec/README.md:named-token",
         "spec/consequence-tiered-api.yaml:yaml-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "persist-and-execute",
+      "class_name": "Concept",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/headers.md:concept:persist-and-execute"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "personal",
@@ -1629,7 +2582,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/dataSensitivity"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "placeholder",
@@ -1639,7 +2598,10 @@
       "sources": [
         "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/case.properties.placeholder"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "population",
@@ -1649,7 +2611,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/blastRadius"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "post",
@@ -1659,7 +2627,10 @@
       "sources": [
         "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "profile",
@@ -1670,7 +2641,14 @@
         "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/case.properties.profile",
         "spec/schemas/conformance-corpus-0.3.0.json:$.properties.profile"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "propose",
@@ -1680,7 +2658,13 @@
       "sources": [
         "spec/schemas/classification-rules-0.1.0.json:$defs/propose"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "provenance",
@@ -1690,7 +2674,12 @@
       "sources": [
         "spec/schemas/recommendation-set-0.1.0.json:$defs/provenance"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "provisioning_defect",
@@ -1704,7 +2693,13 @@
         "spec/extensions.md:named-token",
         "spec/validation.md:named-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "public",
@@ -1714,7 +2709,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/dataSensitivity"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "put",
@@ -1724,7 +2725,12 @@
       "sources": [
         "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "rationale",
@@ -1734,7 +2740,10 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/rationale"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "recommendation-set/0.1.0",
@@ -1744,7 +2753,27 @@
       "sources": [
         "spec/schemas/recommendation-set-0.1.0.json:$.ctierSchema"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "recommendationTtlDays",
+      "class_name": "Extension subfield",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/extensions.md:extension-subfield:recommendationTtlDays"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "recommended",
@@ -1756,7 +2785,13 @@
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/status",
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.if.x-ctier-status"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "recommendedAt",
@@ -1766,7 +2801,10 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/recommendedAt"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "refuse-and-suspend",
@@ -1777,7 +2815,10 @@
         "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/disposition",
         "spec/schemas/decision-record-0.2.0.json:$.disposition"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "refuse-provisioning",
@@ -1788,7 +2829,29 @@
         "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/disposition",
         "spec/schemas/decision-record-0.2.0.json:$.disposition"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "refuse-to-emit",
+      "class_name": "Concept",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:concept:refuse-to-emit",
+        "spec/validation.md:concept:refuse-to-emit"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "regulated",
@@ -1798,7 +2861,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/dataSensitivity"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "request",
@@ -1808,7 +2877,13 @@
       "sources": [
         "spec/schemas/conformance-corpus-0.3.0.json:$defs/request"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Requirement 2",
@@ -1818,7 +2893,13 @@
       "sources": [
         "spec/README.md:prose-requirement"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "titled-section-body"
+      ]
     },
     {
       "identifier": "Requirement 3",
@@ -1829,7 +2910,15 @@
         "spec/README.md:prose-requirement",
         "spec/conformance.md:prose-requirement"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Requirement 4",
@@ -1839,7 +2928,13 @@
       "sources": [
         "spec/README.md:prose-requirement"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Requirement 5",
@@ -1849,7 +2944,13 @@
       "sources": [
         "spec/README.md:prose-requirement"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "titled-section-body"
+      ]
     },
     {
       "identifier": "Requirement 6",
@@ -1859,7 +2960,13 @@
       "sources": [
         "spec/README.md:prose-requirement"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "responseIsCollection",
@@ -1869,7 +2976,12 @@
       "sources": [
         "spec/validation.md:when-predicate-closed-list"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "result",
@@ -1879,7 +2991,10 @@
       "sources": [
         "spec/schemas/outcome-record-0.1.0.json:$.properties.result"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "Retry-After",
@@ -1889,7 +3004,12 @@
       "sources": [
         "spec/consequence-tiered-api.yaml:yaml-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "retry_later",
@@ -1901,7 +3021,12 @@
         "spec/README.md:named-token",
         "spec/headers.md:named-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "reverses",
@@ -1911,7 +3036,10 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/reverses"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "reversibility",
@@ -1922,7 +3050,13 @@
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/reversibility",
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/criteriaFields.properties.reversibility:dim"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "rule",
@@ -1932,7 +3066,13 @@
       "sources": [
         "spec/schemas/classification-rules-0.1.0.json:$defs/rule"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "safe",
@@ -1942,7 +3082,30 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/idempotency"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "scope floor",
+      "class_name": "Concept",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:concept:scope floor",
+        "spec/extensions.md:concept:scope floor"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "searchId",
@@ -1952,7 +3115,10 @@
       "sources": [
         "spec/consequence-tiered-api.yaml:yaml-name"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "securitySchemes",
@@ -1962,7 +3128,12 @@
       "sources": [
         "spec/validation.md:when-predicate-closed-list"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Self-reversal",
@@ -1972,7 +3143,12 @@
       "sources": [
         "spec/validation.md:heading:Self-reversal"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "sequence",
@@ -1982,7 +3158,14 @@
       "sources": [
         "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/case.properties.sequence"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "session-accumulation",
@@ -1992,7 +3175,10 @@
       "sources": [
         "spec/schemas/decision-record-0.2.0.json:$.escalationReason"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "single-customer",
@@ -2002,7 +3188,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/blastRadius"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "single-record",
@@ -2012,7 +3204,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/blastRadius"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Single-target rule",
@@ -2022,7 +3220,13 @@
       "sources": [
         "spec/validation.md:heading:Single-target rule"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "standard",
@@ -2034,7 +3238,14 @@
         "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/case.profile",
         "spec/schemas/conformance-corpus-0.3.0.json:$.profile"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "status",
@@ -2045,7 +3256,13 @@
         "spec/README.md:heading-backtick:`status`",
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/status"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "step",
@@ -2055,7 +3272,26 @@
       "sources": [
         "spec/schemas/conformance-corpus-0.3.0.json:$defs/step"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "structural floor",
+      "class_name": "Concept",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/extensions.md:concept:structural floor"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "system-wide",
@@ -2065,7 +3301,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/blastRadius"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "tagIn",
@@ -2075,7 +3317,12 @@
       "sources": [
         "spec/validation.md:when-predicate-closed-list"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "The transformations, as document-in / document-out",
@@ -2085,7 +3332,12 @@
       "sources": [
         "docs/adr/0009-the-contract-is-the-documents.md:heading:The transformations, as document-in / document-out"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "tier",
@@ -2095,7 +3347,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/tier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Tier 1",
@@ -2105,7 +3363,12 @@
       "sources": [
         "spec/README.md:prose-tier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
     },
     {
       "identifier": "Tier 2",
@@ -2116,7 +3379,13 @@
         "spec/examples/README.md:prose-tier",
         "spec/validation.md:heading:Tier 2 requires a verified compensating action"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage"
+      ]
     },
     {
       "identifier": "Tier 2 requires a verified compensating action",
@@ -2126,7 +3395,13 @@
       "sources": [
         "spec/validation.md:heading:Tier 2 requires a verified compensating action"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Tier 3",
@@ -2138,7 +3413,14 @@
         "spec/conformance.md:prose-tier",
         "spec/schemas/README.md:prose-tier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "Tier 4",
@@ -2149,7 +3431,14 @@
         "spec/README.md:prose-tier",
         "spec/conformance.md:prose-tier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "trace",
@@ -2159,7 +3448,10 @@
       "sources": [
         "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
     },
     {
       "identifier": "unassigned",
@@ -2171,7 +3463,12 @@
         "spec/README.md:named-token",
         "spec/validation.md:named-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "unauthorized",
@@ -2183,7 +3480,30 @@
         "spec/README.md:named-token",
         "spec/validation.md:named-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "undeclared default",
+      "class_name": "Concept",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:concept:undeclared default",
+        "spec/extensions.md:concept:undeclared default",
+        "spec/validation.md:concept:undeclared default"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "undeclared-operation",
@@ -2193,7 +3513,43 @@
       "sources": [
         "spec/schemas/decision-record-0.2.0.json:$.escalationReason"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "undeclaredTier",
+      "class_name": "Extension subfield",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/extensions.md:extension-subfield:undeclaredTier"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "undetermined",
+      "class_name": "Concept",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:concept:undetermined",
+        "spec/conformance.md:concept:undetermined",
+        "spec/extensions.md:concept:undetermined",
+        "spec/validation.md:concept:undetermined"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "undo-restores-effect",
@@ -2203,7 +3559,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/reversibility"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "undo-restores-record-only",
@@ -2213,7 +3575,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/reversibility"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "unsafe",
@@ -2223,7 +3591,13 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/idempotency"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "update",
@@ -2233,7 +3607,12 @@
       "sources": [
         "spec/schemas/recommendation-set-0.1.0.json:$defs/update"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "weight",
@@ -2243,7 +3622,12 @@
       "sources": [
         "spec/schemas/ctier-extensions-0.1.0.json:$defs/weight"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "when",
@@ -2253,7 +3637,13 @@
       "sources": [
         "spec/schemas/classification-rules-0.1.0.json:$defs/when"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "withhold",
@@ -2264,7 +3654,13 @@
         "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/disposition",
         "spec/schemas/decision-record-0.2.0.json:$.disposition"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "X-Agent-Id",
@@ -2275,7 +3671,12 @@
         "spec/consequence-tiered-api.yaml:yaml-name",
         "spec/consequence-tiered-api.yaml:yaml-token"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-consequence-*",
@@ -2286,7 +3687,28 @@
         "spec/README.md:namespace",
         "spec/extensions.md:namespace"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "X-Correlation-Id",
+      "class_name": "Header alias",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/headers.md:header-alias:X-Correlation-Id"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-*",
@@ -2302,7 +3724,13 @@
         "spec/schemas/README.md:namespace",
         "spec/validation.md:namespace"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-bounds",
@@ -2317,7 +3745,12 @@
         "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-bounds",
         "spec/validation.md:prose-x-ctier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-composition",
@@ -2328,7 +3761,12 @@
         "spec/headers.md:prose-x-ctier",
         "spec/validation.md:prose-x-ctier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "x-ctier-correlation-id",
@@ -2342,7 +3780,13 @@
         "spec/headers.md:heading-backtick:`x-ctier-correlation-id`",
         "spec/headers.md:prose-x-ctier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-criteria",
@@ -2357,7 +3801,13 @@
         "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-criteria",
         "spec/validation.md:prose-x-ctier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-defaults",
@@ -2369,7 +3819,12 @@
         "spec/extensions.md:heading-backtick:`x-ctier-defaults`",
         "spec/extensions.md:prose-x-ctier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-deployment",
@@ -2381,7 +3836,13 @@
         "spec/headers.md:heading-backtick:`x-ctier-deployment`",
         "spec/headers.md:prose-x-ctier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-escalate-to",
@@ -2397,7 +3858,12 @@
         "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-escalate-to",
         "spec/validation.md:prose-x-ctier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-exclude",
@@ -2412,7 +3878,12 @@
         "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-exclude",
         "spec/validation.md:prose-x-ctier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-handoff",
@@ -2427,7 +3898,12 @@
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.properties.x-ctier-handoff",
         "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-handoff"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-operation",
@@ -2438,7 +3914,12 @@
         "spec/headers.md:prose-x-ctier",
         "spec/validation.md:prose-x-ctier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "x-ctier-provenance",
@@ -2449,7 +3930,12 @@
         "spec/schemas/recommendation-set-0.1.0.json:$/$defs/action.properties.x-ctier-provenance",
         "spec/validation.md:prose-x-ctier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-rationale",
@@ -2463,7 +3949,12 @@
         "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.properties.x-ctier-rationale",
         "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-rationale"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-recommended-at",
@@ -2478,7 +3969,13 @@
         "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-recommended-at",
         "spec/validation.md:prose-x-ctier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-reverses",
@@ -2494,7 +3991,13 @@
         "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-reverses",
         "spec/validation.md:prose-x-ctier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-status",
@@ -2510,7 +4013,13 @@
         "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-status",
         "spec/validation.md:prose-x-ctier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-tier",
@@ -2527,7 +4036,29 @@
         "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-tier",
         "spec/validation.md:prose-x-ctier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "X-Ctier-Tier",
+      "class_name": "Header alias",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/headers.md:header-alias:X-Ctier-Tier"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "x-ctier-weight",
@@ -2542,7 +4073,12 @@
         "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-weight",
         "spec/validation.md:prose-x-ctier"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": false,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
     },
     {
       "identifier": "X-Delegation-Chain",
@@ -2554,7 +4090,28 @@
         "spec/consequence-tiered-api.yaml:yaml-token",
         "spec/headers.md:heading-backtick:`X-Delegation-Chain`"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "X-Idempotency-Key",
+      "class_name": "Header alias",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/headers.md:header-alias:X-Idempotency-Key"
+      ],
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
     },
     {
       "identifier": "X-Incident-Id",
@@ -2565,7 +4122,13 @@
         "spec/consequence-tiered-api.yaml:yaml-token",
         "spec/headers.md:heading-backtick:`X-Incident-Id`"
       ],
-      "notes": ""
+      "notes": "",
+      "requirement_sentence_strict": true,
+      "requirement_sentence_lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
     }
   ],
   "no_requirement_sentence": [
@@ -2611,17 +4174,21 @@
     "customerId",
     "data-sensitivity",
     "dataSensitivity",
+    "decaySeconds",
     "decision-record/0.2.0",
     "defaults",
     "delegation-authority-expansion",
     "delete",
+    "deploy-time bound",
     "Engine `Criteria` defaults are not the contract",
+    "escalateAbove",
     "escalationReason",
     "exclude",
     "Exclusion exclusivity",
     "expect",
     "failed",
     "fragments",
+    "granted scope",
     "handoff",
     "hasDeclaredReversal",
     "hasRequestBody",
@@ -2636,6 +4203,7 @@
     "level-2",
     "level-3",
     "low",
+    "max",
     "medium",
     "No agent-facing URL",
     "not-applicable",
@@ -2659,6 +4227,7 @@
     "public",
     "rationale",
     "recommendation-set/0.1.0",
+    "recommendationTtlDays",
     "recommendedAt",
     "refuse-and-suspend",
     "regulated",
@@ -2670,6 +4239,7 @@
     "result",
     "reverses",
     "reversibility",
+    "scope floor",
     "searchId",
     "securitySchemes",
     "Self-reversal",
@@ -2677,6 +4247,7 @@
     "single-customer",
     "single-record",
     "Single-target rule",
+    "structural floor",
     "system-wide",
     "tagIn",
     "The transformations, as document-in / document-out",
@@ -2684,6 +4255,7 @@
     "Tier 2 requires a verified compensating action",
     "trace",
     "undeclared-operation",
+    "undeclaredTier",
     "undo-restores-effect",
     "undo-restores-record-only",
     "unsafe",
@@ -2698,6 +4270,430 @@
     "x-ctier-rationale",
     "x-ctier-weight"
   ],
+  "no_requirement_sentence_strict": [
+    "$defs/criteria",
+    "$defs/criteriaProposal",
+    "4.1 Rules become data, not code",
+    "4.2 Recommendations are an overlay",
+    "4.3 The schemas live in the specification repository, not the engine",
+    "accountId",
+    "adjacent",
+    "agent_suspended",
+    "agentId",
+    "appliedTierAtLeast",
+    "authorizationId",
+    "blast-radius",
+    "blastRadius",
+    "Bound comparison",
+    "bounds",
+    "Bounds coherence",
+    "C13 \u2014 Digest discipline",
+    "C14 \u2014 No credential persistence",
+    "C15 \u2014 Agent suspension is an authorisation concern",
+    "C16 \u2014 The namespace is stripped on ingress",
+    "C2 \u2014 Fail-closed",
+    "C3 \u2014 Unidirectionality",
+    "case",
+    "classification-rules/0.1.0",
+    "compliance-trigger",
+    "complianceTrigger",
+    "composition-manifest/0.1.0",
+    "computed-tier-exceeds-declared",
+    "Configured",
+    "constrained",
+    "correlationScope",
+    "countMatch",
+    "Coverage sort",
+    "coverage-report/0.1.0",
+    "Criteria",
+    "criteriaFields",
+    "criteriaProposal",
+    "ctierSchema",
+    "ctierSchemaId",
+    "customerId",
+    "data-sensitivity",
+    "dataSensitivity",
+    "decaySeconds",
+    "decision-record/0.2.0",
+    "defaults",
+    "delegation-authority-expansion",
+    "delete",
+    "deploy-time bound",
+    "Engine `Criteria` defaults are not the contract",
+    "escalateAbove",
+    "escalationReason",
+    "exclude",
+    "Exclusion exclusivity",
+    "expect",
+    "failed",
+    "fragments",
+    "granted scope",
+    "handoff",
+    "hasDeclaredReversal",
+    "hasRequestBody",
+    "head",
+    "high",
+    "idempotencyKey",
+    "internal",
+    "key-required",
+    "Ledger records",
+    "Level 0",
+    "Level 1",
+    "level-2",
+    "level-3",
+    "low",
+    "max",
+    "medium",
+    "No agent-facing URL",
+    "not-applicable",
+    "On the maturity of these criteria",
+    "operationAnchor",
+    "operationIdMatches",
+    "options",
+    "Outcome",
+    "Pagination is refused as a predicate",
+    "patch",
+    "pathEndsWithParameter",
+    "pathParameterCount",
+    "pathSegmentCount",
+    "payload-exceeds-declared-bounds",
+    "paymentId",
+    "pending_authorization",
+    "personal",
+    "placeholder",
+    "population",
+    "post",
+    "public",
+    "rationale",
+    "recommendation-set/0.1.0",
+    "recommendationTtlDays",
+    "recommendedAt",
+    "refuse-and-suspend",
+    "regulated",
+    "Requirement 2",
+    "Requirement 4",
+    "Requirement 5",
+    "Requirement 6",
+    "responseIsCollection",
+    "result",
+    "reverses",
+    "reversibility",
+    "scope floor",
+    "searchId",
+    "securitySchemes",
+    "Self-reversal",
+    "session-accumulation",
+    "single-customer",
+    "single-record",
+    "Single-target rule",
+    "structural floor",
+    "system-wide",
+    "tagIn",
+    "The transformations, as document-in / document-out",
+    "Tier 1",
+    "Tier 2 requires a verified compensating action",
+    "trace",
+    "undeclared-operation",
+    "undeclaredTier",
+    "undo-restores-effect",
+    "undo-restores-record-only",
+    "unsafe",
+    "weight",
+    "X-Agent-Id",
+    "x-ctier-bounds",
+    "x-ctier-defaults",
+    "x-ctier-escalate-to",
+    "x-ctier-exclude",
+    "x-ctier-handoff",
+    "x-ctier-provenance",
+    "x-ctier-rationale",
+    "x-ctier-weight"
+  ],
+  "no_requirement_sentence_lenient": [
+    "accountId",
+    "agent_suspended",
+    "agentId",
+    "authorizationId",
+    "bounds",
+    "C3 \u2014 Unidirectionality",
+    "case",
+    "computed-tier-exceeds-declared",
+    "Configured",
+    "correlationScope",
+    "countMatch",
+    "criteriaFields",
+    "ctierSchemaId",
+    "customerId",
+    "delegation-authority-expansion",
+    "delete",
+    "deploy-time bound",
+    "escalationReason",
+    "exclude",
+    "expect",
+    "failed",
+    "handoff",
+    "head",
+    "idempotencyKey",
+    "operationAnchor",
+    "options",
+    "patch",
+    "payload-exceeds-declared-bounds",
+    "paymentId",
+    "placeholder",
+    "post",
+    "rationale",
+    "recommendedAt",
+    "refuse-and-suspend",
+    "result",
+    "reverses",
+    "searchId",
+    "session-accumulation",
+    "structural floor",
+    "trace",
+    "undeclared-operation"
+  ],
+  "lenient_closes_by_rule": {
+    "class-coverage": [
+      "$defs/criteria",
+      "$defs/criteriaProposal",
+      "4.1 Rules become data, not code",
+      "4.2 Recommendations are an overlay",
+      "4.3 The schemas live in the specification repository, not the engine",
+      "adjacent",
+      "appliedTierAtLeast",
+      "blast-radius",
+      "blastRadius",
+      "classification-rules/0.1.0",
+      "compliance-trigger",
+      "complianceTrigger",
+      "composition-manifest/0.1.0",
+      "constrained",
+      "coverage-report/0.1.0",
+      "criteriaProposal",
+      "data-sensitivity",
+      "dataSensitivity",
+      "decision-record/0.2.0",
+      "fragments",
+      "internal",
+      "key-required",
+      "Level 0",
+      "Level 1",
+      "level-2",
+      "level-3",
+      "not-applicable",
+      "personal",
+      "population",
+      "public",
+      "recommendation-set/0.1.0",
+      "regulated",
+      "Requirement 2",
+      "Requirement 4",
+      "Requirement 5",
+      "Requirement 6",
+      "reversibility",
+      "single-customer",
+      "single-record",
+      "system-wide",
+      "The transformations, as document-in / document-out",
+      "Tier 1",
+      "undo-restores-effect",
+      "undo-restores-record-only",
+      "unsafe"
+    ],
+    "requirement-like-prose": [
+      "Bounds coherence",
+      "C16 \u2014 The namespace is stripped on ingress",
+      "C2 \u2014 Fail-closed",
+      "Coverage sort",
+      "Criteria",
+      "ctierSchema",
+      "decaySeconds",
+      "defaults",
+      "Engine `Criteria` defaults are not the contract",
+      "escalateAbove",
+      "Exclusion exclusivity",
+      "granted scope",
+      "hasDeclaredReversal",
+      "hasRequestBody",
+      "high",
+      "low",
+      "max",
+      "medium",
+      "No agent-facing URL",
+      "operationIdMatches",
+      "Outcome",
+      "Pagination is refused as a predicate",
+      "pathEndsWithParameter",
+      "pathParameterCount",
+      "pathSegmentCount",
+      "pending_authorization",
+      "recommendationTtlDays",
+      "responseIsCollection",
+      "scope floor",
+      "securitySchemes",
+      "Self-reversal",
+      "tagIn",
+      "undeclaredTier",
+      "weight",
+      "X-Agent-Id",
+      "x-ctier-bounds",
+      "x-ctier-defaults",
+      "x-ctier-escalate-to",
+      "x-ctier-exclude",
+      "x-ctier-handoff",
+      "x-ctier-provenance",
+      "x-ctier-rationale",
+      "x-ctier-weight"
+    ],
+    "titled-section-body": [
+      "Bound comparison",
+      "C13 \u2014 Digest discipline",
+      "C14 \u2014 No credential persistence",
+      "C15 \u2014 Agent suspension is an authorisation concern",
+      "Ledger records",
+      "On the maturity of these criteria",
+      "Single-target rule",
+      "Tier 2 requires a verified compensating action"
+    ]
+  },
+  "lenient_closes_by_rule_all_firing": {
+    "class-coverage": [
+      "$defs/criteria",
+      "$defs/criteriaProposal",
+      "4.1 Rules become data, not code",
+      "4.2 Recommendations are an overlay",
+      "4.3 The schemas live in the specification repository, not the engine",
+      "adjacent",
+      "appliedTierAtLeast",
+      "blast-radius",
+      "blastRadius",
+      "classification-rules/0.1.0",
+      "compliance-trigger",
+      "complianceTrigger",
+      "composition-manifest/0.1.0",
+      "constrained",
+      "coverage-report/0.1.0",
+      "criteriaProposal",
+      "data-sensitivity",
+      "dataSensitivity",
+      "decision-record/0.2.0",
+      "fragments",
+      "internal",
+      "key-required",
+      "Level 0",
+      "Level 1",
+      "level-2",
+      "level-3",
+      "not-applicable",
+      "personal",
+      "population",
+      "public",
+      "recommendation-set/0.1.0",
+      "regulated",
+      "Requirement 2",
+      "Requirement 4",
+      "Requirement 5",
+      "Requirement 6",
+      "reversibility",
+      "single-customer",
+      "single-record",
+      "system-wide",
+      "The transformations, as document-in / document-out",
+      "Tier 1",
+      "undo-restores-effect",
+      "undo-restores-record-only",
+      "unsafe"
+    ],
+    "requirement-like-prose": [
+      "$defs/criteria",
+      "$defs/criteriaProposal",
+      "adjacent",
+      "blast-radius",
+      "Bound comparison",
+      "Bounds coherence",
+      "C13 \u2014 Digest discipline",
+      "C14 \u2014 No credential persistence",
+      "C15 \u2014 Agent suspension is an authorisation concern",
+      "C16 \u2014 The namespace is stripped on ingress",
+      "C2 \u2014 Fail-closed",
+      "compliance-trigger",
+      "Coverage sort",
+      "Criteria",
+      "criteriaProposal",
+      "ctierSchema",
+      "data-sensitivity",
+      "decaySeconds",
+      "decision-record/0.2.0",
+      "defaults",
+      "Engine `Criteria` defaults are not the contract",
+      "escalateAbove",
+      "Exclusion exclusivity",
+      "granted scope",
+      "hasDeclaredReversal",
+      "hasRequestBody",
+      "high",
+      "internal",
+      "key-required",
+      "Ledger records",
+      "low",
+      "max",
+      "medium",
+      "No agent-facing URL",
+      "not-applicable",
+      "On the maturity of these criteria",
+      "operationIdMatches",
+      "Outcome",
+      "Pagination is refused as a predicate",
+      "pathEndsWithParameter",
+      "pathParameterCount",
+      "pathSegmentCount",
+      "pending_authorization",
+      "personal",
+      "population",
+      "public",
+      "recommendationTtlDays",
+      "regulated",
+      "Requirement 4",
+      "Requirement 6",
+      "responseIsCollection",
+      "reversibility",
+      "scope floor",
+      "securitySchemes",
+      "Self-reversal",
+      "single-customer",
+      "single-record",
+      "Single-target rule",
+      "system-wide",
+      "tagIn",
+      "Tier 2 requires a verified compensating action",
+      "undeclaredTier",
+      "undo-restores-effect",
+      "undo-restores-record-only",
+      "unsafe",
+      "weight",
+      "X-Agent-Id",
+      "x-ctier-bounds",
+      "x-ctier-defaults",
+      "x-ctier-escalate-to",
+      "x-ctier-exclude",
+      "x-ctier-handoff",
+      "x-ctier-provenance",
+      "x-ctier-rationale",
+      "x-ctier-weight"
+    ],
+    "titled-section-body": [
+      "Bound comparison",
+      "C13 \u2014 Digest discipline",
+      "C14 \u2014 No credential persistence",
+      "C15 \u2014 Agent suspension is an authorisation concern",
+      "Ledger records",
+      "On the maturity of these criteria",
+      "Requirement 2",
+      "Requirement 5",
+      "Single-target rule",
+      "Tier 2 requires a verified compensating action"
+    ]
+  },
   "stated_under_different_name_proxy": [
     "1.1.0",
     "absent",
@@ -2707,6 +4703,7 @@
     "artefact",
     "Attempt",
     "attempt-record/0.3.0",
+    "authority",
     "Authorization",
     "autoResume",
     "bundle",
@@ -2728,25 +4725,32 @@
     "execute",
     "executed",
     "get",
+    "governed set",
     "idempotency",
     "incidentId",
     "inherently-safe",
     "input",
+    "integrity-protection",
+    "join key",
     "Level 2",
     "Level 3",
     "Level 4",
     "method",
+    "namespace strip",
     "none",
     "Observed",
     "operation",
     "outcome-record/0.1.0",
     "overlay",
+    "parameter",
+    "persist-and-execute",
     "profile",
     "propose",
     "provenance",
     "put",
     "recommended",
     "refuse-provisioning",
+    "refuse-to-emit",
     "request",
     "Requirement 3",
     "Retry-After",
@@ -2757,12 +4761,17 @@
     "tier",
     "Tier 3",
     "Tier 4",
+    "undeclared default",
+    "undetermined",
     "update",
     "when",
     "withhold",
     "x-consequence-*",
+    "X-Correlation-Id",
     "x-ctier-*",
     "x-ctier-composition",
-    "x-ctier-operation"
+    "x-ctier-operation",
+    "X-Ctier-Tier",
+    "X-Idempotency-Key"
   ]
 }

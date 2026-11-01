@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""Mechanised identifier pass (audit task 89).
+"""Mechanised identifier pass (audit tasks 89 / 92).
 
 Reads the specification at a given git commit and derives an
 identifier inventory under the counting rule in COUNTING-RULE.md
 beside this script.
+
+Reports a **strict** / **lenient** pair for the requirement-
+sentence column (task 92). Strict is the task-89 whole-token +
+RFC 2119 rule. Lenient adds class-coverage, titled-section body,
+and requirement-like prose — see COUNTING-RULE.md.
 
 Usage:
   identifier_pass.py COMMIT [--repo PATH] [--json OUT] [--md OUT]
@@ -20,13 +25,30 @@ import os
 import re
 import subprocess
 import sys
-import tempfile
 from collections import Counter, defaultdict
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Any, Iterable
 
 NORMATIVE = re.compile(r"\b(MUST(?:\s+NOT)?|SHALL(?:\s+NOT)?|REQUIRED)\b")
+# Ordinary-English obligation cues used by the lenient prose rule
+# (bucket B). Does not include uppercase RFC 2119 — those are strict.
+PROSE_OBLIGATION = re.compile(
+    r"(?i)\b("
+    r"must(?:\s+not)?"
+    r"|shall(?:\s+not)?"
+    r"|required"
+    r"|must never"
+    r"|is a contradiction"
+    r"|contains only"
+    r"|equals the expected"
+    r"|is ordered"
+    r"|not a ctier emit"
+    r"|validator-enforced"
+    r"|fail-closed"
+    r")\b"
+)
+EXCLUDED_BOLD = re.compile(r"(?i)\bExcluded\b")
 FENCE = re.compile(r"```.*?```", re.S)
 HEADING = re.compile(r"^(#{1,6})\s+(.*)$")
 BOLD_LEAD = re.compile(r"^\*\*([^*]+)\*\*")
@@ -38,6 +60,44 @@ TIER = re.compile(r"\bTier\s+(\d+)\b", re.I)
 REQUIREMENT = re.compile(r"\bRequirement\s+(\d+)\b", re.I)
 X_CTIER_KEY = re.compile(r"\bx-ctier-[A-Za-z0-9_-]+\b")
 NAMESPACE = re.compile(r"`(x-ctier-\*|x-consequence-\*)`")
+
+RULE_STRICT = "strict-rfc2119"
+RULE_CLASS = "class-coverage"
+RULE_TITLE = "titled-section-body"
+RULE_PROSE = "requirement-like-prose"
+
+# Hand inventory concepts (finding 43). Harvested when present in prose.
+CONCEPTS = {
+    "governed set",
+    "granted scope",
+    "undeclared default",
+    "join key",
+    "scope floor",
+    "structural floor",
+    "deploy-time bound",
+    "persist-and-execute",
+    "namespace strip",
+    "integrity-protection",
+    "refuse-to-emit",
+    "undetermined",
+}
+
+# Nested fields under x-ctier-* objects (finding 43 Extension subfield).
+EXTENSION_SUBFIELDS = {
+    "undeclaredTier",
+    "escalateAbove",
+    "decaySeconds",
+    "recommendationTtlDays",
+    "parameter",
+    "max",
+    "authority",
+}
+
+HEADER_ALIASES = {
+    "X-Correlation-Id",
+    "X-Ctier-Tier",
+    "X-Idempotency-Key",
+}
 
 # Schema field names treated as first-class vocabulary (COUNTING-RULE.md).
 VOCAB_FIELDS = {
@@ -74,10 +134,13 @@ CRITERIA_DIMS = {
 class Row:
     identifier: str
     class_name: str
-    requirement_sentence: bool
+    requirement_sentence: bool  # strict (back-compat)
     titled_under_own_name: bool
     sources: list[str] = field(default_factory=list)
     notes: str = ""
+    requirement_sentence_strict: bool = False
+    requirement_sentence_lenient: bool = False
+    lenient_rules: list[str] = field(default_factory=list)
 
 
 def run_git(repo: Path, *args: str) -> bytes:
@@ -293,6 +356,12 @@ def classify(ident: str, sources: list[str]) -> str:
         return "Criteria value"
     if ident in {"criteria", "criteriaProposal"} or ident.startswith("$defs/"):
         return "Schema shape"
+    if ident in CONCEPTS or "concept:" in src:
+        return "Concept"
+    if ident in EXTENSION_SUBFIELDS or "extension-subfield" in src:
+        return "Extension subfield"
+    if ident in HEADER_ALIASES or "header-alias" in src.lower():
+        return "Header alias"
     if ident.startswith("X-") or ident in {
         "Idempotency-Key",
         "Retry-After",
@@ -381,6 +450,9 @@ def extract_from_schema(path: str, text: str, bag: dict[str, dict]) -> None:
     for jpath, name in props:
         if name.startswith("x-ctier-") or name in VOCAB_FIELDS:
             add(name, f"{path}:{jpath}.properties.{name}")
+        # nested fields under x-ctier-* objects (Extension subfield)
+        if name in EXTENSION_SUBFIELDS and "x-ctier-" in jpath:
+            add(name, f"{path}:{jpath}.properties.{name}:extension-subfield")
         # criteria dimension names as used in extensions
         if name in CRITERIA_DIMS:
             slug = {
@@ -524,6 +596,23 @@ def extract_headings_and_prose(path: str, text: str, bag: dict[str, dict], title
                 # avoid sucking every year/number: require nearby agent/response words
                 pass
 
+    # Concepts named in finding 43's Concept class
+    for concept in CONCEPTS:
+        if token_in_text(concept, body) or concept in body:
+            add(concept, f"{path}:concept:{concept}")
+
+    # Header aliases called out in headers.md
+    if path.endswith("headers.md"):
+        for alias in HEADER_ALIASES:
+            if token_in_text(alias, body) or alias in body:
+                add(alias, f"{path}:header-alias:{alias}")
+
+    # Extension subfields tabulated in extensions.md
+    if path.endswith("extensions.md"):
+        for sub in EXTENSION_SUBFIELDS:
+            if token_in_text(sub, body) or f"`{sub}`" in body:
+                add(sub, f"{path}:extension-subfield:{sub}")
+
 
 def extract_yaml(path: str, text: str, bag: dict[str, dict]) -> None:
     def add(ident: str, source: str) -> None:
@@ -569,10 +658,49 @@ def build_prose_index(files: dict[str, str]) -> list[str]:
 
 
 def has_requirement(ident: str, paras: Iterable[str]) -> bool:
+    """Strict: whole-token + uppercase MUST/SHALL/REQUIRED same paragraph."""
     for p in paras:
         if not NORMATIVE.search(p):
             continue
         if token_in_text(ident, p):
+            return True
+    return False
+
+
+def has_requirement_like_prose(ident: str, paras: Iterable[str]) -> bool:
+    """Lenient rule from bucket B: obligation-like prose without RFC 2119.
+
+    A paragraph that whole-token-matches the identifier and either:
+    - uses ordinary-English obligation cues (lowercase must/shall/required,
+      contradiction, closed-set, ordering, equality, validator-enforced, …)
+      while lacking uppercase MUST/SHALL/REQUIRED, or
+    - is a bold Excluded / definitional record lead naming the identifier.
+    """
+    for p in paras:
+        if not token_in_text(ident, p) and not (
+            ident in p and (f"**{ident}**" in p or f"`{ident}`" in p)
+        ):
+            # multi-word concepts / plain presence for short tokens already
+            # handled by token_in_text; allow bold-lead record types
+            if not (p.lstrip().startswith(f"**{ident}**") or f"**{ident}**" in p[:80]):
+                continue
+        present = (
+            token_in_text(ident, p)
+            or f"**{ident}**" in p
+            or f"`{ident}`" in p
+            or ident in p
+        )
+        if not present:
+            continue
+        if NORMATIVE.search(p):
+            # uppercase RFC 2119 belongs to strict, not this rule
+            continue
+        if PROSE_OBLIGATION.search(p):
+            return True
+        if EXCLUDED_BOLD.search(p) and token_in_text(ident, p):
+            return True
+        # definitional ledger-record lead: **Attempt** — …
+        if re.match(rf"^\*\*{re.escape(ident)}\*\*\s*[—-]", p.lstrip()):
             return True
     return False
 
@@ -592,6 +720,265 @@ def titled_own_name(ident: str, titles: set[str]) -> bool:
         if re.match(rf"^{re.escape(ident)}\s*[—-]", t):
             return True
     return False
+
+
+def _section_bodies(files: dict[str, str]) -> dict[str, str]:
+    """Map heading title -> body text until the next same-or-higher heading."""
+    out: dict[str, str] = {}
+    for path, text in files.items():
+        if not path.endswith(".md"):
+            continue
+        body = strip_fences(text)
+        lines = body.splitlines()
+        headings: list[tuple[int, int, str]] = []
+        for i, line in enumerate(lines):
+            m = HEADING.match(line)
+            if m:
+                headings.append((i, len(m.group(1)), m.group(2).strip()))
+        for j, (idx, level, title) in enumerate(headings):
+            end = len(lines)
+            for k in range(j + 1, len(headings)):
+                if headings[k][1] <= level:
+                    end = headings[k][0]
+                    break
+            chunk = "\n".join(lines[idx + 1 : end])
+            out[title] = chunk
+            for bt in BACKTICK.findall(title):
+                out.setdefault(bt, chunk)
+    return out
+
+
+def _numbered_requirement_bodies(files: dict[str, str]) -> dict[str, str]:
+    """Map 'Requirement N' -> item body under deployment-requirement lists."""
+    out: dict[str, str] = {}
+    for path, text in files.items():
+        if not path.endswith(".md"):
+            continue
+        body = strip_fences(text)
+        # Patterns: "2. **…**" or "### Requirement 2" already handled as headings.
+        for m in re.finditer(
+            r"(?m)^(?:#{1,6}\s*)?(?:Requirement\s+)?(\d+)\.\s+\*\*([^*]+)\*\*(.*?)(?=^(?:#{1,6}\s|(?:Requirement\s+)?\d+\.\s+\*\*|\Z))",
+            body,
+            re.S,
+        ):
+            num, title_bit, rest = m.group(1), m.group(2), m.group(3)
+            key = f"Requirement {num}"
+            out[key] = f"{title_bit}\n{rest}"
+    return out
+
+
+def class_coverage_credits(
+    class_of: dict[str, str],
+    paras: list[str],
+    files: dict[str, str],
+) -> set[str]:
+    """Identifiers credited by the class-coverage rule (bucket A, rule 1).
+
+    Rule: a requirement stated about a class covers a member when the
+    requirement names the class by its own name or by a pattern the member
+    matches, the obligation is satisfiable per member, and nothing in the
+    requirement or its scope excludes that member.
+    """
+    credited: set[str] = set()
+    joined = "\n".join(paras)
+    prose = "\n".join(v for k, v in files.items() if k.endswith(".md"))
+
+    def members(*classes: str) -> list[str]:
+        return [i for i, c in class_of.items() if c in classes]
+
+    # Criteria shape completeness — covers dimensions, values, $defs shapes.
+    criteria_cover = False
+    for p in paras:
+        if "x-ctier-criteria" in p or "$defs/criteria" in p:
+            if re.search(r"(?i)\ball five\b", p) or re.search(
+                r"(?i)\bfields are required\b", p
+            ):
+                criteria_cover = True
+                break
+            if NORMATIVE.search(p) and re.search(r"(?i)\bcriteria\b", p):
+                criteria_cover = True
+                break
+    if criteria_cover:
+        for ident in members("Criteria value", "Criteria dimension", "Schema shape"):
+            credited.add(ident)
+
+    # Document-type / record-version class — named ctier-authored formats
+    # validated as a class (schemas README + validation document-type talk).
+    doc_class = False
+    for p in paras:
+        if re.search(r"(?i)document type|ctier-authored|schemas/", p) and (
+            NORMATIVE.search(p) or PROSE_OBLIGATION.search(p) or "validat" in p.lower()
+        ):
+            doc_class = True
+            break
+    if "schemas/README.md" in files or any("schemas/README" in p for p in files):
+        # schemas README existing + any validation language about named formats
+        for p in paras:
+            if "validat" in p.lower() and (
+                "schema" in p.lower() or "document" in p.lower()
+            ):
+                doc_class = True
+                break
+    if doc_class:
+        for ident in members("Document type", "Record version"):
+            credited.add(ident)
+
+    # Deployment-level class — ladder / Level N rungs bound by C-criteria.
+    level_cover = False
+    for p in paras:
+        if re.search(r"(?i)\bLevel\s+\d+\b|\blevel-\d+\b", p) and (
+            NORMATIVE.search(p)
+            or re.search(r"(?i)enforc|conformance|adoption|ladder|deployment level", p)
+        ):
+            level_cover = True
+            break
+    if level_cover:
+        for ident in members("Deployment level"):
+            credited.add(ident)
+
+    # Tier class — Who-executes / classification targets.
+    tier_cover = False
+    for p in paras:
+        if re.search(r"(?i)\bTier\s+[1-4]\b", p) and (
+            NORMATIVE.search(p) or re.search(r"(?i)who executes|classification", p)
+        ):
+            tier_cover = True
+            break
+    if tier_cover:
+        for ident in members("Tier"):
+            credited.add(ident)
+
+    # Profile class — standard/constrained bounds.
+    profile_cover = False
+    for p in paras:
+        if re.search(r"(?i)\bprofile\b|\bstandard\b|\bconstrained\b", p) and (
+            NORMATIVE.search(p) or PROSE_OBLIGATION.search(p)
+        ):
+            profile_cover = True
+            break
+    if profile_cover:
+        for ident in members("Profile"):
+            credited.add(ident)
+
+    # Generator mode class — bundle/fragments.
+    gen_cover = False
+    for p in paras:
+        if ("bundle" in p or "fragments" in p) and (
+            NORMATIVE.search(p) or PROSE_OBLIGATION.search(p)
+        ):
+            gen_cover = True
+            break
+    if gen_cover:
+        for ident in members("Generator mode"):
+            credited.add(ident)
+
+    # Corpus-field class — only the dimensions the corpus table treats as
+    # class members (not every Corpus field, e.g. not `placeholder`).
+    corpus_dimension_members = {
+        "profile",
+        "deployment",
+        "sequence",
+        "appliedTierAtLeast",
+    }
+    corpus_cover = False
+    for p in paras:
+        if re.search(r"(?i)\b(profile|deployment|sequence|appliedTierAtLeast)\b", p) and (
+            NORMATIVE.search(p)
+            or PROSE_OBLIGATION.search(p)
+            or re.search(r"(?i)corpus|dimension|bounded imprecision", p)
+        ):
+            corpus_cover = True
+            break
+    if corpus_cover:
+        for ident in members("Corpus field"):
+            if ident in corpus_dimension_members:
+                credited.add(ident)
+
+    # Deployment-requirement class: numbered items under the deployment
+    # requirements list. Sibling items with MUST cover the class of labels
+    # (forces Requirement 4, whose body has no uppercase MUST).
+    dep_req = members("Deployment requirement")
+    if any(
+        NORMATIVE.search(_numbered_requirement_bodies(files).get(i, ""))
+        for i in dep_req
+    ):
+        for ident in dep_req:
+            credited.add(ident)
+
+    # Header class is NOT wholesale-covered by one header's MUST (would
+    # over-credit X-Delegation-Chain etc.). Authorization needs
+    # criterion-linkage — not this rule.
+    _ = (joined, prose)  # retained for future narrowing; silence lint
+    return credited
+
+
+def titled_section_body_credits(
+    class_of: dict[str, str],
+    files: dict[str, str],
+) -> set[str]:
+    """Identifiers credited when a titled section / list-label body has MUST.
+
+    Forced by bucket A cases whose identifier is the section title or
+    'Requirement N' label while the MUST sits in the body without repeating
+    the title token.
+    """
+    credited: set[str] = set()
+    bodies = _section_bodies(files)
+    req_bodies = _numbered_requirement_bodies(files)
+
+    for ident, klass in class_of.items():
+        if klass not in {"Validation rule", "Deployment requirement"}:
+            continue
+        body = bodies.get(ident) or req_bodies.get(ident)
+        if not body:
+            continue
+        if NORMATIVE.search(body):
+            credited.add(ident)
+    return credited
+
+
+def requirement_like_credits(
+    class_of: dict[str, str],
+    paras: list[str],
+    files: dict[str, str],
+) -> set[str]:
+    """Identifiers credited by requirement-like prose (bucket B rule)."""
+    credited: set[str] = set()
+    for ident in class_of:
+        if has_requirement_like_prose(ident, paras):
+            credited.add(ident)
+
+    bodies = _section_bodies(files)
+    # Titled validation-rule / extension-field sections whose body states
+    # an obligation in ordinary English (lowercase must, Required table,
+    # fail-closed, …) without uppercase MUST — and without repeating the
+    # title token inside the body paragraphs the strict scanner walks.
+    for ident, klass in class_of.items():
+        body = bodies.get(ident)
+        if not body:
+            continue
+        if klass == "Validation rule" and (
+            PROSE_OBLIGATION.search(body)
+            or re.search(r"(?m)^\s*\*\*[^*]{8,}\*\*", body)
+            or re.search(
+                r"(?i)\bno\b.{0,40}\bexists\b|\bctier does not\b|\bdoes not guess\b",
+                body,
+            )
+        ):
+            credited.add(ident)
+        if klass in {"Extension field", "Extension subfield"}:
+            # Field-section contract under extensions.md (type / optional /
+            # Required table / descriptive norms), as bucket B credited.
+            if (
+                PROSE_OBLIGATION.search(body)
+                or re.search(r"(?i)\boptional\b|\brequired\b|\bobject\b|\binteger\b|\bstring\b|\bboolean\b", body)
+            ):
+                credited.add(ident)
+        if klass in {"Header", "Header alias", "Document key"} and PROSE_OBLIGATION.search(
+            body
+        ):
+            credited.add(ident)
+    return credited
 
 
 def inventory_for_commit(repo: Path, commit: str) -> dict[str, Any]:
@@ -621,36 +1008,88 @@ def inventory_for_commit(repo: Path, commit: str) -> dict[str, Any]:
     bag = {k: v for k, v in bag.items() if not k.startswith("__error_")}
 
     paras = build_prose_index(files)
+    class_of: dict[str, str] = {}
+    for ident, meta in bag.items():
+        class_of[ident] = meta.get("force_class") or classify(ident, meta["sources"])
+
+    class_hits = class_coverage_credits(class_of, paras, files)
+    title_hits = titled_section_body_credits(class_of, files)
+    prose_hits = requirement_like_credits(class_of, paras, files)
+
     rows: list[Row] = []
     for ident, meta in sorted(bag.items(), key=lambda kv: kv[0].lower()):
         sources = meta["sources"]
-        klass = meta.get("force_class") or classify(ident, sources)
-        req = has_requirement(ident, paras)
+        klass = class_of[ident]
+        strict = has_requirement(ident, paras)
+        rules: list[str] = []
+        if strict:
+            rules.append(RULE_STRICT)
+        if ident in class_hits:
+            rules.append(RULE_CLASS)
+        if ident in title_hits:
+            rules.append(RULE_TITLE)
+        if ident in prose_hits:
+            rules.append(RULE_PROSE)
+        # de-dup preserve order
+        seen: set[str] = set()
+        ordered_rules: list[str] = []
+        for r in rules:
+            if r not in seen:
+                seen.add(r)
+                ordered_rules.append(r)
+        lenient = bool(ordered_rules)
         titled = titled_own_name(ident, titles)
-        # also treat a dedicated ### `ident` heading captured as title set member
         rows.append(
             Row(
                 identifier=ident,
                 class_name=klass,
-                requirement_sentence=req,
+                requirement_sentence=strict,
                 titled_under_own_name=titled,
                 sources=sources,
+                requirement_sentence_strict=strict,
+                requirement_sentence_lenient=lenient,
+                lenient_rules=ordered_rules,
             )
         )
 
     by_class = Counter(r.class_name for r in rows)
-    no_req = [r for r in rows if not r.requirement_sentence]
-    # different name proxy: has requirement, not titled under own name
-    diff_name = [r for r in rows if r.requirement_sentence and not r.titled_under_own_name]
+    no_req_strict = [r for r in rows if not r.requirement_sentence_strict]
+    no_req_lenient = [r for r in rows if not r.requirement_sentence_lenient]
+    # difference: strict-no but lenient-yes, itemised by which non-strict rule
+    # closed it. Primary = first of class-coverage, titled-section-body,
+    # requirement-like-prose that fires (stable priority). Also list every
+    # rule that fires (overlaps allowed; sums may exceed the gap).
+    rule_priority = (RULE_CLASS, RULE_TITLE, RULE_PROSE)
+    closed_primary: dict[str, list[str]] = defaultdict(list)
+    closed_all: dict[str, list[str]] = defaultdict(list)
+    for r in rows:
+        if r.requirement_sentence_strict or not r.requirement_sentence_lenient:
+            continue
+        non_strict = [x for x in r.lenient_rules if x != RULE_STRICT]
+        for rule in non_strict:
+            closed_all[rule].append(r.identifier)
+        for rule in rule_priority:
+            if rule in non_strict:
+                closed_primary[rule].append(r.identifier)
+                break
+    # different name proxy: has strict requirement, not titled under own name
+    diff_name = [r for r in rows if r.requirement_sentence_strict and not r.titled_under_own_name]
 
     full = run_git(repo, "rev-parse", commit).decode().strip()
+    closed_counts = {k: len(v) for k, v in sorted(closed_primary.items())}
+    closed_all_counts = {k: len(v) for k, v in sorted(closed_all.items())}
     summary = {
         "commit": full,
         "commit_arg": commit,
         "corpus_files": sorted(files.keys()),
         "identifiers": len(rows),
         "classes": len(by_class),
-        "no_requirement_sentence": len(no_req),
+        "no_requirement_sentence": len(no_req_strict),  # strict; back-compat
+        "no_requirement_sentence_strict": len(no_req_strict),
+        "no_requirement_sentence_lenient": len(no_req_lenient),
+        "strict_lenient_gap": len(no_req_strict) - len(no_req_lenient),
+        "lenient_closes_by_rule_counts": closed_counts,
+        "lenient_closes_by_rule_counts_all_firing": closed_all_counts,
         "stated_under_different_name_proxy": len(diff_name),
         "per_class": dict(sorted(by_class.items(), key=lambda kv: (-kv[1], kv[0]))),
         "validation_md_recorded": {
@@ -662,14 +1101,21 @@ def inventory_for_commit(repo: Path, commit: str) -> dict[str, Any]:
         "agree_with_validation_md": {
             "identifiers": len(rows) == 195,
             "classes": len(by_class) == 33,
-            "no_requirement_sentence": len(no_req) == 22,
+            "no_requirement_sentence": len(no_req_strict) == 22,
+            "no_requirement_sentence_lenient": len(no_req_lenient) == 22,
             "stated_under_different_name": len(diff_name) == 3,
         },
     }
     return {
         "summary": summary,
         "rows": [asdict(r) for r in rows],
-        "no_requirement_sentence": [r.identifier for r in no_req],
+        "no_requirement_sentence": [r.identifier for r in no_req_strict],
+        "no_requirement_sentence_strict": [r.identifier for r in no_req_strict],
+        "no_requirement_sentence_lenient": [r.identifier for r in no_req_lenient],
+        "lenient_closes_by_rule": {k: v for k, v in sorted(closed_primary.items())},
+        "lenient_closes_by_rule_all_firing": {
+            k: v for k, v in sorted(closed_all.items())
+        },
         "stated_under_different_name_proxy": [r.identifier for r in diff_name],
     }
 
@@ -689,12 +1135,29 @@ def render_md(result: dict[str, Any]) -> str:
         f"{'yes' if s['agree_with_validation_md']['identifiers'] else 'no'} |",
         f"| Classes | {s['classes']} | {s['validation_md_recorded']['classes']} | "
         f"{'yes' if s['agree_with_validation_md']['classes'] else 'no'} |",
-        f"| No requirement sentence | {s['no_requirement_sentence']} | "
+        f"| No requirement sentence (strict) | {s['no_requirement_sentence_strict']} | "
         f"{s['validation_md_recorded']['no_requirement_sentence']} | "
         f"{'yes' if s['agree_with_validation_md']['no_requirement_sentence'] else 'no'} |",
+        f"| No requirement sentence (lenient) | {s['no_requirement_sentence_lenient']} | "
+        f"{s['validation_md_recorded']['no_requirement_sentence']} | "
+        f"{'yes' if s['agree_with_validation_md'].get('no_requirement_sentence_lenient') else 'no'} |",
         f"| Stated under a different name (proxy) | {s['stated_under_different_name_proxy']} | "
         f"{s['validation_md_recorded']['stated_under_different_name']} | "
         f"{'yes' if s['agree_with_validation_md']['stated_under_different_name'] else 'no'} |",
+        "",
+        f"Strict→lenient gap: **{s['strict_lenient_gap']}** "
+        f"(itemised under `lenient_closes_by_rule`).",
+        "",
+        "### Lenient closes by rule (strict=no → lenient=yes)",
+        "",
+        "| Rule | Count |",
+        "|---|---:|",
+    ]
+    for k, v in s.get("lenient_closes_by_rule_counts", {}).items():
+        lines.append(f"| `{k}` | {v} |")
+    if not s.get("lenient_closes_by_rule_counts"):
+        lines.append("| *(none)* | 0 |")
+    lines += [
         "",
         "## Per class",
         "",
@@ -707,13 +1170,16 @@ def render_md(result: dict[str, Any]) -> str:
         "",
         "## Inventory",
         "",
-        "| Identifier | Class | Requirement sentence? | Titled under own name? |",
-        "|---|---|---|---|",
+        "| Identifier | Class | Strict? | Lenient? | Rules | Titled? |",
+        "|---|---|---|---|---|---|",
     ]
     for r in result["rows"]:
+        rules = ",".join(r.get("lenient_rules") or []) or "—"
         lines.append(
             f"| `{r['identifier']}` | {r['class_name']} | "
-            f"{'yes' if r['requirement_sentence'] else 'no'} | "
+            f"{'yes' if r.get('requirement_sentence_strict', r['requirement_sentence']) else 'no'} | "
+            f"{'yes' if r.get('requirement_sentence_lenient', r['requirement_sentence']) else 'no'} | "
+            f"{rules} | "
             f"{'yes' if r['titled_under_own_name'] else 'no'} |"
         )
     lines.append("")
@@ -757,6 +1223,16 @@ def main(argv: list[str] | None = None) -> int:
                 "commit": summary["commit"],
                 "identifiers": summary["identifiers"],
                 "classes": summary["classes"],
+                "no_requirement_sentence_strict": summary[
+                    "no_requirement_sentence_strict"
+                ],
+                "no_requirement_sentence_lenient": summary[
+                    "no_requirement_sentence_lenient"
+                ],
+                "strict_lenient_gap": summary["strict_lenient_gap"],
+                "lenient_closes_by_rule_counts": summary[
+                    "lenient_closes_by_rule_counts"
+                ],
                 "no_requirement_sentence": summary["no_requirement_sentence"],
                 "stated_under_different_name_proxy": summary[
                     "stated_under_different_name_proxy"
