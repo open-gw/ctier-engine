@@ -1,0 +1,2592 @@
+{
+  "summary": {
+    "commit": "0a997321234e5f6f6184b7449a241c3d30a19520",
+    "commit_arg": "0a997321234e5f6f6184b7449a241c3d30a19520",
+    "corpus_files": [
+      "docs/adr/0009-the-contract-is-the-documents.md",
+      "spec/README.md",
+      "spec/conformance.md",
+      "spec/consequence-tiered-api.yaml",
+      "spec/examples/README.md",
+      "spec/extensions.md",
+      "spec/headers.md",
+      "spec/schemas/README.md",
+      "spec/schemas/attempt-record-0.2.0.json",
+      "spec/schemas/classification-rules-0.1.0.json",
+      "spec/schemas/composition-manifest-0.1.0.json",
+      "spec/schemas/conformance-corpus-0.3.0.json",
+      "spec/schemas/coverage-report-0.1.0.json",
+      "spec/schemas/ctier-extensions-0.1.0.json",
+      "spec/schemas/decision-record-0.2.0.json",
+      "spec/schemas/outcome-record-0.1.0.json",
+      "spec/schemas/recommendation-set-0.1.0.json",
+      "spec/validation.md"
+    ],
+    "identifiers": 217,
+    "classes": 31,
+    "no_requirement_sentence": 136,
+    "stated_under_different_name_proxy": 62,
+    "per_class": {
+      "Unclassified": 43,
+      "Criteria value": 17,
+      "Validation rule": 17,
+      "Criterion": 13,
+      "Extension field": 12,
+      "Header": 12,
+      "when-predicate": 10,
+      "Document type": 9,
+      "Criteria dimension": 8,
+      "Deployment level": 7,
+      "Ledger field": 7,
+      "Response identifier": 7,
+      "Escalation reason": 6,
+      "Corpus field": 5,
+      "Disposition": 4,
+      "Schema shape": 4,
+      "Tier": 4,
+      "agentAction": 4,
+      "Confidence": 3,
+      "Coverage status": 3,
+      "Deployment requirement": 3,
+      "Record type": 3,
+      "Record version": 3,
+      "Composition role": 2,
+      "Digest": 2,
+      "Generator mode": 2,
+      "Outcome result": 2,
+      "Profile": 2,
+      "Document key": 1,
+      "Measurement kind": 1,
+      "Namespace": 1
+    },
+    "validation_md_recorded": {
+      "identifiers": 195,
+      "classes": 33,
+      "no_requirement_sentence": 22,
+      "stated_under_different_name": 3
+    },
+    "agree_with_validation_md": {
+      "identifiers": false,
+      "classes": false,
+      "no_requirement_sentence": false,
+      "stated_under_different_name": false
+    }
+  },
+  "rows": [
+    {
+      "identifier": "$defs/criteria",
+      "class_name": "Schema shape",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/criteria:shape"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "$defs/criteriaProposal",
+      "class_name": "Schema shape",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/criteriaProposal:shape"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "1.1.0",
+      "class_name": "Unclassified",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/recommendation-set-0.1.0.json:$.overlay"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "4.1 Rules become data, not code",
+      "class_name": "Document type",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "docs/adr/0009-the-contract-is-the-documents.md:heading:4.1 Rules become data, not code"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "4.2 Recommendations are an overlay",
+      "class_name": "Document type",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "docs/adr/0009-the-contract-is-the-documents.md:heading:4.2 Recommendations are an overlay"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "4.3 The schemas live in the specification repository, not the engine",
+      "class_name": "Document type",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "docs/adr/0009-the-contract-is-the-documents.md:heading:4.3 The schemas live in the specification repository, not the engine"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "403",
+      "class_name": "Response identifier",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/README.md:bold-backtick:Excluded \u2014 `403`."
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "absent",
+      "class_name": "Coverage status",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/coverage-report-0.1.0.json:$/$defs/operation.status"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "accountId",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-name"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "action",
+      "class_name": "Unclassified",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/recommendation-set-0.1.0.json:$defs/action"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "adjacent",
+      "class_name": "Criteria value",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/complianceTrigger"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "agent",
+      "class_name": "Unclassified",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$defs/agent"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Agent suspension is an authorisation concern",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:Agent suspension is an authorisation concern"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "agent_suspended",
+      "class_name": "Response identifier",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-token"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "agentId",
+      "class_name": "Ledger field",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/attempt-record-0.2.0.json:$.properties.agentId",
+        "spec/schemas/decision-record-0.2.0.json:$.properties.agentId"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "AgentSuspended",
+      "class_name": "Response identifier",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:named-token"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "appliedTierAtLeast",
+      "class_name": "Corpus field",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/expect.properties.appliedTierAtLeast"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "artefact",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/composition-manifest-0.1.0.json:$defs/artefact"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Attempt",
+      "class_name": "Record type",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/attempt-record-0.2.0.json:$.ctierSchema:record-type"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "attempt-record/0.2.0",
+      "class_name": "Record version",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/attempt-record-0.2.0.json:$.ctierSchema"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Authorization",
+      "class_name": "Header",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-token"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "authorizationId",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-name"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "autoResume",
+      "class_name": "Response identifier",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:named-token"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "blast-radius",
+      "class_name": "Criteria dimension",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/criteriaFields.properties.blast-radius:dim"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "blastRadius",
+      "class_name": "Criteria dimension",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/blastRadius"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Bound comparison",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:Bound comparison"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "bounds",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/bounds"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Bounds coherence",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:Bounds coherence"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "bundle",
+      "class_name": "Generator mode",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/composition-manifest-0.1.0.json:$.generator.mode"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C1",
+      "class_name": "Criterion",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/README.md:bold:C1 \u2014 Classification precedes routing.",
+        "spec/README.md:prose-criterion"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C10",
+      "class_name": "Criterion",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/README.md:bold:C10 \u2014 No operation executes without a decision having been made.",
+        "spec/README.md:prose-criterion"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C11",
+      "class_name": "Criterion",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/README.md:bold:C11 \u2014 The agent does not choose its tier.",
+        "spec/README.md:prose-criterion"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C12",
+      "class_name": "Criterion",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:prose-criterion",
+        "spec/conformance.md:prose-criterion"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C13",
+      "class_name": "Criterion",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/README.md:bold:C13 \u2014 Digest discipline.",
+        "spec/README.md:prose-criterion",
+        "spec/schemas/README.md:prose-criterion",
+        "spec/validation.md:heading:C13 \u2014 Digest discipline"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C13 \u2014 Digest discipline",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:C13 \u2014 Digest discipline"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C2",
+      "class_name": "Criterion",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/README.md:bold:C2 \u2014 Fail-closed.",
+        "spec/README.md:prose-criterion",
+        "spec/validation.md:heading:C2 \u2014 Fail-closed"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C2 \u2014 Fail-closed",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:C2 \u2014 Fail-closed"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C3",
+      "class_name": "Criterion",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/README.md:bold:C3 \u2014 Escalation is unidirectional.",
+        "spec/README.md:prose-criterion",
+        "spec/examples/README.md:prose-criterion",
+        "spec/validation.md:heading:C3 \u2014 Unidirectionality"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C3 \u2014 Unidirectionality",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:C3 \u2014 Unidirectionality"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C4",
+      "class_name": "Criterion",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/README.md:bold:C4 \u2014 No decision path blocks on human input.",
+        "spec/README.md:prose-criterion"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C5",
+      "class_name": "Criterion",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:prose-criterion"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C6",
+      "class_name": "Criterion",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:prose-criterion"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C7",
+      "class_name": "Criterion",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/README.md:bold:C7 \u2014 A duplicate attempt MUST NOT produce a second execution.",
+        "spec/README.md:bold:Level 2 and C7.",
+        "spec/README.md:prose-criterion",
+        "spec/conformance.md:bold:Declared gap \u2014 C7 at Level 2.",
+        "spec/conformance.md:prose-criterion"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C8",
+      "class_name": "Criterion",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/README.md:bold:C8 \u2014 Expiry and rejection differ.",
+        "spec/README.md:prose-criterion",
+        "spec/conformance.md:prose-criterion"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "C9",
+      "class_name": "Criterion",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:prose-criterion"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "case",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$defs/case"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "classification-rules/0.1.0",
+      "class_name": "Document type",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$.ctierSchema"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "compliance-trigger",
+      "class_name": "Criteria dimension",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/criteriaFields.properties.compliance-trigger:dim"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "complianceTrigger",
+      "class_name": "Criteria dimension",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/complianceTrigger"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "composition-manifest/0.1.0",
+      "class_name": "Document type",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/composition-manifest-0.1.0.json:$.ctierSchema"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "compositionDigest",
+      "class_name": "Digest",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/composition-manifest-0.1.0.json:$.properties.compositionDigest",
+        "spec/schemas/coverage-report-0.1.0.json:$.properties.compositionDigest"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "computed-tier-exceeds-declared",
+      "class_name": "Escalation reason",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/decision-record-0.2.0.json:$.escalationReason"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "conformance-corpus/0.3.0",
+      "class_name": "Document type",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$.ctierSchema"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "constrained",
+      "class_name": "Profile",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/case.profile",
+        "spec/schemas/conformance-corpus-0.3.0.json:$.profile"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "continue_task_without_this_step",
+      "class_name": "agentAction",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:named-token",
+        "spec/consequence-tiered-api.yaml:yaml-token",
+        "spec/headers.md:named-token"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "correlationScope",
+      "class_name": "Ledger field",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/attempt-record-0.2.0.json:$.properties.correlationScope",
+        "spec/schemas/decision-record-0.2.0.json:$.properties.correlationScope"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "countMatch",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$defs/countMatch"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Coverage sort",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:Coverage sort"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "coverage-report/0.1.0",
+      "class_name": "Document type",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/coverage-report-0.1.0.json:$.ctierSchema"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "criteria",
+      "class_name": "Schema shape",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/criteria"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Criteria",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading-backtick:Engine `Criteria` defaults are not the contract"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "criteriaFields",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/criteriaFields"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "criteriaProposal",
+      "class_name": "Schema shape",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/criteriaProposal"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "ctierSchema",
+      "class_name": "Document key",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/attempt-record-0.2.0.json:$.properties.ctierSchema",
+        "spec/schemas/classification-rules-0.1.0.json:$.properties.ctierSchema",
+        "spec/schemas/composition-manifest-0.1.0.json:$.properties.ctierSchema",
+        "spec/schemas/conformance-corpus-0.3.0.json:$.properties.ctierSchema",
+        "spec/schemas/coverage-report-0.1.0.json:$.properties.ctierSchema",
+        "spec/schemas/decision-record-0.2.0.json:$.properties.ctierSchema",
+        "spec/schemas/outcome-record-0.1.0.json:$.properties.ctierSchema",
+        "spec/schemas/recommendation-set-0.1.0.json:$.properties.ctierSchema"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "ctierSchemaId",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/ctierSchemaId"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "customerId",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-name"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "data-sensitivity",
+      "class_name": "Criteria dimension",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/criteriaFields.properties.data-sensitivity:dim"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "dataSensitivity",
+      "class_name": "Criteria dimension",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/dataSensitivity"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Decision",
+      "class_name": "Record type",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/decision-record-0.2.0.json:$.ctierSchema:record-type"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "decision-record/0.2.0",
+      "class_name": "Record version",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/decision-record-0.2.0.json:$.ctierSchema"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "declared",
+      "class_name": "Coverage status",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/coverage-report-0.1.0.json:$/$defs/operation.status",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/status"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "defaults",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/defaults"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "delegation-authority-expansion",
+      "class_name": "Escalation reason",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/decision-record-0.2.0.json:$.escalationReason"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "delete",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "deployment",
+      "class_name": "Corpus field",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$.properties.deployment"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "deploymentDigest",
+      "class_name": "Digest",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/attempt-record-0.2.0.json:$.properties.deploymentDigest",
+        "spec/schemas/decision-record-0.2.0.json:$.properties.deploymentDigest"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Derived",
+      "class_name": "Measurement kind",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:measurement-kind",
+        "spec/conformance.md:measurement-kind"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "description",
+      "class_name": "Composition role",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/composition-manifest-0.1.0.json:$/$defs/input.role"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "digest",
+      "class_name": "Unclassified",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/digest"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "direct",
+      "class_name": "Criteria value",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/complianceTrigger"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "disposition",
+      "class_name": "Ledger field",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$defs/disposition",
+        "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/expect.properties.disposition",
+        "spec/schemas/decision-record-0.2.0.json:$.properties.disposition"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Engine `Criteria` defaults are not the contract",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:Engine `Criteria` defaults are not the contract"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "escalationReason",
+      "class_name": "Ledger field",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/decision-record-0.2.0.json:$.properties.escalationReason"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "exclude",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/exclude"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Exclusion exclusivity",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:Exclusion exclusivity"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "execute",
+      "class_name": "Disposition",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-token",
+        "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/disposition",
+        "spec/schemas/decision-record-0.2.0.json:$.disposition"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "executed",
+      "class_name": "Outcome result",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/outcome-record-0.1.0.json:$.result"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "expect",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$defs/expect"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "failed",
+      "class_name": "Outcome result",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/outcome-record-0.1.0.json:$.result"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "fragments",
+      "class_name": "Generator mode",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/composition-manifest-0.1.0.json:$.generator.mode"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "get",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "halt",
+      "class_name": "agentAction",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:named-token"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "halt_and_hand_off",
+      "class_name": "agentAction",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:named-token",
+        "spec/consequence-tiered-api.yaml:yaml-token",
+        "spec/headers.md:named-token"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "handoff",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/handoff"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "hasDeclaredReversal",
+      "class_name": "when-predicate",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/validation.md:when-predicate-closed-list"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "hasRequestBody",
+      "class_name": "when-predicate",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/validation.md:when-predicate-closed-list"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "head",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "high",
+      "class_name": "Confidence",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$/$defs/rule.confidence",
+        "spec/schemas/recommendation-set-0.1.0.json:$/$defs/provenance.confidence"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "idempotency",
+      "class_name": "Criteria dimension",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/idempotency",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/criteriaFields.properties.idempotency:dim"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Idempotency-Key",
+      "class_name": "Header",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/headers.md:heading-backtick:`Idempotency-Key`"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "idempotencyKey",
+      "class_name": "Ledger field",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/decision-record-0.2.0.json:$.properties.idempotencyKey"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "incidentId",
+      "class_name": "Response identifier",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:named-token"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "inherently-safe",
+      "class_name": "Criteria value",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/idempotency"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "input",
+      "class_name": "Unclassified",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/composition-manifest-0.1.0.json:$defs/input"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "internal",
+      "class_name": "Criteria value",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/dataSensitivity"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "key-required",
+      "class_name": "Criteria value",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/idempotency"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Ledger records",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:Ledger records"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Level 0",
+      "class_name": "Deployment level",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:prose-level"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Level 1",
+      "class_name": "Deployment level",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:prose-level"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Level 2",
+      "class_name": "Deployment level",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:prose-level",
+        "spec/conformance.md:prose-level"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Level 3",
+      "class_name": "Deployment level",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:prose-level"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Level 4",
+      "class_name": "Deployment level",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:prose-level"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "level-2",
+      "class_name": "Deployment level",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/conformance.md:prose-level-slug",
+        "spec/schemas/conformance-corpus-0.3.0.json:$.deployment"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "level-3",
+      "class_name": "Deployment level",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/conformance.md:prose-level-slug",
+        "spec/schemas/conformance-corpus-0.3.0.json:$.deployment"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "low",
+      "class_name": "Confidence",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$/$defs/rule.confidence",
+        "spec/schemas/recommendation-set-0.1.0.json:$/$defs/provenance.confidence"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "medium",
+      "class_name": "Confidence",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$/$defs/rule.confidence",
+        "spec/schemas/recommendation-set-0.1.0.json:$/$defs/provenance.confidence"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "method",
+      "class_name": "when-predicate",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/validation.md:when-predicate-closed-list"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "No agent-facing URL",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:No agent-facing URL"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "No credential persistence",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:No credential persistence"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "none",
+      "class_name": "Escalation reason",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/reversibility",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/complianceTrigger",
+        "spec/schemas/decision-record-0.2.0.json:$.escalationReason"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "not-applicable",
+      "class_name": "Criteria value",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/reversibility"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "On the maturity of these criteria",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:On the maturity of these criteria"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "operation",
+      "class_name": "Unclassified",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/coverage-report-0.1.0.json:$defs/operation",
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/operation"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "operationAnchor",
+      "class_name": "Ledger field",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/attempt-record-0.2.0.json:$.properties.operationAnchor",
+        "spec/schemas/decision-record-0.2.0.json:$.properties.operationAnchor"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "operationIdMatches",
+      "class_name": "when-predicate",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/validation.md:when-predicate-closed-list"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "options",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Outcome",
+      "class_name": "Record type",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/outcome-record-0.1.0.json:$.ctierSchema:record-type"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "outcome-record/0.1.0",
+      "class_name": "Record version",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/outcome-record-0.1.0.json:$.ctierSchema"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "overlay",
+      "class_name": "Composition role",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/composition-manifest-0.1.0.json:$/$defs/input.role"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Pagination is refused as a predicate",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:Pagination is refused as a predicate"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "patch",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "pathEndsWithParameter",
+      "class_name": "when-predicate",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/validation.md:when-predicate-closed-list"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "pathParameterCount",
+      "class_name": "when-predicate",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/validation.md:when-predicate-closed-list"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "pathSegmentCount",
+      "class_name": "when-predicate",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/validation.md:when-predicate-closed-list"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "payload-exceeds-declared-bounds",
+      "class_name": "Escalation reason",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/decision-record-0.2.0.json:$.escalationReason"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "paymentId",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-name"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "pending_authorization",
+      "class_name": "Response identifier",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-token"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "personal",
+      "class_name": "Criteria value",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/dataSensitivity"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "placeholder",
+      "class_name": "Corpus field",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/case.properties.placeholder"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "population",
+      "class_name": "Criteria value",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/blastRadius"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "post",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "profile",
+      "class_name": "Corpus field",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/case.properties.profile",
+        "spec/schemas/conformance-corpus-0.3.0.json:$.properties.profile"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "propose",
+      "class_name": "Unclassified",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$defs/propose"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "provenance",
+      "class_name": "Unclassified",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/recommendation-set-0.1.0.json:$defs/provenance"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "public",
+      "class_name": "Criteria value",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/dataSensitivity"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "put",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "rationale",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/rationale"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "recommendation-set/0.1.0",
+      "class_name": "Document type",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/recommendation-set-0.1.0.json:$.ctierSchema"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "recommended",
+      "class_name": "Coverage status",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/coverage-report-0.1.0.json:$/$defs/operation.status",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/status",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.if.x-ctier-status"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "recommendedAt",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/recommendedAt"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "refuse-and-suspend",
+      "class_name": "Disposition",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/disposition",
+        "spec/schemas/decision-record-0.2.0.json:$.disposition"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "refuse-provisioning",
+      "class_name": "Disposition",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/disposition",
+        "spec/schemas/decision-record-0.2.0.json:$.disposition"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "regulated",
+      "class_name": "Criteria value",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/dataSensitivity"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "request",
+      "class_name": "Unclassified",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$defs/request"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Requirement 2",
+      "class_name": "Deployment requirement",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:prose-requirement"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Requirement 3",
+      "class_name": "Deployment requirement",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:prose-requirement",
+        "spec/conformance.md:prose-requirement"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Requirement 4",
+      "class_name": "Deployment requirement",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:prose-requirement"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "responseIsCollection",
+      "class_name": "when-predicate",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/validation.md:when-predicate-closed-list"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "result",
+      "class_name": "Ledger field",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/outcome-record-0.1.0.json:$.properties.result"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Retry-After",
+      "class_name": "Header",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-token"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "retry_later",
+      "class_name": "agentAction",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/headers.md:named-token"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "reverses",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/reverses"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "reversibility",
+      "class_name": "Criteria dimension",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/reversibility",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/criteriaFields.properties.reversibility:dim"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "rule",
+      "class_name": "Unclassified",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$defs/rule"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "safe",
+      "class_name": "Criteria value",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/idempotency"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "searchId",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-name"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "securitySchemes",
+      "class_name": "when-predicate",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/validation.md:when-predicate-closed-list"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Self-reversal",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:Self-reversal"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "sequence",
+      "class_name": "Corpus field",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/case.properties.sequence"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "session-accumulation",
+      "class_name": "Escalation reason",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/decision-record-0.2.0.json:$.escalationReason"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "single-customer",
+      "class_name": "Criteria value",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/blastRadius"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "single-record",
+      "class_name": "Criteria value",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/blastRadius"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Single-target rule",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:Single-target rule"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "standard",
+      "class_name": "Profile",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/conformance.md:bold-backtick:`standard`",
+        "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/case.profile",
+        "spec/schemas/conformance-corpus-0.3.0.json:$.profile"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "status",
+      "class_name": "Unclassified",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/status"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "step",
+      "class_name": "Unclassified",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$defs/step"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "system-wide",
+      "class_name": "Criteria value",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/blastRadius"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "tagIn",
+      "class_name": "when-predicate",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/validation.md:when-predicate-closed-list"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "The transformations, as document-in / document-out",
+      "class_name": "Document type",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "docs/adr/0009-the-contract-is-the-documents.md:heading:The transformations, as document-in / document-out"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "tier",
+      "class_name": "Unclassified",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/tier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Tier 1",
+      "class_name": "Tier",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:prose-tier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Tier 2",
+      "class_name": "Tier",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/examples/README.md:prose-tier",
+        "spec/validation.md:heading:Tier 2 requires a verified compensating action"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Tier 2 requires a verified compensating action",
+      "class_name": "Validation rule",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/validation.md:heading:Tier 2 requires a verified compensating action"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Tier 3",
+      "class_name": "Tier",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:prose-tier",
+        "spec/conformance.md:prose-tier",
+        "spec/schemas/README.md:prose-tier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "Tier 4",
+      "class_name": "Tier",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:prose-tier",
+        "spec/conformance.md:prose-tier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "trace",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$/$defs/when.method.items"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "unassigned",
+      "class_name": "Response identifier",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:named-token"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "undeclared-operation",
+      "class_name": "Escalation reason",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/decision-record-0.2.0.json:$.escalationReason"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "undo-restores-effect",
+      "class_name": "Criteria value",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/reversibility"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "undo-restores-record-only",
+      "class_name": "Criteria value",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/reversibility"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "unsafe",
+      "class_name": "Criteria value",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/idempotency"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "update",
+      "class_name": "Unclassified",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/recommendation-set-0.1.0.json:$defs/update"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "weight",
+      "class_name": "Unclassified",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/ctier-extensions-0.1.0.json:$defs/weight"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "when",
+      "class_name": "Unclassified",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/classification-rules-0.1.0.json:$defs/when"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "withhold",
+      "class_name": "Disposition",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/conformance-corpus-0.3.0.json:$/$defs/disposition",
+        "spec/schemas/decision-record-0.2.0.json:$.disposition"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "X-Agent-Id",
+      "class_name": "Header",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-name",
+        "spec/consequence-tiered-api.yaml:yaml-token"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-consequence-*",
+      "class_name": "Namespace",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/README.md:namespace",
+        "spec/extensions.md:namespace"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-*",
+      "class_name": "Header",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "docs/adr/0009-the-contract-is-the-documents.md:namespace",
+        "spec/README.md:namespace",
+        "spec/conformance.md:namespace",
+        "spec/extensions.md:namespace",
+        "spec/headers.md:namespace",
+        "spec/schemas/README.md:namespace",
+        "spec/validation.md:namespace"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-bounds",
+      "class_name": "Extension field",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-x-ctier",
+        "spec/extensions.md:heading-backtick:`x-ctier-bounds`",
+        "spec/extensions.md:prose-x-ctier",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.properties.x-ctier-bounds",
+        "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-bounds",
+        "spec/validation.md:prose-x-ctier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-composition",
+      "class_name": "Header",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/headers.md:prose-x-ctier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-correlation-id",
+      "class_name": "Header",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/README.md:prose-x-ctier",
+        "spec/conformance.md:prose-x-ctier",
+        "spec/consequence-tiered-api.yaml:yaml-x-ctier",
+        "spec/headers.md:heading-backtick:`x-ctier-correlation-id`",
+        "spec/headers.md:prose-x-ctier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-criteria",
+      "class_name": "Extension field",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-x-ctier",
+        "spec/extensions.md:heading-backtick:`x-ctier-criteria`",
+        "spec/extensions.md:prose-x-ctier",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.properties.x-ctier-criteria",
+        "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-criteria",
+        "spec/validation.md:prose-x-ctier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-defaults",
+      "class_name": "Extension field",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-x-ctier",
+        "spec/extensions.md:heading-backtick:`x-ctier-defaults`",
+        "spec/extensions.md:prose-x-ctier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-deployment",
+      "class_name": "Header",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/README.md:prose-x-ctier",
+        "spec/headers.md:heading-backtick:`x-ctier-deployment`",
+        "spec/headers.md:prose-x-ctier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-escalate-to",
+      "class_name": "Extension field",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/README.md:prose-x-ctier",
+        "spec/consequence-tiered-api.yaml:yaml-x-ctier",
+        "spec/extensions.md:heading-backtick:`x-ctier-escalate-to`",
+        "spec/extensions.md:prose-x-ctier",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.properties.x-ctier-escalate-to",
+        "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-escalate-to",
+        "spec/validation.md:prose-x-ctier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-exclude",
+      "class_name": "Extension field",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-x-ctier",
+        "spec/extensions.md:heading-backtick:`x-ctier-exclude`",
+        "spec/extensions.md:prose-x-ctier",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.properties.x-ctier-exclude",
+        "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-exclude",
+        "spec/validation.md:prose-x-ctier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-handoff",
+      "class_name": "Extension field",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/README.md:prose-x-ctier",
+        "spec/consequence-tiered-api.yaml:yaml-x-ctier",
+        "spec/extensions.md:heading-backtick:`x-ctier-handoff`",
+        "spec/extensions.md:prose-x-ctier",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.properties.x-ctier-handoff",
+        "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-handoff"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-operation",
+      "class_name": "Header",
+      "requirement_sentence": true,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/headers.md:prose-x-ctier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-provenance",
+      "class_name": "Extension field",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/schemas/recommendation-set-0.1.0.json:$/$defs/action.properties.x-ctier-provenance",
+        "spec/validation.md:prose-x-ctier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-rationale",
+      "class_name": "Extension field",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-x-ctier",
+        "spec/extensions.md:heading-backtick:`x-ctier-rationale`",
+        "spec/extensions.md:prose-x-ctier",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.properties.x-ctier-rationale",
+        "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-rationale"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-recommended-at",
+      "class_name": "Extension field",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/examples/README.md:prose-x-ctier",
+        "spec/extensions.md:heading-backtick:`x-ctier-recommended-at`",
+        "spec/extensions.md:prose-x-ctier",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.properties.x-ctier-recommended-at",
+        "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-recommended-at",
+        "spec/validation.md:prose-x-ctier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-reverses",
+      "class_name": "Extension field",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-x-ctier",
+        "spec/examples/README.md:prose-x-ctier",
+        "spec/extensions.md:heading-backtick:`x-ctier-reverses`",
+        "spec/extensions.md:prose-x-ctier",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.properties.x-ctier-reverses",
+        "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-reverses",
+        "spec/validation.md:prose-x-ctier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-status",
+      "class_name": "Extension field",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-x-ctier",
+        "spec/extensions.md:heading-backtick:`x-ctier-status`",
+        "spec/extensions.md:prose-x-ctier",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.properties.x-ctier-status",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.if.properties.x-ctier-status",
+        "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-status",
+        "spec/validation.md:prose-x-ctier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-tier",
+      "class_name": "Header",
+      "requirement_sentence": true,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/README.md:prose-x-ctier",
+        "spec/consequence-tiered-api.yaml:yaml-x-ctier",
+        "spec/extensions.md:heading-backtick:`x-ctier-tier`",
+        "spec/extensions.md:prose-x-ctier",
+        "spec/headers.md:prose-x-ctier",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.properties.x-ctier-tier",
+        "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-tier",
+        "spec/validation.md:prose-x-ctier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "x-ctier-weight",
+      "class_name": "Extension field",
+      "requirement_sentence": false,
+      "titled_under_own_name": true,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-x-ctier",
+        "spec/extensions.md:heading-backtick:`x-ctier-weight`",
+        "spec/extensions.md:prose-x-ctier",
+        "spec/schemas/ctier-extensions-0.1.0.json:$/$defs/operation.properties.x-ctier-weight",
+        "spec/schemas/recommendation-set-0.1.0.json:$/$defs/update.properties.x-ctier-weight",
+        "spec/validation.md:prose-x-ctier"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "X-Delegation-Chain",
+      "class_name": "Header",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-name",
+        "spec/consequence-tiered-api.yaml:yaml-token"
+      ],
+      "notes": ""
+    },
+    {
+      "identifier": "X-Incident-Id",
+      "class_name": "Header",
+      "requirement_sentence": false,
+      "titled_under_own_name": false,
+      "sources": [
+        "spec/consequence-tiered-api.yaml:yaml-token"
+      ],
+      "notes": ""
+    }
+  ],
+  "no_requirement_sentence": [
+    "$defs/criteria",
+    "$defs/criteriaProposal",
+    "4.1 Rules become data, not code",
+    "4.2 Recommendations are an overlay",
+    "4.3 The schemas live in the specification repository, not the engine",
+    "403",
+    "accountId",
+    "adjacent",
+    "Agent suspension is an authorisation concern",
+    "agent_suspended",
+    "agentId",
+    "appliedTierAtLeast",
+    "artefact",
+    "Attempt",
+    "attempt-record/0.2.0",
+    "Authorization",
+    "authorizationId",
+    "blast-radius",
+    "blastRadius",
+    "Bound comparison",
+    "bounds",
+    "Bounds coherence",
+    "C13 \u2014 Digest discipline",
+    "C2 \u2014 Fail-closed",
+    "C3 \u2014 Unidirectionality",
+    "case",
+    "classification-rules/0.1.0",
+    "compliance-trigger",
+    "complianceTrigger",
+    "composition-manifest/0.1.0",
+    "computed-tier-exceeds-declared",
+    "constrained",
+    "correlationScope",
+    "countMatch",
+    "Coverage sort",
+    "coverage-report/0.1.0",
+    "Criteria",
+    "criteriaFields",
+    "criteriaProposal",
+    "ctierSchema",
+    "ctierSchemaId",
+    "customerId",
+    "data-sensitivity",
+    "dataSensitivity",
+    "decision-record/0.2.0",
+    "defaults",
+    "delegation-authority-expansion",
+    "delete",
+    "disposition",
+    "Engine `Criteria` defaults are not the contract",
+    "escalationReason",
+    "exclude",
+    "Exclusion exclusivity",
+    "expect",
+    "failed",
+    "fragments",
+    "get",
+    "handoff",
+    "hasDeclaredReversal",
+    "hasRequestBody",
+    "head",
+    "high",
+    "idempotencyKey",
+    "internal",
+    "key-required",
+    "Ledger records",
+    "Level 0",
+    "Level 1",
+    "level-2",
+    "level-3",
+    "low",
+    "medium",
+    "No agent-facing URL",
+    "No credential persistence",
+    "not-applicable",
+    "On the maturity of these criteria",
+    "operationAnchor",
+    "operationIdMatches",
+    "options",
+    "Outcome",
+    "Pagination is refused as a predicate",
+    "patch",
+    "pathEndsWithParameter",
+    "pathParameterCount",
+    "pathSegmentCount",
+    "payload-exceeds-declared-bounds",
+    "paymentId",
+    "pending_authorization",
+    "personal",
+    "placeholder",
+    "population",
+    "post",
+    "public",
+    "put",
+    "rationale",
+    "recommendation-set/0.1.0",
+    "recommendedAt",
+    "refuse-and-suspend",
+    "regulated",
+    "Requirement 2",
+    "Requirement 3",
+    "Requirement 4",
+    "responseIsCollection",
+    "result",
+    "reverses",
+    "reversibility",
+    "searchId",
+    "securitySchemes",
+    "Self-reversal",
+    "sequence",
+    "session-accumulation",
+    "single-customer",
+    "single-record",
+    "Single-target rule",
+    "system-wide",
+    "tagIn",
+    "The transformations, as document-in / document-out",
+    "Tier 1",
+    "Tier 2 requires a verified compensating action",
+    "trace",
+    "undeclared-operation",
+    "undo-restores-effect",
+    "undo-restores-record-only",
+    "unsafe",
+    "weight",
+    "X-Agent-Id",
+    "x-ctier-bounds",
+    "x-ctier-defaults",
+    "x-ctier-escalate-to",
+    "x-ctier-exclude",
+    "x-ctier-handoff",
+    "x-ctier-provenance",
+    "x-ctier-rationale",
+    "x-ctier-weight",
+    "X-Delegation-Chain",
+    "X-Incident-Id"
+  ],
+  "stated_under_different_name_proxy": [
+    "1.1.0",
+    "absent",
+    "action",
+    "agent",
+    "AgentSuspended",
+    "autoResume",
+    "bundle",
+    "C12",
+    "C5",
+    "C6",
+    "C9",
+    "compositionDigest",
+    "conformance-corpus/0.3.0",
+    "continue_task_without_this_step",
+    "criteria",
+    "Decision",
+    "declared",
+    "deployment",
+    "deploymentDigest",
+    "Derived",
+    "description",
+    "digest",
+    "direct",
+    "execute",
+    "executed",
+    "halt",
+    "halt_and_hand_off",
+    "idempotency",
+    "incidentId",
+    "inherently-safe",
+    "input",
+    "Level 2",
+    "Level 3",
+    "Level 4",
+    "method",
+    "none",
+    "operation",
+    "outcome-record/0.1.0",
+    "overlay",
+    "profile",
+    "propose",
+    "provenance",
+    "recommended",
+    "refuse-provisioning",
+    "request",
+    "Retry-After",
+    "retry_later",
+    "rule",
+    "safe",
+    "status",
+    "step",
+    "tier",
+    "Tier 3",
+    "Tier 4",
+    "unassigned",
+    "update",
+    "when",
+    "withhold",
+    "x-consequence-*",
+    "x-ctier-*",
+    "x-ctier-composition",
+    "x-ctier-operation"
+  ]
+}
