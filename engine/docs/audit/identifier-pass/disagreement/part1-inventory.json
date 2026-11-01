@@ -1,0 +1,691 @@
+{
+  "sweep_commit": "0a997321234e5f6f6184b7449a241c3d30a19520",
+  "finding43_commit": "86f3565f90995c5c52abbf603cea6588d07fe1f3",
+  "script_no_requirement": 136,
+  "record_no_requirement": 22,
+  "agreed_no_count": 16,
+  "agreed_no": [
+    "X-Delegation-Chain",
+    "X-Incident-Id",
+    "agentId",
+    "agent_suspended",
+    "computed-tier-exceeds-declared",
+    "correlationScope",
+    "delegation-authority-expansion",
+    "failed",
+    "idempotencyKey",
+    "operationAnchor",
+    "payload-exceeds-declared-bounds",
+    "pending_authorization",
+    "placeholder",
+    "refuse-and-suspend",
+    "session-accumulation",
+    "undeclared-operation"
+  ],
+  "script_no_hand_yes_count": 76,
+  "script_only_no_count": 44,
+  "script_only_no": [
+    "4.1 Rules become data, not code",
+    "4.2 Recommendations are an overlay",
+    "4.3 The schemas live in the specification repository, not the engine",
+    "C13 \u2014 Digest discipline",
+    "C2 \u2014 Fail-closed",
+    "C3 \u2014 Unidirectionality",
+    "Criteria",
+    "Ledger records",
+    "On the maturity of these criteria",
+    "The transformations, as document-in / document-out",
+    "accountId",
+    "artefact",
+    "authorizationId",
+    "blastRadius",
+    "bounds",
+    "case",
+    "complianceTrigger",
+    "countMatch",
+    "criteriaFields",
+    "criteriaProposal",
+    "ctierSchemaId",
+    "customerId",
+    "dataSensitivity",
+    "defaults",
+    "delete",
+    "disposition",
+    "escalationReason",
+    "exclude",
+    "expect",
+    "get",
+    "handoff",
+    "head",
+    "options",
+    "patch",
+    "paymentId",
+    "post",
+    "put",
+    "rationale",
+    "recommendedAt",
+    "result",
+    "reverses",
+    "searchId",
+    "trace",
+    "weight"
+  ],
+  "bucket_counts": {
+    "A": 44,
+    "B": 32,
+    "C": 0,
+    "D": 0,
+    "ambiguous": 0
+  },
+  "bucket_C_members": [],
+  "classifications": [
+    {
+      "script_id": "$defs/criteria",
+      "f43_id": "`$defs/criteria`",
+      "f43_class": "Schema shape",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`).",
+      "note": "Class/shape-level completeness requirement covers the dimension or shape name."
+    },
+    {
+      "script_id": "$defs/criteriaProposal",
+      "f43_id": "`$defs/criteriaProposal`",
+      "f43_class": "Schema shape",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`).",
+      "note": "Class/shape-level completeness requirement covers the dimension or shape name."
+    },
+    {
+      "script_id": "403",
+      "f43_id": "`403`",
+      "f43_class": "Response identifier",
+      "bucket": "B",
+      "quote": "Excluded \u2014 `403`.** Refused at credential validation, before consequence evaluation.",
+      "note": "Bold excluded-status prose without MUST/SHALL/REQUIRED."
+    },
+    {
+      "script_id": "Agent suspension is an authorisation concern",
+      "f43_id": "Agent suspension is an authorisation concern",
+      "f43_class": "Validation rule",
+      "bucket": "A",
+      "quote": "An implementation without it may record a rejection but cannot produce its effect, and MUST NOT simulate the effect by consulting the policy service on every request",
+      "note": "Titled section; MUST is in the body paragraph, which does not repeat the title token \u2014 script requires same-paragraph co-occurrence."
+    },
+    {
+      "script_id": "Attempt",
+      "f43_id": "Attempt",
+      "f43_class": "Record type",
+      "bucket": "B",
+      "quote": "**Attempt** \u2014 the enforcement point refused without classifying\u2026",
+      "note": "Ledger-records definitional prose; no MUST beside the name."
+    },
+    {
+      "script_id": "Authorization",
+      "f43_id": "`Authorization` (custody)",
+      "f43_class": "Header",
+      "bucket": "A",
+      "quote": "`Authorization` on custody's execute request is the policy service authenticating as itself (C6: the agent is not the client).",
+      "note": "Covered by C6; the header token is not in C6's MUST paragraph."
+    },
+    {
+      "script_id": "Bound comparison",
+      "f43_id": "Bound comparison",
+      "f43_class": "Validation rule",
+      "bucket": "A",
+      "quote": "An implementation MUST interpret a bound parameter's value as a decimal number.",
+      "note": "Titled section; MUST is in the body paragraph, which does not repeat the title token \u2014 script requires same-paragraph co-occurrence."
+    },
+    {
+      "script_id": "Bounds coherence",
+      "f43_id": "Bounds coherence",
+      "f43_class": "Validation rule",
+      "bucket": "B",
+      "quote": "`x-ctier-bounds.parameter` must name a parameter that exists on the operation.",
+      "note": "Requirement-like section prose without uppercase MUST/SHALL/REQUIRED."
+    },
+    {
+      "script_id": "Coverage sort",
+      "f43_id": "Coverage sort",
+      "f43_class": "Validation rule",
+      "bucket": "B",
+      "quote": "`coverage-report` `operations` is ordered by recommended tier descending, `absent` last.",
+      "note": "Requirement-like section prose without uppercase MUST/SHALL/REQUIRED."
+    },
+    {
+      "script_id": "Engine `Criteria` defaults are not the contract",
+      "f43_id": "Engine `Criteria` defaults are not the contract",
+      "f43_class": "Validation rule",
+      "bucket": "B",
+      "quote": "Those defaults are **not** the document contract and must never be relied upon by a document.",
+      "note": "Requirement-like section prose without uppercase MUST/SHALL/REQUIRED."
+    },
+    {
+      "script_id": "Exclusion exclusivity",
+      "f43_id": "Exclusion exclusivity",
+      "f43_class": "Validation rule",
+      "bucket": "B",
+      "quote": "`x-ctier-exclude: true` with a declared `x-ctier-tier` is a contradiction.",
+      "note": "Requirement-like section prose without uppercase MUST/SHALL/REQUIRED."
+    },
+    {
+      "script_id": "Level 0",
+      "f43_id": "Level 0",
+      "f43_class": "Deployment level",
+      "bucket": "A",
+      "quote": "Adoption-ladder / conformance deployment-level class: levels are the named rungs the deployment requirements and C-criteria bind to (e.g. Level 2 enforces Tiers 1, 2 and 4\u2026).",
+      "note": "Hand credits the level as required by the ladder contract; no same-paragraph MUST+token for Level 0/1 / level-2/3 at sweep."
+    },
+    {
+      "script_id": "Level 1",
+      "f43_id": "Level 1",
+      "f43_class": "Deployment level",
+      "bucket": "A",
+      "quote": "Adoption-ladder / conformance deployment-level class: levels are the named rungs the deployment requirements and C-criteria bind to (e.g. Level 2 enforces Tiers 1, 2 and 4\u2026).",
+      "note": "Hand credits the level as required by the ladder contract; no same-paragraph MUST+token for Level 0/1 / level-2/3 at sweep."
+    },
+    {
+      "script_id": "No agent-facing URL",
+      "f43_id": "No agent-facing URL",
+      "f43_class": "Validation rule",
+      "bucket": "B",
+      "quote": "**No response emitted to an agent carries a URL.**",
+      "note": "Requirement-like section prose without uppercase MUST/SHALL/REQUIRED."
+    },
+    {
+      "script_id": "No credential persistence",
+      "f43_id": "No credential persistence",
+      "f43_class": "Validation rule",
+      "bucket": "A",
+      "quote": "A policy service MUST NOT persist any credential belonging to the agent.",
+      "note": "Titled section; MUST is in the body paragraph, which does not repeat the title token \u2014 script requires same-paragraph co-occurrence."
+    },
+    {
+      "script_id": "Outcome",
+      "f43_id": "Outcome",
+      "f43_class": "Record type",
+      "bucket": "B",
+      "quote": "**Outcome** \u2014 what happened when an approved Tier 3 executed\u2026 / An outcome is the only record that proves C6 held.",
+      "note": "Definitional prose without RFC 2119 beside the name."
+    },
+    {
+      "script_id": "Pagination is refused as a predicate",
+      "f43_id": "Pagination is refused as a predicate",
+      "f43_class": "Validation rule",
+      "bucket": "B",
+      "quote": "No pagination predicate exists. If a recommender wants that signal, it uses `x-ctier-bounds` being present or absent.",
+      "note": "Requirement-like section prose without uppercase MUST/SHALL/REQUIRED."
+    },
+    {
+      "script_id": "Requirement 2",
+      "f43_id": "Requirement 2",
+      "f43_class": "Deployment requirement",
+      "bucket": "A",
+      "quote": "2. **Custody's execute path bypasses the enforcement point by design.** \u2026 The backend MUST treat custody as a trusted caller\u2026",
+      "note": "Identifier \"Requirement N\" is the list label; MUST appears in the item body without the words \"Requirement N\" (except elsewhere with lowercase must for Requirement 3)."
+    },
+    {
+      "script_id": "Requirement 3",
+      "f43_id": "Requirement 3",
+      "f43_class": "Deployment requirement",
+      "bucket": "A",
+      "quote": "3. **A deployment MUST ensure the ctier ingress strip precedes any component that reads a reserved header.**",
+      "note": "Identifier \"Requirement N\" is the list label; MUST appears in the item body without the words \"Requirement N\" (except elsewhere with lowercase must for Requirement 3)."
+    },
+    {
+      "script_id": "Requirement 4",
+      "f43_id": "Requirement 4",
+      "f43_class": "Deployment requirement",
+      "bucket": "A",
+      "quote": "Numbered deployment-requirement item under \"What ctier requires of the deployment\" (item 4 in the same list).",
+      "note": "Identifier \"Requirement N\" is the list label; MUST appears in the item body without the words \"Requirement N\" (except elsewhere with lowercase must for Requirement 3)."
+    },
+    {
+      "script_id": "Self-reversal",
+      "f43_id": "Self-reversal",
+      "f43_class": "Validation rule",
+      "bucket": "B",
+      "quote": "An operation MAY name itself in `x-ctier-reverses`\u2026 An operation that is `key-required` or `unsafe` cannot reverse itself",
+      "note": "Requirement-like section prose without uppercase MUST/SHALL/REQUIRED."
+    },
+    {
+      "script_id": "Single-target rule",
+      "f43_id": "Single-target rule",
+      "f43_class": "Validation rule",
+      "bucket": "A",
+      "quote": "An overlay action whose `update` sets any `x-ctier-*` field that resolves to a tier below 4 \u2014 whether by declaring `x-ctier-tier` or by supplying `x-ctier-criteria` that compute one \u2014 MUST select exactly one operation.",
+      "note": "Titled section; MUST is in the body paragraph, which does not repeat the title token \u2014 script requires same-paragraph co-occurrence."
+    },
+    {
+      "script_id": "Tier 1",
+      "f43_id": "Tier 1",
+      "f43_class": "Tier",
+      "bucket": "A",
+      "quote": "Tier table under \"Who executes\" in extensions.md (Tier 1\u20134); tiers are the classification targets C-criteria and overlay rules bind to.",
+      "note": "Class-level; Tier 2\u20134 happen to co-occur with MUST elsewhere, Tier 1 does not."
+    },
+    {
+      "script_id": "Tier 2 requires a verified compensating action",
+      "f43_id": "Tier 2 requires a verified compensating action",
+      "f43_class": "Validation rule",
+      "bucket": "A",
+      "quote": "An operation declaring `x-ctier-tier: 2`, or criteria resolving to Tier 2, MUST be named by an `x-ctier-reverses` field in the same composed description.",
+      "note": "Titled section; MUST is in the body paragraph, which does not repeat the title token \u2014 script requires same-paragraph co-occurrence."
+    },
+    {
+      "script_id": "X-Agent-Id",
+      "f43_id": "`X-Agent-Id`",
+      "f43_class": "Header",
+      "bucket": "B",
+      "quote": "Pass-through of the agent's inbound headers (including `X-Agent-Id`) is not a ctier emit.",
+      "note": "Descriptive wire note without RFC 2119; hand still marked requirement=yes."
+    },
+    {
+      "script_id": "adjacent",
+      "f43_id": "`adjacent`",
+      "f43_class": "Criteria value",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`). Enum members are the closed value set of those required fields.",
+      "note": "Class-level indirection via required criteria fields; individual values are not named in a MUST sentence."
+    },
+    {
+      "script_id": "appliedTierAtLeast",
+      "f43_id": "`appliedTierAtLeast`",
+      "f43_class": "Corpus field",
+      "bucket": "A",
+      "quote": "An escalating case asserts `appliedTierAtLeast` rather than an exact tier\u2026",
+      "note": "Corpus-field class under conformance bounded imprecision."
+    },
+    {
+      "script_id": "attempt-record/0.2.0",
+      "f43_id": "`attempt-record/0.2.0`",
+      "f43_class": "Record version",
+      "bucket": "A",
+      "quote": "Ledger / schema document-type version for Attempt records; covered by the record-version class the sweep treated as required alongside Decision/Attempt/Outcome.",
+      "note": "Version id rarely sits in a MUST sentence; hand credited via record class."
+    },
+    {
+      "script_id": "blast-radius",
+      "f43_id": "`blast-radius`",
+      "f43_class": "Criteria dimension",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`).",
+      "note": "Class/shape-level completeness requirement covers the dimension or shape name."
+    },
+    {
+      "script_id": "classification-rules/0.1.0",
+      "f43_id": "`classification-rules/0.1.0`",
+      "f43_class": "Document type",
+      "bucket": "A",
+      "quote": "Document types listed in schemas/README and validated as named ctier-authored formats; hand treated the document-type class as carrying schema/validation requirements.",
+      "note": "Class-level; script finds no MUST co-occurrence with the version string."
+    },
+    {
+      "script_id": "compliance-trigger",
+      "f43_id": "`compliance-trigger`",
+      "f43_class": "Criteria dimension",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`).",
+      "note": "Class/shape-level completeness requirement covers the dimension or shape name."
+    },
+    {
+      "script_id": "composition-manifest/0.1.0",
+      "f43_id": "`composition-manifest/0.1.0`",
+      "f43_class": "Document type",
+      "bucket": "A",
+      "quote": "Document types listed in schemas/README and validated as named ctier-authored formats; hand treated the document-type class as carrying schema/validation requirements.",
+      "note": "Class-level; script finds no MUST co-occurrence with the version string."
+    },
+    {
+      "script_id": "constrained",
+      "f43_id": "`constrained`",
+      "f43_class": "Profile",
+      "bucket": "A",
+      "quote": "`profile` | `standard` bounds\u2026; `constrained` does not assume that, and puts the check at the enforcement point",
+      "note": "Profile class; standard co-occurs with MUST in a large Naming paragraph, constrained does not."
+    },
+    {
+      "script_id": "coverage-report/0.1.0",
+      "f43_id": "`coverage-report/0.1.0`",
+      "f43_class": "Document type",
+      "bucket": "A",
+      "quote": "Document types listed in schemas/README and validated as named ctier-authored formats; hand treated the document-type class as carrying schema/validation requirements.",
+      "note": "Class-level; script finds no MUST co-occurrence with the version string."
+    },
+    {
+      "script_id": "ctierSchema",
+      "f43_id": "`ctierSchema`",
+      "f43_class": "Document key",
+      "bucket": "B",
+      "quote": "- `ctierSchema` equals the expected `<name>/<version>` string.",
+      "note": "Schema-checked list item without RFC 2119 keyword."
+    },
+    {
+      "script_id": "data-sensitivity",
+      "f43_id": "`data-sensitivity`",
+      "f43_class": "Criteria dimension",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`).",
+      "note": "Class/shape-level completeness requirement covers the dimension or shape name."
+    },
+    {
+      "script_id": "decision-record/0.2.0",
+      "f43_id": "`decision-record/0.2.0`",
+      "f43_class": "Record version",
+      "bucket": "A",
+      "quote": "Ledger / schema document-type version for Decision records; same class-level credit as other record versions.",
+      "note": "Class-level indirection."
+    },
+    {
+      "script_id": "fragments",
+      "f43_id": "`fragments`",
+      "f43_class": "Generator mode",
+      "bucket": "A",
+      "quote": "Generator mode beside `bundle` on composition-manifest; hand credited the mode class (bundle has MUST-proximity elsewhere in headers.md).",
+      "note": "Class-level indirection to generator-mode requirements."
+    },
+    {
+      "script_id": "hasDeclaredReversal",
+      "f43_id": "`hasDeclaredReversal`",
+      "f43_class": "when-predicate",
+      "bucket": "B",
+      "quote": "`when` contains only the closed predicate keys: `method`, `pathEndsWithParameter`, `responseIsCollection`, `hasRequestBody`, `securitySchemes`, `tagIn`, `operationIdMatches`, `hasDeclaredReversal`, `pathSegmentCount`, `pathParameterCount`.",
+      "note": "Named in the closed-set prose; no RFC 2119 keyword in that bullet."
+    },
+    {
+      "script_id": "hasRequestBody",
+      "f43_id": "`hasRequestBody`",
+      "f43_class": "when-predicate",
+      "bucket": "B",
+      "quote": "`when` contains only the closed predicate keys: `method`, `pathEndsWithParameter`, `responseIsCollection`, `hasRequestBody`, `securitySchemes`, `tagIn`, `operationIdMatches`, `hasDeclaredReversal`, `pathSegmentCount`, `pathParameterCount`.",
+      "note": "Named in the closed-set prose; no RFC 2119 keyword in that bullet."
+    },
+    {
+      "script_id": "high",
+      "f43_id": "`high`",
+      "f43_class": "Confidence",
+      "bucket": "B",
+      "quote": "Enumerations: \u2026 rule `confidence` `high` | `medium` | `low`.",
+      "note": "Named in schema-checked enumerations prose without RFC 2119."
+    },
+    {
+      "script_id": "internal",
+      "f43_id": "`internal`",
+      "f43_class": "Criteria value",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`). Enum members are the closed value set of those required fields.",
+      "note": "Class-level indirection via required criteria fields; individual values are not named in a MUST sentence."
+    },
+    {
+      "script_id": "key-required",
+      "f43_id": "`key-required`",
+      "f43_class": "Criteria value",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`). Enum members are the closed value set of those required fields.",
+      "note": "Class-level indirection via required criteria fields; individual values are not named in a MUST sentence."
+    },
+    {
+      "script_id": "level-2",
+      "f43_id": "`level-2`",
+      "f43_class": "Deployment level",
+      "bucket": "A",
+      "quote": "Adoption-ladder / conformance deployment-level class: levels are the named rungs the deployment requirements and C-criteria bind to (e.g. Level 2 enforces Tiers 1, 2 and 4\u2026).",
+      "note": "Hand credits the level as required by the ladder contract; no same-paragraph MUST+token for Level 0/1 / level-2/3 at sweep."
+    },
+    {
+      "script_id": "level-3",
+      "f43_id": "`level-3`",
+      "f43_class": "Deployment level",
+      "bucket": "A",
+      "quote": "Adoption-ladder / conformance deployment-level class: levels are the named rungs the deployment requirements and C-criteria bind to (e.g. Level 2 enforces Tiers 1, 2 and 4\u2026).",
+      "note": "Hand credits the level as required by the ladder contract; no same-paragraph MUST+token for Level 0/1 / level-2/3 at sweep."
+    },
+    {
+      "script_id": "low",
+      "f43_id": "`low`",
+      "f43_class": "Confidence",
+      "bucket": "B",
+      "quote": "Enumerations: \u2026 rule `confidence` `high` | `medium` | `low`.",
+      "note": "Named in schema-checked enumerations prose without RFC 2119."
+    },
+    {
+      "script_id": "medium",
+      "f43_id": "`medium`",
+      "f43_class": "Confidence",
+      "bucket": "B",
+      "quote": "Enumerations: \u2026 rule `confidence` `high` | `medium` | `low`.",
+      "note": "Named in schema-checked enumerations prose without RFC 2119."
+    },
+    {
+      "script_id": "not-applicable",
+      "f43_id": "`not-applicable`",
+      "f43_class": "Criteria value",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`). Enum members are the closed value set of those required fields.",
+      "note": "Class-level indirection via required criteria fields; individual values are not named in a MUST sentence."
+    },
+    {
+      "script_id": "operationIdMatches",
+      "f43_id": "`operationIdMatches`",
+      "f43_class": "when-predicate",
+      "bucket": "B",
+      "quote": "`when` contains only the closed predicate keys: `method`, `pathEndsWithParameter`, `responseIsCollection`, `hasRequestBody`, `securitySchemes`, `tagIn`, `operationIdMatches`, `hasDeclaredReversal`, `pathSegmentCount`, `pathParameterCount`.",
+      "note": "Named in the closed-set prose; no RFC 2119 keyword in that bullet."
+    },
+    {
+      "script_id": "pathEndsWithParameter",
+      "f43_id": "`pathEndsWithParameter`",
+      "f43_class": "when-predicate",
+      "bucket": "B",
+      "quote": "`when` contains only the closed predicate keys: `method`, `pathEndsWithParameter`, `responseIsCollection`, `hasRequestBody`, `securitySchemes`, `tagIn`, `operationIdMatches`, `hasDeclaredReversal`, `pathSegmentCount`, `pathParameterCount`.",
+      "note": "Named in the closed-set prose; no RFC 2119 keyword in that bullet."
+    },
+    {
+      "script_id": "pathParameterCount",
+      "f43_id": "`pathParameterCount`",
+      "f43_class": "when-predicate",
+      "bucket": "B",
+      "quote": "`when` contains only the closed predicate keys: `method`, `pathEndsWithParameter`, `responseIsCollection`, `hasRequestBody`, `securitySchemes`, `tagIn`, `operationIdMatches`, `hasDeclaredReversal`, `pathSegmentCount`, `pathParameterCount`.",
+      "note": "Named in the closed-set prose; no RFC 2119 keyword in that bullet."
+    },
+    {
+      "script_id": "pathSegmentCount",
+      "f43_id": "`pathSegmentCount`",
+      "f43_class": "when-predicate",
+      "bucket": "B",
+      "quote": "`when` contains only the closed predicate keys: `method`, `pathEndsWithParameter`, `responseIsCollection`, `hasRequestBody`, `securitySchemes`, `tagIn`, `operationIdMatches`, `hasDeclaredReversal`, `pathSegmentCount`, `pathParameterCount`.",
+      "note": "Named in the closed-set prose; no RFC 2119 keyword in that bullet."
+    },
+    {
+      "script_id": "personal",
+      "f43_id": "`personal`",
+      "f43_class": "Criteria value",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`). Enum members are the closed value set of those required fields.",
+      "note": "Class-level indirection via required criteria fields; individual values are not named in a MUST sentence."
+    },
+    {
+      "script_id": "population",
+      "f43_id": "`population`",
+      "f43_class": "Criteria value",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`). Enum members are the closed value set of those required fields.",
+      "note": "Class-level indirection via required criteria fields; individual values are not named in a MUST sentence."
+    },
+    {
+      "script_id": "public",
+      "f43_id": "`public`",
+      "f43_class": "Criteria value",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`). Enum members are the closed value set of those required fields.",
+      "note": "Class-level indirection via required criteria fields; individual values are not named in a MUST sentence."
+    },
+    {
+      "script_id": "recommendation-set/0.1.0",
+      "f43_id": "`recommendation-set/0.1.0`",
+      "f43_class": "Document type",
+      "bucket": "A",
+      "quote": "Document types listed in schemas/README and validated as named ctier-authored formats; hand treated the document-type class as carrying schema/validation requirements.",
+      "note": "Class-level; script finds no MUST co-occurrence with the version string."
+    },
+    {
+      "script_id": "regulated",
+      "f43_id": "`regulated`",
+      "f43_class": "Criteria value",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`). Enum members are the closed value set of those required fields.",
+      "note": "Class-level indirection via required criteria fields; individual values are not named in a MUST sentence."
+    },
+    {
+      "script_id": "responseIsCollection",
+      "f43_id": "`responseIsCollection`",
+      "f43_class": "when-predicate",
+      "bucket": "B",
+      "quote": "`when` contains only the closed predicate keys: `method`, `pathEndsWithParameter`, `responseIsCollection`, `hasRequestBody`, `securitySchemes`, `tagIn`, `operationIdMatches`, `hasDeclaredReversal`, `pathSegmentCount`, `pathParameterCount`.",
+      "note": "Named in the closed-set prose; no RFC 2119 keyword in that bullet."
+    },
+    {
+      "script_id": "reversibility",
+      "f43_id": "`reversibility`",
+      "f43_class": "Criteria dimension",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`).",
+      "note": "Class/shape-level completeness requirement covers the dimension or shape name."
+    },
+    {
+      "script_id": "securitySchemes",
+      "f43_id": "`securitySchemes`",
+      "f43_class": "when-predicate",
+      "bucket": "B",
+      "quote": "`when` contains only the closed predicate keys: `method`, `pathEndsWithParameter`, `responseIsCollection`, `hasRequestBody`, `securitySchemes`, `tagIn`, `operationIdMatches`, `hasDeclaredReversal`, `pathSegmentCount`, `pathParameterCount`.",
+      "note": "Named in the closed-set prose; no RFC 2119 keyword in that bullet."
+    },
+    {
+      "script_id": "sequence",
+      "f43_id": "`sequence`",
+      "f43_class": "Corpus field",
+      "bucket": "A",
+      "quote": "Conformance corpus dimensions table (`profile` / `deployment` / `sequence`); sequence is a required dimension of the corpus class.",
+      "note": "Class-level corpus field."
+    },
+    {
+      "script_id": "single-customer",
+      "f43_id": "`single-customer`",
+      "f43_class": "Criteria value",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`). Enum members are the closed value set of those required fields.",
+      "note": "Class-level indirection via required criteria fields; individual values are not named in a MUST sentence."
+    },
+    {
+      "script_id": "single-record",
+      "f43_id": "`single-record`",
+      "f43_class": "Criteria value",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`). Enum members are the closed value set of those required fields.",
+      "note": "Class-level indirection via required criteria fields; individual values are not named in a MUST sentence."
+    },
+    {
+      "script_id": "system-wide",
+      "f43_id": "`system-wide`",
+      "f43_class": "Criteria value",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`). Enum members are the closed value set of those required fields.",
+      "note": "Class-level indirection via required criteria fields; individual values are not named in a MUST sentence."
+    },
+    {
+      "script_id": "tagIn",
+      "f43_id": "`tagIn`",
+      "f43_class": "when-predicate",
+      "bucket": "B",
+      "quote": "`when` contains only the closed predicate keys: `method`, `pathEndsWithParameter`, `responseIsCollection`, `hasRequestBody`, `securitySchemes`, `tagIn`, `operationIdMatches`, `hasDeclaredReversal`, `pathSegmentCount`, `pathParameterCount`.",
+      "note": "Named in the closed-set prose; no RFC 2119 keyword in that bullet."
+    },
+    {
+      "script_id": "undo-restores-effect",
+      "f43_id": "`undo-restores-effect`",
+      "f43_class": "Criteria value",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`). Enum members are the closed value set of those required fields.",
+      "note": "Class-level indirection via required criteria fields; individual values are not named in a MUST sentence."
+    },
+    {
+      "script_id": "undo-restores-record-only",
+      "f43_id": "`undo-restores-record-only`",
+      "f43_class": "Criteria value",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`). Enum members are the closed value set of those required fields.",
+      "note": "Class-level indirection via required criteria fields; individual values are not named in a MUST sentence."
+    },
+    {
+      "script_id": "unsafe",
+      "f43_id": "`unsafe`",
+      "f43_class": "Criteria value",
+      "bucket": "A",
+      "quote": "Where `x-ctier-criteria` appears on a description or qualified spec, all five fields are required (`$defs/criteria`). Enum members are the closed value set of those required fields.",
+      "note": "Class-level indirection via required criteria fields; individual values are not named in a MUST sentence."
+    },
+    {
+      "script_id": "x-ctier-bounds",
+      "f43_id": "`x-ctier-bounds`",
+      "f43_class": "Extension field",
+      "bucket": "B",
+      "quote": "`parameter` must name a parameter that exists on the operation. That check is validator-enforced; see `validation.md`.",
+      "note": "Field section under extensions.md; body uses lowercase must / table \"Required\" / descriptive norms, not uppercase MUST co-occurring with the field token in one paragraph."
+    },
+    {
+      "script_id": "x-ctier-defaults",
+      "f43_id": "`x-ctier-defaults`",
+      "f43_class": "Extension field",
+      "bucket": "B",
+      "quote": "Object. Optional. Fail-closed values apply when a field is omitted.",
+      "note": "Field section under extensions.md; body uses lowercase must / table \"Required\" / descriptive norms, not uppercase MUST co-occurring with the field token in one paragraph."
+    },
+    {
+      "script_id": "x-ctier-escalate-to",
+      "f43_id": "`x-ctier-escalate-to`",
+      "f43_class": "Extension field",
+      "bucket": "B",
+      "quote": "Integer 1\u20134. Optional. Per-operation accumulation target. May never resolve below the tier already reached. That check is validator-enforced; see `validation.md` (C3).",
+      "note": "Field section under extensions.md; body uses lowercase must / table \"Required\" / descriptive norms, not uppercase MUST co-occurring with the field token in one paragraph."
+    },
+    {
+      "script_id": "x-ctier-exclude",
+      "f43_id": "`x-ctier-exclude`",
+      "f43_class": "Extension field",
+      "bucket": "B",
+      "quote": "Exclusion exclusivity / exclude semantics in extensions + validation (contradiction with declared tier).",
+      "note": "Field section under extensions.md; body uses lowercase must / table \"Required\" / descriptive norms, not uppercase MUST co-occurring with the field token in one paragraph."
+    },
+    {
+      "script_id": "x-ctier-handoff",
+      "f43_id": "`x-ctier-handoff`",
+      "f43_class": "Extension field",
+      "bucket": "B",
+      "quote": "Object. Optional. The authority class\u2026 The class is declared; the person is resolved by the consuming application.",
+      "note": "Field section under extensions.md; body uses lowercase must / table \"Required\" / descriptive norms, not uppercase MUST co-occurring with the field token in one paragraph."
+    },
+    {
+      "script_id": "x-ctier-provenance",
+      "f43_id": "`x-ctier-provenance`",
+      "f43_class": "Extension field",
+      "bucket": "B",
+      "quote": "Provenance field on recommendation-set / validation discussion of overlay provenance.",
+      "note": "Field section under extensions.md; body uses lowercase must / table \"Required\" / descriptive norms, not uppercase MUST co-occurring with the field token in one paragraph."
+    },
+    {
+      "script_id": "x-ctier-rationale",
+      "f43_id": "`x-ctier-rationale`",
+      "f43_class": "Extension field",
+      "bucket": "B",
+      "quote": "String. Optional. Why this tier. What survives an audit.",
+      "note": "Field section under extensions.md; body uses lowercase must / table \"Required\" / descriptive norms, not uppercase MUST co-occurring with the field token in one paragraph."
+    },
+    {
+      "script_id": "x-ctier-weight",
+      "f43_id": "`x-ctier-weight`",
+      "f43_class": "Extension field",
+      "bucket": "B",
+      "quote": "Integer \u2265 0. Optional. Contribution to accumulated consequence. **Zero is meaningful**",
+      "note": "Field section under extensions.md; body uses lowercase must / table \"Required\" / descriptive norms, not uppercase MUST co-occurring with the field token in one paragraph."
+    }
+  ]
+}

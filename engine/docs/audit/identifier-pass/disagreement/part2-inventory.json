@@ -1,0 +1,294 @@
+{
+  "script_only": [
+    "1.1.0",
+    "4.1 Rules become data, not code",
+    "4.2 Recommendations are an overlay",
+    "4.3 The schemas live in the specification repository, not the engine",
+    "C13 \u2014 Digest discipline",
+    "C2 \u2014 Fail-closed",
+    "C3 \u2014 Unidirectionality",
+    "Criteria",
+    "Ledger records",
+    "On the maturity of these criteria",
+    "The transformations, as document-in / document-out",
+    "accountId",
+    "action",
+    "agent",
+    "artefact",
+    "authorizationId",
+    "blastRadius",
+    "bounds",
+    "case",
+    "complianceTrigger",
+    "countMatch",
+    "criteria",
+    "criteriaFields",
+    "criteriaProposal",
+    "ctierSchemaId",
+    "customerId",
+    "dataSensitivity",
+    "defaults",
+    "delete",
+    "digest",
+    "disposition",
+    "escalationReason",
+    "exclude",
+    "expect",
+    "get",
+    "halt",
+    "handoff",
+    "head",
+    "input",
+    "operation",
+    "options",
+    "patch",
+    "paymentId",
+    "post",
+    "propose",
+    "provenance",
+    "put",
+    "rationale",
+    "recommendedAt",
+    "request",
+    "result",
+    "reverses",
+    "rule",
+    "searchId",
+    "status",
+    "step",
+    "tier",
+    "trace",
+    "unassigned",
+    "update",
+    "weight",
+    "when"
+  ],
+  "script_only_judgements": {
+    "1.1.0": "Rule artefact \u2014 overlay/version const fragment.",
+    "4.1 Rules become data, not code": "Rule artefact \u2014 ADR-0009 / validation.md heading harvested as an identifier.",
+    "4.2 Recommendations are an overlay": "Rule artefact \u2014 ADR-0009 / validation.md heading harvested as an identifier.",
+    "4.3 The schemas live in the specification repository, not the engine": "Rule artefact \u2014 ADR-0009 / validation.md heading harvested as an identifier.",
+    "C13 \u2014 Digest discipline": "Rule artefact \u2014 full heading string; finding 43 inventoried the letter separately.",
+    "C2 \u2014 Fail-closed": "Rule artefact \u2014 full heading string; finding 43 inventoried the letter separately.",
+    "C3 \u2014 Unidirectionality": "Rule artefact \u2014 full heading string; finding 43 inventoried the letter separately.",
+    "Criteria": "Rule artefact \u2014 ADR-0009 / validation.md heading harvested as an identifier.",
+    "Ledger records": "Rule artefact \u2014 ADR-0009 / validation.md heading harvested as an identifier.",
+    "On the maturity of these criteria": "Rule artefact \u2014 ADR-0009 / validation.md heading harvested as an identifier.",
+    "The transformations, as document-in / document-out": "Rule artefact \u2014 ADR-0009 / validation.md heading harvested as an identifier.",
+    "accountId": "Rule artefact \u2014 example/schema property token, not a finding-43 vocabulary row.",
+    "action": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "agent": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "artefact": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "authorizationId": "Rule artefact \u2014 example/schema property token, not a finding-43 vocabulary row.",
+    "blastRadius": "Rule artefact \u2014 camelCase schema twin of a kebab dimension already in finding 43.",
+    "bounds": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "case": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "complianceTrigger": "Rule artefact \u2014 camelCase schema twin of a kebab dimension already in finding 43.",
+    "countMatch": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "criteria": "Rule artefact \u2014 bare $defs key alongside the shape id finding 43 preferred.",
+    "criteriaFields": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "criteriaProposal": "Rule artefact \u2014 bare $defs key alongside the shape id finding 43 preferred.",
+    "ctierSchemaId": "Rule artefact \u2014 example/schema property token, not a finding-43 vocabulary row.",
+    "customerId": "Rule artefact \u2014 example/schema property token, not a finding-43 vocabulary row.",
+    "dataSensitivity": "Rule artefact \u2014 camelCase schema twin of a kebab dimension already in finding 43.",
+    "defaults": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "delete": "Rule artefact \u2014 HTTP method enum member; finding 43 did not inventory verbs.",
+    "digest": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "disposition": "Rule artefact \u2014 vocab field name; finding 43 inventoried members/uses more than the key.",
+    "escalationReason": "Rule artefact \u2014 vocab field name; finding 43 inventoried members/uses more than the key.",
+    "exclude": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "expect": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "get": "Rule artefact \u2014 HTTP method enum member; finding 43 did not inventory verbs.",
+    "halt": "Borderline \u2014 real response/agentAction token; finding 43 response set at attach did not list it.",
+    "handoff": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "head": "Rule artefact \u2014 HTTP method enum member; finding 43 did not inventory verbs.",
+    "input": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "operation": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "options": "Rule artefact \u2014 HTTP method enum member; finding 43 did not inventory verbs.",
+    "patch": "Rule artefact \u2014 HTTP method enum member; finding 43 did not inventory verbs.",
+    "paymentId": "Rule artefact \u2014 example/schema property token, not a finding-43 vocabulary row.",
+    "post": "Rule artefact \u2014 HTTP method enum member; finding 43 did not inventory verbs.",
+    "propose": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "provenance": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "put": "Rule artefact \u2014 HTTP method enum member; finding 43 did not inventory verbs.",
+    "rationale": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "recommendedAt": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "request": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "result": "Rule artefact \u2014 vocab field name; finding 43 inventoried members/uses more than the key.",
+    "reverses": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "rule": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "searchId": "Rule artefact \u2014 example/schema property token, not a finding-43 vocabulary row.",
+    "status": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "step": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "tier": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "trace": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "unassigned": "Borderline \u2014 real response/agentAction token; finding 43 response set at attach did not list it.",
+    "update": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "weight": "Rule artefact \u2014 script-only token; not in finding 43's 195.",
+    "when": "Rule artefact \u2014 script-only token; not in finding 43's 195."
+  },
+  "f43_only": [
+    {
+      "id": "`decision-record/0.1.0`",
+      "class": "Record version"
+    },
+    {
+      "id": "`attempt-record/0.1.0`",
+      "class": "Record version"
+    },
+    {
+      "id": "qualified spec",
+      "class": "Document type"
+    },
+    {
+      "id": "Overlay 1.1.0",
+      "class": "Document type"
+    },
+    {
+      "id": "Interface description",
+      "class": "Document type"
+    },
+    {
+      "id": "Governance overlay",
+      "class": "Document type"
+    },
+    {
+      "id": "`undeclaredTier`",
+      "class": "Extension subfield"
+    },
+    {
+      "id": "`escalateAbove`",
+      "class": "Extension subfield"
+    },
+    {
+      "id": "`decaySeconds`",
+      "class": "Extension subfield"
+    },
+    {
+      "id": "`recommendationTtlDays`",
+      "class": "Extension subfield"
+    },
+    {
+      "id": "`parameter`",
+      "class": "Extension subfield"
+    },
+    {
+      "id": "`max`",
+      "class": "Extension subfield"
+    },
+    {
+      "id": "`authority`",
+      "class": "Extension subfield"
+    },
+    {
+      "id": "`x-ctier-tier` (header)",
+      "class": "Header"
+    },
+    {
+      "id": "`X-Agent-Action`",
+      "class": "Header"
+    },
+    {
+      "id": "`X-Correlation-Id`",
+      "class": "Header alias"
+    },
+    {
+      "id": "`X-Ctier-Tier`",
+      "class": "Header alias"
+    },
+    {
+      "id": "`X-Idempotency-Key`",
+      "class": "Header alias"
+    },
+    {
+      "id": "`none` (reversibility)",
+      "class": "Criteria value"
+    },
+    {
+      "id": "`none` (compliance)",
+      "class": "Criteria value"
+    },
+    {
+      "id": "Configured",
+      "class": "Measurement kind"
+    },
+    {
+      "id": "Observed",
+      "class": "Measurement kind"
+    },
+    {
+      "id": "Requirement 1",
+      "class": "Deployment requirement"
+    },
+    {
+      "id": "governed set",
+      "class": "Concept"
+    },
+    {
+      "id": "granted scope",
+      "class": "Concept"
+    },
+    {
+      "id": "undeclared default",
+      "class": "Concept"
+    },
+    {
+      "id": "join key",
+      "class": "Concept"
+    },
+    {
+      "id": "scope floor",
+      "class": "Concept"
+    },
+    {
+      "id": "structural floor",
+      "class": "Concept"
+    },
+    {
+      "id": "deploy-time bound",
+      "class": "Concept"
+    },
+    {
+      "id": "persist-and-execute",
+      "class": "Concept"
+    },
+    {
+      "id": "namespace strip",
+      "class": "Concept"
+    },
+    {
+      "id": "integrity-protection",
+      "class": "Concept"
+    },
+    {
+      "id": "refuse-to-emit",
+      "class": "Concept"
+    },
+    {
+      "id": "undetermined",
+      "class": "Concept"
+    },
+    {
+      "id": "`sha256:` digest form",
+      "class": "Document key"
+    },
+    {
+      "id": "`PendingAuthorization`",
+      "class": "Response identifier"
+    },
+    {
+      "id": "`202`",
+      "class": "Response identifier"
+    },
+    {
+      "id": "`423`",
+      "class": "Response identifier"
+    },
+    {
+      "id": "`503`",
+      "class": "Response identifier"
+    }
+  ],
+  "paired_count": 155,
+  "net": 22
+}
