@@ -89,6 +89,44 @@ name?
    response-identifier class and still missed half its
    members.
 
+   When filling the requirement column for a class that owes
+   a requirement sentence, credit a member under either of
+   the following — not only under same-paragraph co-occurrence
+   of the member token with `MUST` / `SHALL` / `REQUIRED`:
+
+   **Class-coverage rule.** A requirement stated about a
+   class covers a member identifier when (a) the requirement
+   names the class by its own name or by a pattern the
+   member matches, (b) the obligation is satisfiable per
+   member, and (c) nothing in the requirement or its scope
+   excludes that member. Examples of shape only: a sentence
+   that all five `x-ctier-criteria` fields are required
+   covers each criteria dimension and each closed enum
+   value of those fields; a document-type / record-version
+   class that the corpus validates as named formats covers
+   each version string in that class; a profile / tier /
+   deployment-level / generator-mode / corpus-dimension
+   class covers each named member the class enumerates.
+
+   **Titled-section / list-label body.** If the identifier
+   *is* the section title or the numbered list label of an
+   obligation (`### Bound comparison`, `Requirement 3`, …),
+   a requirement sentence in that section or list-item body
+   covers the identifier even when the body does not repeat
+   the title token. The class-coverage rule above does not
+   reach these cases; state this second rule explicitly or
+   you will mark titled validation rules and numbered
+   deployment requirements as missing whenever the MUST sits
+   only in the body.
+
+   A wire token that is merely *discussed* under a named
+   criterion (for example a header mentioned parenthetically
+   as how `C6` is satisfied) without being a class member
+   under the first rule and without being the section title
+   under the second is **outside both rules**. Leave it to
+   reader judgment and record the doubt; do not silently
+   extend class-coverage to "anything near a criterion."
+
 5. **Fill columns for each row:**
    - `requirement-or-definition-found`: `yes` / `no`
    - `titled-under-own-name`: `yes` / `no` (a table cell or
