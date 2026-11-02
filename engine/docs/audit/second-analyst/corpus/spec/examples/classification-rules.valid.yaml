@@ -1,0 +1,50 @@
+ctierSchema: classification-rules/0.1.0
+rules:
+  - id: read-single-resource
+    when:
+      method: [get, head]
+      pathEndsWithParameter: true
+      responseIsCollection: false
+    propose:
+      criteria:
+        reversibility: not-applicable
+        blast-radius: single-record
+        data-sensitivity: internal
+        compliance-trigger: none
+        idempotency: inherently-safe
+    rationale: Single-resource read; there is nothing to undo.
+    confidence: high
+  - id: has-declared-reversal
+    when:
+      hasDeclaredReversal: true
+    propose:
+      tier: 2
+    rationale: An x-ctier-reverses names this operation, including self-reversal.
+    confidence: high
+  - id: delete-is-tier-3-floor
+    when:
+      method: [delete]
+    propose:
+      tier: 3
+    rationale: A delete restores the record at best.
+    confidence: high
+  - id: nested-item-path
+    when:
+      pathSegmentCount: { min: 3 }
+      pathParameterCount: 2
+    propose:
+      criteria:
+        reversibility: not-applicable
+        blast-radius: single-record
+        data-sensitivity: personal
+        compliance-trigger: none
+        idempotency: inherently-safe
+    rationale: Two-parameter path; a nested item read.
+    confidence: medium
+  - id: named-export
+    when:
+      operationIdMatches: [exportStatements]
+    propose:
+      tier: 4
+    rationale: Bulk export is a known high-consequence shape.
+    confidence: medium

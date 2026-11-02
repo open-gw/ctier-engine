@@ -1,0 +1,2172 @@
+{
+  "DO_NOT_OPEN_BEFORE_RUN_COMPLETES": true,
+  "pin": "0a997321234e5f6f6184b7449a241c3d30a19520",
+  "note": "Facilitator sealed key. Per-identifier strict/lenient at pin.",
+  "rows": [
+    {
+      "identifier": "$defs/criteria",
+      "class": "Schema shape",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "$defs/criteriaProposal",
+      "class": "Schema shape",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "1.1.0",
+      "class": "Unclassified",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "4.1 Rules become data, not code",
+      "class": "Document type",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "4.2 Recommendations are an overlay",
+      "class": "Document type",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "4.3 The schemas live in the specification repository, not the engine",
+      "class": "Document type",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "403",
+      "class": "Response identifier",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "absent",
+      "class": "Coverage status",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "accountId",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "action",
+      "class": "Unclassified",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "adjacent",
+      "class": "Criteria value",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "agent",
+      "class": "Unclassified",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "Agent suspension is an authorisation concern",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "agent_suspended",
+      "class": "Response identifier",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "agentId",
+      "class": "Ledger field",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "AgentSuspended",
+      "class": "Response identifier",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "appliedTierAtLeast",
+      "class": "Corpus field",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "artefact",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "Attempt",
+      "class": "Record type",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "attempt-record/0.2.0",
+      "class": "Record version",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "authority",
+      "class": "Extension subfield",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "Authorization",
+      "class": "Header",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "authorizationId",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "autoResume",
+      "class": "Response identifier",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "blast-radius",
+      "class": "Criteria dimension",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "blastRadius",
+      "class": "Criteria dimension",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "Bound comparison",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "bounds",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "Bounds coherence",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "bundle",
+      "class": "Generator mode",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "C1",
+      "class": "Criterion",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "C10",
+      "class": "Criterion",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "C11",
+      "class": "Criterion",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "C12",
+      "class": "Criterion",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "C13",
+      "class": "Criterion",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "C13 \u2014 Digest discipline",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "C2",
+      "class": "Criterion",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "C2 \u2014 Fail-closed",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "C3",
+      "class": "Criterion",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "C3 \u2014 Unidirectionality",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "C4",
+      "class": "Criterion",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "C5",
+      "class": "Criterion",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "C6",
+      "class": "Criterion",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "C7",
+      "class": "Criterion",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "C8",
+      "class": "Criterion",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "C9",
+      "class": "Criterion",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "case",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "classification-rules/0.1.0",
+      "class": "Document type",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "compliance-trigger",
+      "class": "Criteria dimension",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "complianceTrigger",
+      "class": "Criteria dimension",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "composition-manifest/0.1.0",
+      "class": "Document type",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "compositionDigest",
+      "class": "Digest",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "computed-tier-exceeds-declared",
+      "class": "Escalation reason",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "conformance-corpus/0.3.0",
+      "class": "Document type",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "constrained",
+      "class": "Profile",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "continue_task_without_this_step",
+      "class": "agentAction",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "correlationScope",
+      "class": "Ledger field",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "countMatch",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "Coverage sort",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "coverage-report/0.1.0",
+      "class": "Document type",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "criteria",
+      "class": "Schema shape",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "Criteria",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "criteriaFields",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "criteriaProposal",
+      "class": "Schema shape",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "ctierSchema",
+      "class": "Document key",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "ctierSchemaId",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "customerId",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "data-sensitivity",
+      "class": "Criteria dimension",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "dataSensitivity",
+      "class": "Criteria dimension",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "decaySeconds",
+      "class": "Extension subfield",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "Decision",
+      "class": "Record type",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "decision-record/0.2.0",
+      "class": "Record version",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "declared",
+      "class": "Coverage status",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "defaults",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "delegation-authority-expansion",
+      "class": "Escalation reason",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "delete",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "deploy-time bound",
+      "class": "Concept",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "deployment",
+      "class": "Corpus field",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "deploymentDigest",
+      "class": "Digest",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "Derived",
+      "class": "Measurement kind",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "description",
+      "class": "Composition role",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "digest",
+      "class": "Unclassified",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "direct",
+      "class": "Criteria value",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "disposition",
+      "class": "Ledger field",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "Engine `Criteria` defaults are not the contract",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "escalateAbove",
+      "class": "Extension subfield",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "escalationReason",
+      "class": "Ledger field",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "exclude",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "Exclusion exclusivity",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "execute",
+      "class": "Disposition",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "executed",
+      "class": "Outcome result",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "expect",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "failed",
+      "class": "Outcome result",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "fragments",
+      "class": "Generator mode",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "get",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "governed set",
+      "class": "Concept",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "granted scope",
+      "class": "Concept",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "halt",
+      "class": "agentAction",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "halt_and_hand_off",
+      "class": "agentAction",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "handoff",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "hasDeclaredReversal",
+      "class": "when-predicate",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "hasRequestBody",
+      "class": "when-predicate",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "head",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "high",
+      "class": "Confidence",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "idempotency",
+      "class": "Criteria dimension",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "Idempotency-Key",
+      "class": "Header",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "idempotencyKey",
+      "class": "Ledger field",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "incidentId",
+      "class": "Response identifier",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "inherently-safe",
+      "class": "Criteria value",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "input",
+      "class": "Unclassified",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "integrity-protection",
+      "class": "Concept",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "internal",
+      "class": "Criteria value",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "join key",
+      "class": "Concept",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "key-required",
+      "class": "Criteria value",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "Ledger records",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "Level 0",
+      "class": "Deployment level",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "Level 1",
+      "class": "Deployment level",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "Level 2",
+      "class": "Deployment level",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "Level 3",
+      "class": "Deployment level",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "Level 4",
+      "class": "Deployment level",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "level-2",
+      "class": "Deployment level",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "level-3",
+      "class": "Deployment level",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "low",
+      "class": "Confidence",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "max",
+      "class": "Extension subfield",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "medium",
+      "class": "Confidence",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "method",
+      "class": "when-predicate",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "namespace strip",
+      "class": "Concept",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "No agent-facing URL",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "No credential persistence",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "none",
+      "class": "Escalation reason",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "not-applicable",
+      "class": "Criteria value",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "On the maturity of these criteria",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "operation",
+      "class": "Unclassified",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "operationAnchor",
+      "class": "Ledger field",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "operationIdMatches",
+      "class": "when-predicate",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "options",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "Outcome",
+      "class": "Record type",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "outcome-record/0.1.0",
+      "class": "Record version",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "overlay",
+      "class": "Composition role",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "Pagination is refused as a predicate",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "parameter",
+      "class": "Extension subfield",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "patch",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "pathEndsWithParameter",
+      "class": "when-predicate",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "pathParameterCount",
+      "class": "when-predicate",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "pathSegmentCount",
+      "class": "when-predicate",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "payload-exceeds-declared-bounds",
+      "class": "Escalation reason",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "paymentId",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "pending_authorization",
+      "class": "Response identifier",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "persist-and-execute",
+      "class": "Concept",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "personal",
+      "class": "Criteria value",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "placeholder",
+      "class": "Corpus field",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "population",
+      "class": "Criteria value",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "post",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "profile",
+      "class": "Corpus field",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "propose",
+      "class": "Unclassified",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "provenance",
+      "class": "Unclassified",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "public",
+      "class": "Criteria value",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "put",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "rationale",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "recommendation-set/0.1.0",
+      "class": "Document type",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "recommendationTtlDays",
+      "class": "Extension subfield",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "recommended",
+      "class": "Coverage status",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "recommendedAt",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "refuse-and-suspend",
+      "class": "Disposition",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "refuse-provisioning",
+      "class": "Disposition",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "refuse-to-emit",
+      "class": "Concept",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "regulated",
+      "class": "Criteria value",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "request",
+      "class": "Unclassified",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "Requirement 2",
+      "class": "Deployment requirement",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "titled-section-body"
+      ]
+    },
+    {
+      "identifier": "Requirement 3",
+      "class": "Deployment requirement",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "Requirement 4",
+      "class": "Deployment requirement",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "responseIsCollection",
+      "class": "when-predicate",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "result",
+      "class": "Ledger field",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "Retry-After",
+      "class": "Header",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "retry_later",
+      "class": "agentAction",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "reverses",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "reversibility",
+      "class": "Criteria dimension",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "rule",
+      "class": "Unclassified",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "safe",
+      "class": "Criteria value",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "scope floor",
+      "class": "Concept",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "searchId",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "securitySchemes",
+      "class": "when-predicate",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "Self-reversal",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "sequence",
+      "class": "Corpus field",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "session-accumulation",
+      "class": "Escalation reason",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "single-customer",
+      "class": "Criteria value",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "single-record",
+      "class": "Criteria value",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "Single-target rule",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "standard",
+      "class": "Profile",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "status",
+      "class": "Unclassified",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "step",
+      "class": "Unclassified",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "structural floor",
+      "class": "Concept",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "system-wide",
+      "class": "Criteria value",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "tagIn",
+      "class": "when-predicate",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "The transformations, as document-in / document-out",
+      "class": "Document type",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "tier",
+      "class": "Unclassified",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "Tier 1",
+      "class": "Tier",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "Tier 2",
+      "class": "Tier",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "Tier 2 requires a verified compensating action",
+      "class": "Validation rule",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "titled-section-body",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "Tier 3",
+      "class": "Tier",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage"
+      ]
+    },
+    {
+      "identifier": "Tier 4",
+      "class": "Tier",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "trace",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "unassigned",
+      "class": "Response identifier",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "undeclared default",
+      "class": "Concept",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "undeclared-operation",
+      "class": "Escalation reason",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "undeclaredTier",
+      "class": "Extension subfield",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "undetermined",
+      "class": "Concept",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "undo-restores-effect",
+      "class": "Criteria value",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "undo-restores-record-only",
+      "class": "Criteria value",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "unsafe",
+      "class": "Criteria value",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "class-coverage",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "update",
+      "class": "Unclassified",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "weight",
+      "class": "Unclassified",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "when",
+      "class": "Unclassified",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "withhold",
+      "class": "Disposition",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "X-Agent-Id",
+      "class": "Header",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-consequence-*",
+      "class": "Namespace",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "X-Correlation-Id",
+      "class": "Header alias",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-*",
+      "class": "Header",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-bounds",
+      "class": "Extension field",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-composition",
+      "class": "Header",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "x-ctier-correlation-id",
+      "class": "Header",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-criteria",
+      "class": "Extension field",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-defaults",
+      "class": "Extension field",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-deployment",
+      "class": "Header",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-escalate-to",
+      "class": "Extension field",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-exclude",
+      "class": "Extension field",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-handoff",
+      "class": "Extension field",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-operation",
+      "class": "Header",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "x-ctier-provenance",
+      "class": "Extension field",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-rationale",
+      "class": "Extension field",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-recommended-at",
+      "class": "Extension field",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-reverses",
+      "class": "Extension field",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-status",
+      "class": "Extension field",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-tier",
+      "class": "Header",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "X-Ctier-Tier",
+      "class": "Header alias",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119",
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "x-ctier-weight",
+      "class": "Extension field",
+      "strict": false,
+      "lenient": true,
+      "lenient_rules": [
+        "requirement-like-prose"
+      ]
+    },
+    {
+      "identifier": "X-Delegation-Chain",
+      "class": "Header",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    },
+    {
+      "identifier": "X-Idempotency-Key",
+      "class": "Header alias",
+      "strict": true,
+      "lenient": true,
+      "lenient_rules": [
+        "strict-rfc2119"
+      ]
+    },
+    {
+      "identifier": "X-Incident-Id",
+      "class": "Header",
+      "strict": false,
+      "lenient": false,
+      "lenient_rules": []
+    }
+  ]
+}
