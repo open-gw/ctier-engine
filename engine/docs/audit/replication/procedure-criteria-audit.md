@@ -71,17 +71,60 @@ outcome?
    supply a sentence from memory or from a non-corpus file.
 
 4. **Ask, of the copied sentence: mechanism, property, or
-   mixed?** Apply these tests in order; record which fired.
+   mixed?** Before any test, record the protected-outcome
+   field for the row. Then apply the tests in order; record
+   which fired.
 
-   - **Test 1 (letter vs intent):** Is there a plausible
-     implementation that achieves the outcome the surrounding
-     prose claims to protect, yet fails the letter of the
-     sentence because the sentence names a particular
-     artefact or location? If yes → mechanism pressure.
+   **Protected-outcome field (required before Test 1).**
+   Quote a contiguous verbatim span from the corpus that
+   states the outcome the criterion is meant to protect, in
+   the candidate's own words, **or** write exactly
+   `UNSTATED`. Record the location (file path + heading or
+   nearby anchor the corpus uses). Do not paraphrase. Do not
+   invent an outcome the corpus does not state.
+
+   What qualifies as a **span:**
+   - Contiguous characters copied from one place in the
+     corpus (one sentence, or adjacent sentences under the
+     same criterion heading / titled block).
+   - May be the requirement sentence itself when that
+     sentence already states an outcome rather than only an
+     artefact.
+   - May be a purpose clause, title, or surrounding prose
+     under the same criterion that names what the
+     prescription is for — still contiguous and verbatim.
+   - Prefer the shortest span that states an outcome without
+     naming only the replaceable artefact.
+
+   What **`UNSTATED`** means:
+   - No contiguous span in the corpus states a protected
+     outcome in the candidate's own words for this row.
+   - When the field is `UNSTATED`, **skip Test 1** for that
+     row. Tests 2 and 3 may still run against the copied
+     requirement sentence. Do not supply an outcome from
+     memory so that Test 1 can run.
+
+   Worked negative: if the only span you can quote restates
+   the named artefact or location (status code, store name,
+   plugin order, constructor) and adds no separable outcome,
+   that is not a protected-outcome span — write `UNSTATED`
+   (or keep searching for a purpose/outcome clause). Test 1
+   does not fire on an artefact-only restatement; you have
+   not found an intent/letter split.
+
+   - **Test 1 (letter vs intent):** Using only the recorded
+     protected-outcome span (skip this test when the field is
+     `UNSTATED`): is there a plausible implementation that
+     achieves that quoted outcome, yet fails the letter of
+     the requirement sentence because the sentence names a
+     particular artefact or location? If yes → mechanism
+     pressure.
    - **Test 2 (replaceable prescription):** Can the named
      status, field list, store, constructor, or strip/MAC
      pair be replaced by another concrete means without
-     changing the protected outcome? If yes → the prescription
+     changing the protected outcome (the quoted span when
+     present; otherwise the outcome only as the requirement
+     sentence itself states it)? If yes → the prescription
      is mechanism; the outcome may still be a property
      (verdict **mixed** if both an outcome sentence and a
      replaceable prescription are present).
@@ -137,30 +180,54 @@ outcome?
 
 One markdown table, then the four counts.
 
-| ID | Verdict | Protected property (one line) | Tests that fired | Scope |
+| ID | Verdict | Protected-outcome span (verbatim + location) or `UNSTATED` | Tests that fired | Scope |
 |---|---|---|---|---|
-| R1 | mechanism | … | 1, 3 | governed operations only |
-| R2 | property | … | — | unbounded |
-| R3 | mixed | … | 2 | … |
+| R1 | mechanism | "…" (`path` §heading) | 1, 3 | governed operations only |
+| R2 | property | "…" (`path` §heading) | — | unbounded |
+| R3 | mixed | "…" (`path` §heading) | 2 | … |
 | R4 | unstated | — | — | — |
 
 ```
 N=4 mechanisms=1 mixed=1 properties=1 unstated=1
 ```
 
-### Worked fragment (synthetic; not a candidate result)
+### Worked fragment — span present (synthetic; not a candidate result)
 
-Corpus sentence for `R7`: "On refusal the enforcement point
-MUST return status 451 and write a row to the custody
-ledger before responding."
+Corpus for `R7`, requirement sentence: "On refusal the
+enforcement point MUST return status 451 and write a row to
+the custody ledger before responding."
 
-- Test 2 fires: another non-retryable status, or a different
-  durable sink, could preserve "the agent is released and the
-  refusal is evidenced."
+Surrounding prose under the same heading: "A refused agent
+must be released onto the rest of its task; the refusal must
+be evidenced."
+
+- Protected-outcome span (verbatim + location):
+  `"A refused agent must be released onto the rest of its
+  task; the refusal must be evidenced."`
+  (`candidate.md` §R7)
+- Test 1: skip only if `UNSTATED`; here a span is recorded.
+  A plausible impl could release-and-evidence with another
+  non-retryable status / different durable sink and fail the
+  letter's `451` + custody-ledger prescription → Test 1 may
+  fire.
+- Test 2 fires on the same replaceable prescription.
 - Verdict: `mixed`.
-- Protected property (one line): a refused agent does not
-  retry this step; the refusal is evidenced.
 - Scope: as stated in the criterion body, or `unbounded`.
+
+### Worked fragment — `UNSTATED` (synthetic; not a candidate result)
+
+Corpus for `R8`, sole sentence under the heading: "The
+gateway MUST load `plugins/ctier-filter.so` before any other
+filter."
+
+No purpose clause, no title outcome, no adjacent prose that
+states what loading that artefact protects.
+
+- Protected-outcome field: `UNSTATED`
+- Test 1: **skipped** (field is `UNSTATED`).
+- Test 2 / Test 3: may still fire on the named artefact.
+- Do not invent "filter order protects classification" so
+  Test 1 can run.
 
 ---
 
@@ -179,9 +246,13 @@ ledger before responding."
   outside it, the correct verdict is `unstated` in the
   candidate corpus — not a classification of the external
   sentence.
-- **Mechanism/property is reader-dependent.** Two hostile
-  readers can disagree on Test 1's "plausible
-  implementation." Record the alternative you considered; do
+- **Protected-outcome span selection remains reader-
+  dependent.** Requiring a quoted span (or `UNSTATED`) before
+  Test 1 makes disagreement about a cited sentence rather
+  than an unspoken intent. Two hostile readers can still
+  pick different surrounding sentences as the outcome, or
+  disagree on Test 1's "plausible implementation" once a
+  span is fixed. Record the alternative you considered; do
   not smooth disagreement away.
 - **This pass does not detect "named everywhere, required
   nowhere" across non-criteria identifiers.** That is
