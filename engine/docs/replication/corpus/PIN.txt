@@ -1,0 +1,6 @@
+ctier commit 0a997321234e5f6f6184b7449a241c3d30a19520
+short: 0a99732
+label: specification pin for this replication package (identifier-attach / 1.16.0)
+exported: spec/ and docs/adr/0009-the-contract-is-the-documents.md
+Do not replace with tip. Work only from this tree unless a procedure
+names a different frozen commit.

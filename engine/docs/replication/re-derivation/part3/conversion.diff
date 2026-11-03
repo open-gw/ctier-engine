@@ -1,0 +1,589 @@
+commit 730cac6df87c23f175f733a6e391c268e19b2cb0
+Author: RGD <222322921+rinugd@users.noreply.github.com>
+Date:   Sat Sep 19 04:41:32 2026 -0400
+
+    docs: engine documents cite criteria rather than restating them
+    
+    Co-authored-by: Cursor <cursoragent@cursor.com>
+
+diff --git a/README.md b/README.md
+index 81fe646..2c215a4 100644
+--- a/README.md
++++ b/README.md
+@@ -31,15 +31,16 @@ is the author-run live suite, not the demonstration.
+ 
+ ## Adoption ladder
+ 
+-Each rung is independently useful.
++Levels 0–4 are in the specification this engine implements
++([`engine/docs/SPEC.md`](engine/docs/SPEC.md)). What this engine deploys:
+ 
+-| Level | Deployed | Gives |
+-|---|---|---|
+-| 0 · Classify | nothing | a review queue in risk order, and a number: what share of the estate is unclassified |
+-| 1 · Observe | proxy config | classify and emit a decision record, enforcing nothing; coverage warns |
+-| 2 · Enforce 1/2/4 | proxy config + AS flags | first level with teeth, still no new runtime; coverage fails the build |
+-| 3 · Withhold | custody | Tier 3 end to end |
+-| 4 · Accumulate | scope floor | decomposition defence, and the cycle back to design |
++| Level | This engine |
++|---|---|
++| 0 · Classify | Coverage report and review queue; nothing compiled into a gateway |
++| 1 · Observe | Proxy config that classifies and emits a decision record; coverage warns |
++| 2 · Enforce 1/2/4 | Proxy config and AS flags; no custody; coverage fails the build |
++| 3 · Withhold | Custody; persist, approve, execute |
++| 4 · Accumulate | Scope floor on Kong and APISIX |
+ 
+ Level 4 on the two live gateways is the same property with two encodings:
+ Kong's plugin module starts the poller; APISIX starts it lazily from
+@@ -61,17 +62,15 @@ one of these has been misled by omission.
+   states the visibility bound as threshold-crossing plus one poll interval
+   (1000 ms, Derived). It does not treat the 216 ms Observed sample as the bound.
+   See [`engine/docs/measurements.md`](engine/docs/measurements.md).
+-- **Fragment mode's C11 guarantee is bounded per target.** Bundle mode owns the
+-  path. Fragment mode is not C11-conformant against arbitrary existing
+-  configuration (requirement 3).
+-- **Level 2 does not satisfy C7.** There is no derived idempotency key at
+-  observe-or-enforce-without-custody. C7 holds where custody persists context
+-  and execute reuses it.
+-- **Three deployment requirements ctier does not enforce:** (1) the backend
+-  accepts requests only from the enforcement point and from custody; (2)
+-  custody's execute path bypasses the enforcement point by design; (3) in
+-  fragment mode the operator must place the strip before any reader of a 1.5.0
+-  header, and no later writer. See `engine/docs/portability.md`.
++- **Fragment mode (C11).** Bundle mode owns the path and strips inbound
++  `x-ctier-*` first. Fragment mode does not guarantee that order against
++  arbitrary existing configuration. See `engine/docs/portability.md`.
++- **Level 2 (C7).** This engine strips inbound idempotency keys and emits
++  none. Derived keys are emitted when custody persists context (Level 3).
++- **What this engine does not make unavoidable.** The live rig isolates
++  echo on an internal network. Custody calls the backend directly.
++  Fragment emit does not pin strip-before-read against arbitrary existing
++  configuration. See `engine/docs/portability.md`.
+ 
+ ctier also does not guarantee durability of `[ctier-decision]` gateway-log
+ lines (requirement 4). An operator without a collector has not recorded them.
+diff --git a/engine/docs/DECISIONS.md b/engine/docs/DECISIONS.md
+index 4008671..e15e9e6 100644
+--- a/engine/docs/DECISIONS.md
++++ b/engine/docs/DECISIONS.md
+@@ -46,7 +46,7 @@ Why it is worth doing rather than merely possible:
+   a clean, non-destructive action. This is a good fit, not a workaround.
+ - Targeting by `operationId` works — `$.paths[*][?@.operationId == 'cancelOrder']`
+   — which means an overlay survives path restructuring. That is the *same*
+-  stability argument C7 already makes for anchoring the idempotency key on
++  stability argument this engine later used when deriving keys (C7) from
+   `operationId`. The consistency is worth having.
+ 
+ **The failure mode you must design against, and it is not a small one.** Split
+@@ -75,13 +75,10 @@ Changes:
+   description", and add the single-target rule above as a normative MUST.
+ - **Generator contract** — accepts N overlay documents; applies in order; emits
+   a composition manifest.
+-- **New conformance criterion, C13** — *tier assignment is bound to the digest
+-  of the complete composed description, and every input artefact and its digest
+-  is recorded in the emitted bundle and in each ledger entry.* This is what
+-  preserves C12 across the split: the binding is to the composition, not to
+-  either input alone. Without C13, "which overlay said Tier 2?" becomes
+-  unanswerable at audit, and the whole point of separated ownership was the
+-  audit trail.
++- **Proposed criterion C13.** This record proposed a thirteenth letter. The
++  specification minted it. This engine emits `compositionDigest` and
++  `deploymentDigest` on the artefact and on decision records. The letter
++  is not minted here. See [`SPEC.md`](SPEC.md).
+ 
+ ---
+ 
+@@ -279,11 +276,11 @@ match before the engine ships, and stop there.**
+ and documentation link. Format is `x-{namespace}-`, giving `x-ctier-tier`,
+ `x-ctier-criteria`, `x-ctier-exclude`.
+ 
+-The naming win is bigger than it looks: your runtime headers are already
+-`x-ctier-*` per C11, so registering the namespace gives you one prefix across
+-the design-time extension, the runtime header and the repo name. That is the
+-kind of coherence that makes a model easy to talk about, which is most of what
+-adoption is.
++The naming win is bigger than it looks: this engine's runtime headers are
++already `x-ctier-*` (C11), so registering the namespace gives you one prefix
++across the design-time extension, the runtime header and the repo name. That
++is the kind of coherence that makes a model easy to talk about, which is most
++of what adoption is.
+ 
+ The cost is a spec version bump — the DOI'd spec uses `x-consequence-tier`, so
+ renaming means a 1.1. Do it anyway, and do it **before the engine ships**,
+@@ -336,7 +333,8 @@ a confirm button" — which is exactly the laundering the model rejects for Tier
+ > identity. A confirmation that permits the agent's credential to complete the
+ > call is Tier 3 with extra steps, and the ledger will show it.
+ 
+-That belongs in the PRD next to C4, and it is the answer to the first hostile
++That belongs next to this engine's C4 description in the PRD (what the
++engine does, not what C4 requires), and it is the answer to the first hostile
+ question you will get about Tier 4 in Berlin.
+ 
+ ---
+@@ -347,7 +345,7 @@ question you will get about Tier 4 in Berlin.
+ |---|---|---|
+ | 1 | Generator accepts description + N overlays; composition manifest | Generator contract, PRD |
+ | 2 | Single-target rule for tier-lowering overlay actions | PRD (normative MUST), generator |
+-| 3 | **C13** — assignment bound to the composed digest; inputs recorded | PRD conformance table |
++| 3 | **C13** — proposed here; the specification minted the letter | PRD names C13 and what this engine does |
+ | 4 | Coverage report + non-zero exit; `--allow-unclassified` | Generator, CI |
+ | 5 | Rule **3b** — blast radius applies to reads on sensitive data | `classifier.py`, 2 new tests |
+ | 6 | Ordering re-derived from reversibility, not asserted | PRD |
+diff --git a/engine/docs/PRD.md b/engine/docs/PRD.md
+index 19bc740..6411172 100644
+--- a/engine/docs/PRD.md
++++ b/engine/docs/PRD.md
+@@ -18,8 +18,8 @@ fragments for whatever gateway is already in place.
+ ## 2. What v1 must prove
+ 
+ The claim on which the whole model rests is that consequence-based governance can be enforced
+-at the gateway, in the request path, without a human ever occupying that path. v1 exists to
+-demonstrate exactly that, end to end, with one gateway.
++at the gateway, in the request path. v1 exists to demonstrate exactly that, end to end, with
++one gateway. C4 is in the specification this engine implements ([`SPEC.md`](SPEC.md)).
+ 
+ **In scope for v1**
+ 
+@@ -127,60 +127,67 @@ deliberate.
+ 
+ ## 3. Conformance
+ 
+-An implementation is conformant if it satisfies all of the following. These are the
+-requirements a second implementation would have to meet, and they are the point of writing a
+-PRD before code.
++Criteria C1–C13 are in the specification this engine implements
++([`SPEC.md`](SPEC.md)). This section names the identifier and what this
++engine does. It does not state what a criterion requires.
+ 
+-**C1 — Classification precedes routing.** No governed operation reaches its target before a
+-decision is recorded.
++**C1.** The generator classifies each operation and compiles the assignment
++into the enforcement configuration. Request-time code does not classify.
+ 
+-**C2 — Undeclared fails closed.** An operation reachable within a granted scope but carrying no
+-`x-ctier-*` declaration is treated as Tier 4.
++**C2.** For an operation present in the composed description with no
++`x-ctier-*` declaration, the generator emits the undeclared default (tier
++4). A path absent from that composition is not given that default; Kong
++and APISIX refuse it and record an Attempt (`appliedTier` undetermined).
++See [`portability.md`](portability.md).
+ 
+-**C3 — Escalation is unidirectional.** No runtime input may produce a tier lower than the
+-declared tier, and no escalation stage may produce a tier lower than the tier entering that
+-stage.
++**C3.** The generator resolves `x-ctier-escalate-to` to an integer that
++does not fall below the tier entering that stage. Apigee emits the
++integer. Kong and APISIX still apply the compiled consequence in Lua.
+ 
+-**C4 — The human is never in the request path.** No decision path blocks on human input. The
+-enforcement point must not hold a connection open pending a human decision.
++**C4.** Classify, withhold, refuse, and escalate do not wait for a human.
++Approval is a later `POST` to custody. Handover is the consuming
++application's work
++([ADR-007](adr/0007-routing-to-a-human-is-the-consuming-applications-concern.md)).
+ 
+-**C5 — The withheld response is terminal and non-retryable.** Status outside conventionally
+-retried classes, no `Retry-After`, explicit `retryable: false` and an `agentAction` directive.
++**C5.** A withhold returns `202`, no `Retry-After`, `retryable: false`, and
++`agentAction: continue_task_without_this_step`. Custody constructs the
++body; the enforcement point relays it.
+ 
+-**C6 — Execution is from persisted context.** On approval, the operation executed is
+-byte-identical to the operation described in the approval event. The agent does not resubmit.
++**C6.** Custody persists the operation at withhold and executes those
++bytes under the policy service's identity. The agent is not the execute
++client.
+ 
+-**C7 — Idempotency keys are derived, not generated.** Derived from the declared `operationId`
+-(or method + path template) plus a canonical serialisation of the request specifics, so a
+-resubmission resolves to the pending context rather than creating a second one.
++**C7.** Where custody persists context, the key is derived at classify,
++stored, and emitted on execute. Level 2 strips inbound idempotency keys
++and emits none.
+ 
+-**C8 — Expiry and rejection differ.** Rejection pauses the agent for the operation class.
+-Expiry refuses the single operation and leaves the agent working.
++**C8.** `decide(reject)` pauses the agent for the operation class. Expiry
++refuses the one operation and leaves the agent working.
+ 
+-**C9 — Tier 4 has no resume path.** No state transition exists by which a Tier 4 operation
+-executes under the agent's identity.
++**C9.** A Tier 4 response is `423` with `autoResume: false` and
++`agentAction: halt_and_hand_off`. This engine has no path that then
++executes that operation under the agent's identity.
+ 
+-**C10 — Decisions are recorded before they are acted on**, including declared tier, applied
+-tier and escalation reason.
++**C10.** Kong and APISIX write a decision record (gateway log at Levels
++1–2; custody ledger at Level 3). A custody-unavailable refuse is recorded
++as an Attempt, `appliedTier` undetermined. If the log sink is down with
++custody, that window has no record
++([ADR-005](adr/0005-custody-unavailable-fails-closed-and-the-refusal-is-recorded.md)).
+ 
+-**C11 — An injected tier is trusted only from inside the trust boundary.** A tier arriving as an
+-inbound client header MUST NOT be honoured. The enforcement point MUST strip any client-supplied
+-tier at the edge before setting its own, or the value MUST be integrity-protected such that the
+-engine can distinguish a gateway-set value from a caller-set one. Without this, an agent
+-declares itself Tier 1 and the model collapses.
++**C11.** Generated bundles strip inbound `x-ctier-*` (and the named
++aliases) before setting this engine's own headers. Classification does
++not read an inbound tier. Fragment mode does not guarantee that order
++against arbitrary existing configuration; see
++[`portability.md`](portability.md).
+ 
+-**C12 — Tier assignment is bound to the deployed interface revision.** The declared tier MUST
+-travel with the gateway configuration rather than being resolved from a separately loaded
+-document at request time, so that a deployed operation cannot exist without its governance
+-assignment. Where a fallback resolution path is used, an operation matching no loaded
+-specification MUST be treated as undeclared.
++**C12.** The assignment travels in the generated configuration. The
++governed set is written on the artefact (`governed` on Kong). A composed
++operation with no assignment is refused undetermined on Kong and APISIX.
++A route added after generation can still escape.
+ 
+-**C13 — Tier assignment is bound to the composed interface description.** Where
+-the declaration is assembled from a description plus one or more governance
+-overlays, the assignment is bound to the digest of the composition, and every
+-input artefact and its digest MUST be recorded in the emitted gateway
+-configuration and in each decision record. C12's binding is to the
+-composition, not to either input alone.
++**C13.** Compose emits `compositionDigest` over the composed document.
++Generate stamps `deploymentDigest` and per-input digests on the emitted
++configuration and on decision records.
+ 
+ ## 4. Interfaces
+ 
+@@ -197,7 +204,7 @@ on approval. `GET /v1/pending` is the queue for the application's approval surfa
+ - Tier 1 and 2 classification: single-digit milliseconds at the enforcement point. Tier 3 and 4
+   do not consume the routing budget, since nothing is routed.
+ - No classification service sits in the request path. Custody is the only new runtime
+-  component, and only Level 3 requires it.
++  component, and this engine deploys it at Level 3.
+ - Ledger is append-only. No update or delete path exists in code.
+ 
+ ## 6. Milestones
+diff --git a/engine/docs/SOLUTION-DESIGN.md b/engine/docs/SOLUTION-DESIGN.md
+index aea5fe3..32e6646 100644
+--- a/engine/docs/SOLUTION-DESIGN.md
++++ b/engine/docs/SOLUTION-DESIGN.md
+@@ -85,7 +85,7 @@ Two declaration modes, both first-class (ADR-001):
+ 
+ A recommender proposes tiers; a human confirms the ones that carry consequence
+ (ADR-008). Classification has three states: **declared**, **recommended**,
+-**absent** — and absent is Tier 4.
++**absent** — and absent is compiled as the undeclared default (tier 4).
+ 
+ Output: the qualified spec, a per-operation rationale, and a review queue ordered
+ by recommended tier.
+@@ -196,37 +196,38 @@ about routing is the developer's choice:
+ 
+ ## 7. Conformance criteria
+ 
+-| | |
++Criteria C1–C13 are in the specification this engine implements
++([`SPEC.md`](SPEC.md)). The table names the identifier and what this
++engine does. It does not state what a criterion requires.
++
++| | This engine |
+ |---|---|
+-| C1 | Classification precedes routing |
+-| C2 | An operation carrying no `x-ctier-*` declaration fails closed to Tier 4 |
+-| C3 | Escalation is unidirectional. No runtime input may produce a tier lower than the declared tier, **and no escalation stage may produce a tier lower than the tier entering that stage** |
+-| C4 | The human is never in the request path |
+-| C5 | The withheld response is terminal and non-retryable |
+-| C6 | Execution is from persisted context, never agent resubmission |
+-| C7 | Idempotency keys are derived, not generated — anchored on `operationId` so they survive path restructuring |
+-| C8 | Expiry and rejection produce different outcomes |
+-| C9 | Tier 4 has no resume path |
+-| C10 | Decisions are recorded before they are acted on. Where the policy service is unavailable and the enforcement point refuses without classifying, **the refusal MUST itself be recorded** — declared tier, composition digest, reason, applied tier undetermined. A refusal to decide is a decision |
+-| C11 | An injected tier is trusted only from inside the trust boundary |
+-| C12 | Tier assignment is bound to the deployed interface revision |
+-| C13 | Assignment binds to the digest of the **composed** description; every input artefact and its digest is recorded in the emitted configuration and in each decision record |
++| C1 | Classifies at generate time; compiles the assignment into the enforcement configuration |
++| C2 | Emits the undeclared default (tier 4) for an operation in the composition with no declaration; a path outside the composition is refused undetermined |
++| C3 | Resolves `x-ctier-escalate-to` to an integer that does not fall below the tier entering that stage |
++| C4 | Classify, withhold, refuse, and escalate do not wait for a human |
++| C5 | Withhold is `202`, no `Retry-After`, `retryable: false`, `agentAction: continue_task_without_this_step` |
++| C6 | Custody persists at withhold and executes those bytes; the agent is not the execute client |
++| C7 | Derives the key at classify, stores it, emits it on execute; Level 2 strips inbound keys and emits none |
++| C8 | `decide(reject)` pauses the operation class; expiry refuses the one operation |
++| C9 | Tier 4 is `423` / `halt_and_hand_off`; no later execute under the agent's identity |
++| C10 | Writes a decision record (gateway log at Levels 1–2; custody at Level 3); a custody-unavailable refuse is an Attempt, `appliedTier` undetermined |
++| C11 | Bundle mode strips inbound `x-ctier-*` before setting its own; classification does not read an inbound tier |
++| C12 | Assignment travels in the generated configuration; the governed set is on the artefact; a composed miss is refused undetermined |
++| C13 | Emits `compositionDigest` and `deploymentDigest` on the artefact and on decision records |
+ 
+ ---
+ 
+ ## 8. Trust boundary
+ 
+-C11 is the obvious attack: without stripping client-supplied `x-ctier-*` headers
+-at the edge, an agent declares itself Tier 1 and the model collapses.
++C11. Generated bundles strip inbound `x-ctier-*` before setting this
++engine's own headers. Classification does not read an inbound tier.
+ 
+ Apigee's `AssignMessage` removes headers **by exact name** — no documented
+-wildcard or prefix form. So the generator enumerates a closed set, paired with an
+-invariant that is stronger than the removal:
+-
+-> The enforcement point and custody MUST ignore any `x-ctier-*` header they do
+-> not know.
+-
+-That property survives a gateway misconfiguration; header removal alone does not.
++wildcard or prefix form. So the generator enumerates a closed set. This
++engine's enforcement point and custody ignore an `x-ctier-*` header they
++do not know. That ignore survives a gateway misconfiguration; header
++removal alone does not.
+ 
+ ---
+ 
+@@ -240,15 +241,16 @@ at the enforcement point on Apigee, APIM or Envoy.
+ delegation chain itself, which requires a scripted policy, and suspension is
+ consulted from custody. Slower, more coupled, and conformant.
+ 
+-**Adoption ladder** — each rung independently useful:
++**Adoption ladder.** Levels 0–4 are in the specification this engine
++implements ([`SPEC.md`](SPEC.md)). What this engine deploys:
+ 
+-| Level | Deployed | Gives |
+-|---|---|---|
+-| 0 · Classify | nothing | a review queue in risk order, and a number: what share of the estate is unclassified |
+-| 1 · Observe | proxy config | classify and emit a decision record, enforcing nothing; coverage warns |
+-| 2 · Enforce 1/2/4 | proxy config + AS flags | first level with teeth, still no new runtime; coverage fails the build |
+-| 3 · Withhold | custody | Tier 3 end to end |
+-| 4 · Accumulate | scope floor | decomposition defence, and the cycle back to design |
++| Level | This engine |
++|---|---|
++| 0 · Classify | Coverage report and review queue; nothing compiled into a gateway |
++| 1 · Observe | Proxy config that classifies and emits a decision record; coverage warns |
++| 2 · Enforce 1/2/4 | Proxy config and AS flags; no custody; coverage fails the build |
++| 3 · Withhold | Custody; persist, approve, execute |
++| 4 · Accumulate | Scope floor on Kong and APISIX |
+ 
+ Level 4 is encoded on Kong and APISIX as an out-of-band poller plus a
+ local dictionary read. Apigee is artefact-only for this rung. The
+@@ -297,13 +299,15 @@ constraint in §4 exists to keep them cheap.
+ 
+ ## 12. Observability
+ 
+-Three record types. Conflating them repeats the error C8 warns about.
++This engine emits three record types (`decision-record/0.2.0`,
++`attempt-record/0.2.0`, `outcome-record/0.1.0`). C8 is in the
++specification this engine implements.
+ 
+-- **Decisions** — classified and acted on. Declared tier, applied tier,
+-  escalation reason, composition digest.
+-- **Attempts** — refused without classification. Applied tier undetermined.
+-- **Outcomes** — what executed after approval. The only record that proves C6
+-  held.
++- **Decisions** — this engine writes declared tier, applied tier,
++  escalation reason, deployment digest.
++- **Attempts** — this engine writes a refuse without classification,
++  `appliedTier` undetermined.
++- **Outcomes** — this engine writes what executed after approval.
+ 
+ There is no tracing integration in this implementation. Decision evidence
+ at Levels 1 and 2 is a schema-valid log line on the gateway. Custody, when
+diff --git a/engine/docs/portability.md b/engine/docs/portability.md
+index 6aa951a..e443f3d 100644
+--- a/engine/docs/portability.md
++++ b/engine/docs/portability.md
+@@ -21,10 +21,10 @@ every recomputation is a place two targets can silently disagree.
+ |---|---|---|---|
+ | Operation resolution | **Deploy time.** Generator emits one conditional flow per classified operation; first matching flow wins. | **Deploy time / request time.** Generator emits one route per OpenAPI operation (method + path). 08c E1: Kong's router selected it. | **Deploy time.** One route per classified operation (method + `uri`). 17 live: `GET /accounts/12345/balance` echoed the compiled tier and operation. |
+ | Path specificity | **Deploy time.** Generator sorts literal paths ahead of templated siblings (`flow_sort_key`) because Apigee is first-match by document order. | **Deploy time, with a request-time remainder.** Generator sets `regex_priority` to the count of literal segments. 08c E2: the literal received its own tier with that hint in place. Unaided preference at equal priority was not tested. | **Deploy time.** `priority = 10 +` literal segment count. Untested as a dedicated 08c-style pair; the corpus includes both shapes and agreed. |
+-| Default tier when undeclared | **Deploy time.** `AM-DefaultTier` sets 4; classified flows override. | **Deploy time / request time.** Global `ctier` instance `tier = 4` applies C2 only when the matched route is in the governed set (08c E3: `exportStatements`). A matched route absent from that set is refused and recorded undetermined — not Tier 4. | **Deploy time.** Catch-all `/*` at priority 1. A composed-but-unassigned path is C2 (423, no Attempt). A path the composition does not contain is refused and recorded undetermined. A more specific added route wins over `/*`. Unclassified operations are not given their own route. |
++| Default tier when undeclared | **Deploy time.** `AM-DefaultTier` sets 4; classified flows override. | **Deploy time / request time.** Global `ctier` instance `tier = 4` applies the undeclared default only when the matched route is in the governed set (08c E3: `exportStatements`). A matched route absent from that set is refused and recorded undetermined — not Tier 4. | **Deploy time.** Catch-all `/*` at priority 1. A composed-but-unassigned path gets the undeclared default (423, no Attempt). A path the composition does not contain is refused and recorded undetermined. A more specific added route wins over `/*`. Unclassified operations are not given their own route. |
+ | Inbound header removal | **Request time.** JS prefix-walks `x-ctier-*`; AssignMessage removes aliases a prefix misses (`X-Correlation-Id`, `Idempotency-Key`, `X-Idempotency-Key`). | **Request time.** Lua prefix-scans `x-ctier-*` and the same aliases. | **Request time.** Lua prefix-scans the namespace and aliases. `proxy-rewrite` remove is aliases only (A2: cannot remove-and-set the names it writes). |
+ | Tier propagation upstream | **Deploy time / request time.** Per-operation `AssignMessage` writes `ctier.tier`. Target PreFlow JS sets `x-ctier-correlation-id`. It does not set `Idempotency-Key`. | **Request time.** After strip, the plugin sets `x-ctier-tier`, `x-ctier-deployment`, `x-ctier-correlation-id`. `Idempotency-Key` is set from the ledger only when custody is compiled. | **Deploy time / request time.** `proxy-rewrite` sets `x-ctier-tier`, `x-ctier-deployment`, `x-ctier-operation`. Lua posts the decision when custody is configured, sets the join key, and copies `idempotencyKey` from the ledger 201 when present. |
+-| Bounds escalation | **Request time comparison, deploy-time value.** Nested `Condition` on `request.queryparam.<parameter>` inside the operation flow. The unexceeded path keeps the compiled floor; the exceeded path assigns the escalated integer, already resolved by the generator (C3: +1, never past 4). | **Request time comparison, deploy-time value.** Lua compares a configured query parameter to a configured maximum. The consequence of that comparison is C3 (+1, cap 4), known at generate time; Kong still applies it in `escalate` rather than emitting the integer. | **Request time comparison, deploy-time value.** Lua `tonumber` of the compiled query parameter. The consequence (abort, withhold, or overwrite the tier header) is compiled. Platform `vars` were not used: the corpus needs `101.0` and `1.01e2`. |
++| Bounds escalation | **Request time comparison, deploy-time value.** Nested `Condition` on `request.queryparam.<parameter>` inside the operation flow. The unexceeded path keeps the compiled floor; the exceeded path assigns the escalated integer, already resolved by the generator (C3). | **Request time comparison, deploy-time value.** Lua compares a configured query parameter to a configured maximum. The consequence of that comparison is known at generate time (C3); Kong still applies it in `escalate` rather than emitting the integer. | **Request time comparison, deploy-time value.** Lua `tonumber` of the compiled query parameter. The consequence (abort, withhold, or overwrite the tier header) is compiled. Platform `vars` were not used: the corpus needs `101.0` and `1.01e2`. |
+ | Execute (tiers 1, 2) | **Deploy time.** No fault rule; request continues. | **Request time.** Plugin does not exit; request continues. | **Deploy time.** No abort plugin; request continues. |
+ | Withhold (tier 3) | **Deploy time.** PostFlow `RF-Provisioning` (403) when `ctier.tier = 3` — Level 2 without custody, not 202. | **Request time.** Plugin exits 403 when the (possibly escalated) tier is 3 and `custody` is false. Same Level 2 posture. | **Deploy time at L2; request time at L3.** `fault-injection` 403 without custody. With custody, serverless POST `/v1/pending` (same hop Kong makes in Lua). |
+ | Refuse-and-suspend (tier 4) | **Deploy time.** PostFlow `RF-Tier4` (423) when `ctier.tier = 4`. | **Request time.** Plugin exits 423 when the (possibly escalated) tier is ≥ 4. | **Deploy time.** `fault-injection` 423. |
+@@ -56,16 +56,16 @@ do the same walk. `X-Ctier-Tier` is an alias the spec names and a
+ prefix already catches. `X-Correlation-Id` is the one a prefix
+ target can still miss.
+ 
+-**Fragment mode is not C11-conformant** on any of the three targets
+-against arbitrary existing configuration. See requirement 3 under
+-what ctier requires of the deployment. Bundle mode gets the
+-ordering for free because it owns the path.
++**Fragment mode (C11).** On any of the three targets, this engine does
++not guarantee strip-before-read against arbitrary existing
++configuration. See what this engine does not make unavoidable.
++Bundle mode gets the ordering for free because it owns the path.
+ 
+ **Bounds** is the other non-mechanical split. Both targets compare the request
+ to `x-ctier-bounds` at request time — Apigee with a declarative condition,
+ Kong with a Lua comparison — because the predicate depends on the request.
+-The escalated *value* does not: the generator knows the resolved floor and C3, so it
+-knows the integer to assign. Apigee emits that integer in `AssignMessage`.
++The escalated *value* does not: the generator knows the resolved floor and
++the C3 consequence, so it knows the integer to assign. Apigee emits that integer in `AssignMessage`.
+ Kong still adds one in `escalate`. Pushing the consequence to deploy time is
+ what keeps the targets aligned; leaving the comparison at request time is
+ what makes the predicate true.
+@@ -88,7 +88,7 @@ plugin instance config? If yes, it belongs in the generator.
+ | `has_required_scope(conf.required_scope)` | 401 vs continue | **No.** The required *name* is compiled. Whether this token carries it is not. | Legitimate third branch: it depends on the token. Reads the bearer Kong's `jwt` plugin already accepted. Not a call to the issuer. Absent `required_scope` (excluded routes) is skip, so a token that reached an excluded operation is still 403 provisioning. |
+ | `tier >= 4` | 423 vs continue | No, once bounds can raise the configured tier. Without bounds, yes. | Disposition implied by the (possibly escalated) tier. Kong cannot branch declaratively. |
+ | `tier == 3 and not conf.custody` | 403 vs continue, for Tier 3 | `custody` is generate-time (never emitted; default false). The *tier* may have been raised by bounds from 2, so the T3 case is not always known at generate time. | Disposition implied by the (possibly escalated) tier, plus a generate-time custody flag. If `custody` were true today, this branch would fall through and **proxy** Tier 3 — withhold (202) is not implemented. Finding; stays until custody exists. |
+-| `not conf.operation and not in_governed` | Undetermined refusal vs C2 default on the global instance | **Yes.** The governed set is compiled. Whether this request matched a name on it is not — the router chooses the route. | C2 stays for a composed route with no instance. A miss is an Attempt, not Tier 4. |
++| `not conf.operation and not in_governed` | Undetermined refusal vs undeclared default on the global instance | **Yes.** The governed set is compiled. Whether this request matched a name on it is not — the router chooses the route. | The undeclared default stays for a composed route with no instance (C2). A miss is an Attempt, not Tier 4. |
+ | `conf.operation` | Whether to set `x-ctier-operation` upstream | Yes. Generator always sets it on route instances and omits it on the global instance. | Optional config field, not a governance decision. |
+ | `ngx.shared.ctier_floors` missing or no key for the scope | Whether to raise the compiled tier | No. The floor is runtime state. | Absence is no escalation, not Tier 4. Logged; the request continues at the compiled floor. |
+ | published floor `> tier` | Raise to the floor | No. | Heuristic escalation. Can only raise. |
+@@ -173,7 +173,7 @@ the other can, so they must disagree on that pair.
+ |---|---|---|
+ | Path specificity | Same hazard, different mechanism (sort vs `regex_priority`). | No. |
+ | Default undeclared tier | Same property, different mechanism (PreFlow vs plugin precedence). | No. |
+-| Header removal | Apigee **cannot** prefix-strip; Kong Lua can. C11 sends `x-ctier-tier`, which is in Apigee's closed set. Classification agrees. Echo of an *unknown* `x-ctier-*` is not what `expect` holds. | No for this corpus. |
++| Header removal | Apigee **cannot** prefix-strip; Kong Lua can. This engine sends `x-ctier-tier` after strip (C11), which is in Apigee's closed set. Classification agrees. Echo of an *unknown* `x-ctier-*` is not what `expect` holds. | No for this corpus. |
+ | Bounds escalation | Both compare a query parameter at request time (Apigee `Condition`, Kong Lua). The escalated integer is resolved at generate time on Apigee; Kong still computes +1 in the plugin. Same property, different mechanism. | No. One expect (the classifier). |
+ | T3 withhold vs 403 | Both Level 2 targets refuse as provisioning. Classifier `withhold` is already out of scope against those proxies. | No. Already excluded, not forked. |
+ 
+@@ -284,7 +284,7 @@ not the deployment digest:
+ | Surface | Keeps | Because |
+ |---|---|---|
+ | compose manifest, coverage report | `compositionDigest` | compose-time; compose cannot see agent identities |
+-| conformance corpus document field | `composition` | C13 of the API the cases classify, not a ledger field |
++| conformance corpus document field | `composition` | digest of the API the cases classify (C13), not a ledger field |
+ 
+ ## Custody execute is a second ingress path
+ 
+@@ -293,7 +293,7 @@ re-enter Kong, Apigee, or APISIX. Task 17 Check 1 measured that.
+ The backend therefore has **two callers with different properties**:
+ 
+ - Requests through the enforcement point, where the compiled decision
+-  applies and C11 strips forged `x-ctier-*` headers.
++  applies and this engine strips inbound `x-ctier-*` headers (C11).
+ - Requests from custody, where none of that runs. The decision was
+   already made; that is why this path exists.
+ 
+@@ -310,52 +310,44 @@ The specification's threat model needs the same exception written
+ down. That is a spec change (with 14b's `spec/headers.md` and 1.5.0),
+ not this file's.
+ 
+-## What ctier requires of the deployment
+-
+-ctier compiles configuration into the enforcement point. It cannot
+-make itself unavoidable. Three conditions have to be true in the
+-deployment for the guarantees to hold. None is a defect in the
+-framework. Leaving them implicit invites an adopter to believe more
+-than it does.
+-
+-1. **The backend accepts requests only from the enforcement point
+-   and from custody.** Network policy or mutual authentication does
+-   that. The live rig demonstrates one shape of it (internal
+-   network, unpublished port). A production topology that leaves
+-   the origin open has not deployed the chokepoint, however
+-   faithfully it compiled the policy.
+-2. **Custody's execute path bypasses the enforcement point by
+-   design** (14a). The backend must treat custody as a trusted
+-   caller by some means other than anything ctier enforces.
+-3. **In fragment mode, the operator must ensure the ctier strip
+-   runs before any other component that reads a 1.5.0 header, and
+-   that no later component writes one.** Kong plugin PRIORITY is a
++## What this engine does not make unavoidable
++
++The specification this engine implements ([`SPEC.md`](SPEC.md))
++names deployment conditions. This engine cannot make them hold.
++What this engine and this rig do:
++
++1. **Backend callers.** The live rig isolates echo on an internal
++   network and does not publish it to the host (14a.1). That is a
++   property of this compose file.
++2. **Custody execute.** Custody calls the backend directly (14a).
++   This engine does not sit on that path.
++3. **Fragment strip order (C11).** Kong plugin PRIORITY is a
+    constant on the plugin (ctier is 800), not a field in the deck.
+    CORS (2000), jwt (1005) and request-transformer (801) all run
+    *before* that strip. APISIX `_meta.priority` is per plugin
+    instance but an existing rewrite-phase function can still sit
+    above it. Apigee PreProxy FlowHook runs before any ProxyEndpoint
+    PreFlow step we prepend, and is not in the artefact we inspect.
+-   **Fragment mode is not C11-conformant** against arbitrary
+-   existing configuration. Bundle mode is, because it owns the
+-   path. No runtime check is added to compensate. The conflict
+-   report names what was found; a C11-breaking collision or a
+-   writer that runs after the strip refuses to emit.
++   Bundle mode owns the path. No runtime check is added to
++   compensate. The conflict report names what was found; a collision
++   that writes a reserved header after the strip, or a reader
++   before it, refuses to emit.
+ 
+ ## The catchall does not catch a later add
+ 
+-C12 is scoped to the governed set because a route added after
+-generation cannot be closed from inside the configuration. 41
+-narrows the gap that 38 measured. It does not close it.
++C12. This engine's governed set is the operations in the
++composition generate consumed. A route added after generation
++cannot be closed from inside the configuration. 41 narrows the
++gap that 38 measured. It does not close it.
+ 
+ **What it catches.** Kong's global `ctier` instance runs on a
+ matched route. If that route's name is in the governed set and
+-has no route-level instance, C2's undeclared default applies
+-(Tier 4). If the name is not in the set, the request is refused
++has no route-level instance, the undeclared default applies
++(tier 4). If the name is not in the set, the request is refused
+ and recorded undetermined. APISIX's `undeclared` route is `/*`
+ at priority 1. A composed-but-unassigned path that reaches it
+-is C2. A path the composition does not contain is refused and
+-recorded undetermined.
++gets the undeclared default. A path the composition does not
++contain is refused and recorded undetermined.
+ 
+ **What outranks it.** Kong: a route-level `ctier` instance
+ overrides the global plugin; a path that matches no route is
+@@ -377,7 +369,8 @@ These two were a forgery path. A compatibility window would have
+ kept the hole open and called it courtesy. They are gone.
+ 
+ Task 17 already established that the execute request never meets
+-C11's strip set, so specify-and-strip was never available.
++this engine's strip set (C11), so specify-and-strip was never
++available.
+ 
+ A backend recovers agent and approver as: correlation id on the
+ execute request (`x-ctier-correlation-id`) → decision record.
+@@ -391,25 +384,27 @@ provisioning. It is the rung that sells "no new runtime."
+ are stripped on Kong, APISIX, and Apigee. An agent cannot choose the
+ key the backend would honour.
+ 
+-**What it does not.** It does not emit the C7 HMAC. That key is
+-derived from request content and stored with persisted context. C7
+-forbids re-deriving it at execution time. Level 2 has no persist, so
+-there is nowhere to store it. Kong and APISIX copy `idempotencyKey`
+-from the ledger 201 when custody is present (Level 3) and otherwise
+-set nothing. Custody's own execute always emits the stored key.
++**What it does not.** It does not emit a derived HMAC. This engine
++derives that key from request content and stores it with persisted
++context; it does not re-derive at execution time. Level 2 has no
++persist, so there is nowhere to store it. Kong and APISIX copy
++`idempotencyKey` from the ledger 201 when custody is present (Level
++3) and otherwise set nothing. Custody's own execute always emits the
++stored key.
+ 
+ A Lua HMAC on the gateway 500'd every Level-2 execute. Hashing the
+ request at forward time is request-time compute the compiled
+ architecture is built to avoid, even if the 500 were fixed. A
+-per-request `ngx.md5` of a minted id is not C7 either: it would look
+-like a key while guaranteeing the backend never deduplicates.
++per-request `ngx.md5` of a minted id is not this engine's derived
++key either: it would look like a key while guaranteeing the backend
++never deduplicates.
+ 
+ A backend that honours `Idempotency-Key` therefore sees a
+ **ctier-derived HMAC at Level 3**, and **no key at Level 2**. The
+-agent's value is gone in both cases. Duplicate-execution defence is
+-C7 only where custody exists. Whether the specification's MUST
+-should be scoped that way, or Level 2 needs another mechanism, is
+-not decided here.
++agent's value is gone in both cases. This engine emits the stored
++key only where custody exists (C7). Whether the specification's
++MUST should be scoped that way, or Level 2 needs another mechanism,
++is not decided here.
+ 
+ No target provides the derived key on the forwarded path, for the
+ reason 22 established: the material includes the body, and two
