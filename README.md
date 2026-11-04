@@ -35,6 +35,14 @@ Level 3: zero failed rows, skips carry stated reasons. Matrices in
 - **Five criteria are not observable at a running URL** (C4, C8, C13, C14,
   C15). Witnesses can falsify; they do not verify. See
   [`engine/docs/kit/observability.md`](engine/docs/kit/observability.md).
+- **Known deviation — rule-proposal criteria.** Default / packaged
+  classification rules propose only some criteria on purpose (a description
+  cannot show sensitivity or compliance trigger). ctier's
+  `classification-rules/0.1.0` schema still requires all five on
+  `propose.criteria`, so those packaged rules fail that schema. This is a
+  known deviation, not a tip bug; resolution is a deliberate ctier **1.26.0**
+  or schema-id decision. Tracked in
+  [open-gw/ctier#1](https://github.com/open-gw/ctier/issues/1).
 
 A clean matrix is a claim about the cases in the kit. It is not a claim about
 the specification.
